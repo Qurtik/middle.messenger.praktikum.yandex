@@ -1,0 +1,15 @@
+<div class="auth-page">
+	{{#> Card title="Авторизация"}}
+
+		{{#*inline "body"}}
+			{{> Input label="Почта" value="vladislav@yandex.ru"}}
+			{{> Input label="Пароль" value="********"}}
+		{{/inline}}
+
+		{{#*inline "actions"}}
+			{{> Button text="Войти" class="goToChatsBtn"}}
+			{{> Button text="Зарегистрироваться" class="goToRegisterBtn"}}
+		{{/inline}}
+
+	{{/Card}}
+</div>
