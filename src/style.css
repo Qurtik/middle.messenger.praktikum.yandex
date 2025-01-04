@@ -1,0 +1,56 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+#app {
+	display: flex;
+	justify-content: flex-start;
+	border: solid green;
+	height: 100vh;
+	margin: 0px;
+	padding: 0px;
+}
+
+.chatPage {
+	display: flex;
+}
+
+.leftMenu {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	/* align-content: space-evenly; */
+	height: 100%;
+	width: 300px;
+	border: 3px solid rgb(9, 255, 0);
+	border-radius: 10px;
+	overflow-y: auto;
+	margin: 0 auto;
+	margin-left: 0;
+}
+
+.topBlock {
+	height: 125px;
+	border: solid red;
+}
+.chatList {
+	height: 100%;
+	border: solid blue;
+}
+.bottomBlock {
+	height: 80px;
+	border: solid rgb(0, 213, 255);
+}
+
+/* .footer {
+	height: 14vh;
+	width: 95vw;
+	margin: 0px auto;
+	padding: 0px;
+} */
