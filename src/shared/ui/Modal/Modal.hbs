@@ -1,3 +1,22 @@
-<div>
-	Modal
+<div id="{{id}}" class="modal {{class}}">
+	<div class="modal__shadow"></div>
+	<div class="modal__wrap">
+		<div class="modal__window">
+			<div class="modal__title">
+				{{title}}
+				{{#if showCloseBtn}}
+					{{> ModalButton idModal=id type="img" src="close" class="modal__title-close-btn"}}
+				{{/if}}
+			</div>
+			<div class="modal__body">
+				{{#>body}}
+				{{/body}}
+				{{!-- {{> @partial-block }} --}}
+			</div>
+			<div class="modal__footer">
+				{{#>actions}}
+				{{/actions}}
+			</div>
+		</div>
+	</div>
 </div>
