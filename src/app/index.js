@@ -1,6 +1,10 @@
 import Handlebars from "handlebars";
+
 import { ChatPage } from "../pages/chat";
+import "../pages/chat/ui/ChatPage.pcss";
+
 import { ProfilePage } from "../pages/profile";
+import "../pages/profile/ui/ProfilePage.pcss";
 
 import { AuthPage } from "../pages/auth";
 import "../pages/auth/ui/AuthPage.pcss";
@@ -8,7 +12,7 @@ import "../pages/auth/ui/AuthPage.pcss";
 import { RegistrationPage } from "../pages/register";
 import "../pages/register/ui/RegistrationPage.pcss";
 
-import { Input, Button, Card, Modal } from "../shared/ui";
+import { Input, Button, ModalButton, Card, Modal } from "../shared/ui";
 
 import "../shared/ui/Input/Input.pcss";
 import "../shared/ui/Button/Button.pcss";
@@ -17,17 +21,19 @@ import "../shared/ui/Modal/Modal.pcss";
 
 // import "../style.pcss";
 
-import { ChatList } from "../widgets/chat-list";
+import { LeftMenu } from "../widgets/left-menu";
+import "../widgets/left-menu/ui/LeftMenu.pcss";
 
 Handlebars.registerPartial("Input", Input);
 Handlebars.registerPartial("Button", Button);
+Handlebars.registerPartial("ModalButton", ModalButton);
 Handlebars.registerPartial("Card", Card);
-Handlebars.registerPartial("ChatList", ChatList);
+Handlebars.registerPartial("LeftMenu", LeftMenu);
 Handlebars.registerPartial("Modal", Modal);
 
-// Handlebars.registerHelper("bold", function (options) {
-// 	return new Handlebars.SafeString('<div class="mybold">' + options.fn(this) + "</div>");
-// });
+Handlebars.registerHelper("eq", function (a, b) {
+	return a === b;
+});
 
 export default class App {
 	constructor() {
@@ -44,15 +50,16 @@ export default class App {
 		};
 
 		this.appElement = document.getElementById("app");
+
+		document.addEventListener("click", attachedEventListenerToggleModal);
 	}
 
 	render() {
 		let template;
 
 		if (this.state.currentPage === "chatPage") {
-			console.log("12312");
 			template = Handlebars.compile(ChatPage);
-			this.appElement.innerHTML = template({ param1: 123 });
+			this.appElement.innerHTML = template();
 		} else if (this.state.currentPage === "profilePage") {
 			template = Handlebars.compile(ProfilePage);
 			this.appElement.innerHTML = template({ userData: this.state.userData });
@@ -110,5 +117,32 @@ export default class App {
 				this.render();
 			});
 		}
+	}
+
+	// eventListenerModal() {
+	// 	console.log("eventListenerModal");
+	// 	document.addEventListener("click", toggleModal);
+
+	// 	function toggleModal(event) {
+	// 		console.log("event:");
+	// 		console.log(event);
+	// 		// Проверяем, был ли клик на элементе, который нам интересен
+	// 		if (event.target.classList.contains("modal_toggle")) {
+	// 			const idModal = event.target.getAttribute("data-id-modal");
+	// 			// const modalId = event.target.dataset.modal; // Если есть data атрибут
+	// 			const modal = document.getElementById(idModal);
+	// 			modal.classList.toggle("modal_active");
+	// 		}
+	// 	}
+	// }
+}
+
+function attachedEventListenerToggleModal(event) {
+	// Проверяем, был ли клик на элементе, который нам интересен
+	if (event.target.classList.contains("modal_toggle")) {
+		const idModal = event.target.getAttribute("data-id-modal");
+		// const modalId = event.target.dataset.modal; // Если есть data атрибут
+		const modal = document.getElementById(idModal);
+		modal.classList.toggle("modal_active");
 	}
 }
