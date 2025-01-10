@@ -1,0 +1,87 @@
+.modal {
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 30px 70px;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	overflow: hidden;
+	overflow-y: auto;
+	z-index: 99;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.modal_active {
+	visibility: visible;
+	pointer-events: auto;
+}
+
+.modal__shadow {
+	position: absolute;
+	border: none;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 0.3;
+	z-index: 100;
+	overflow: hidden;
+}
+
+.modal__window {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	position: relative;
+	z-index: 101;
+	border: 2px solid var(--border-color);
+	border-radius: 5px;
+	background-color: white;
+	width: 450px;
+	max-width: 100%;
+	height: 200px;
+}
+
+.modal__title {
+	display: flex;
+	font-family: sans-serif;
+	font-size: 22px;
+	line-height: 1;
+	background-color: antiquewhite;
+	padding: 15px 20px;
+}
+
+/* свойства для кнопки "Закрыть" */
+.modal__title-close-btn {
+	position: relative;
+	cursor: pointer;
+	margin-left: auto;
+	color: hsla(0, 100%, 50%, 0.761);
+	font-weight: bold;
+}
+.modal__title-close-btn:focus,
+.modal__title-close-btn:hover {
+	text-decoration: none;
+	background-color: hsla(0, 100%, 50%, 0.07);
+	border-radius: 50%;
+}
+
+.modal__body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 8px;
+}
+
+.modal__footer {
+	display: flex;
+	justify-content: flex-end;
+	border-top: 2px solid var(--border-color);
+	height: 55px;
+}
+.modal__footer-btn {
+	margin: auto 5px;
+}

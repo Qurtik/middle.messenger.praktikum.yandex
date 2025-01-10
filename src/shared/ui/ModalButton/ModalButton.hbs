@@ -1,0 +1,13 @@
+{{!-- <button data-id-modal="{{idModal}}" class="btn modal_toggle {{class}}">{{ text }}</button> --}}
+
+
+{{#if type}}
+	{{#if (eq type "img")}}
+		<span data-id-modal="{{idModal}}" class="material-icons modal_toggle {{class}}">
+			{{src}}
+		</span>
+	{{/if}}
+
+	{{else}}
+	<button data-id-modal="{{idModal}}" class="btn modal_toggle {{class}}">{{ text }}</button>
+{{/if}}
