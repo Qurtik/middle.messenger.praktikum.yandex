@@ -14,10 +14,13 @@ import "../pages/register/ui/RegistrationPage.pcss";
 
 import { Input, Button, ModalButton, Card, Modal } from "../shared/ui";
 
-import "../shared/ui/Input/Input.pcss";
+// import "../shared/ui/Input/Input.pcss";
 import "../shared/ui/Button/Button.pcss";
 import "../shared/ui/Card/Card.pcss";
 import "../shared/ui/Modal/Modal.pcss";
+
+
+import "../shared/ui/Input/TextField.pcss";
 
 // import "../style.pcss";
 
