@@ -6,18 +6,37 @@
 
 	<div class="profile-main profile-page__profile-main">
 
-		{{> Input label="Почта" value="vladislav@yandex.ru"}}
-		{{> Input label="Логин" value="svladislav"}}
-		{{> Input label="Имя" value="Владислав"}}
-		{{> Input label="Фамилия" value="Селезов"}}
-		{{> Input label="Имя в чате" value="Владислав"}}
-		{{> Input label="Телефон" value="+7 123 456 78 90"}}
+		{{> Input name="email" label="Почта" value="vladislav@yandex.ru" class="profile-main__input"}}
+		{{> Input name="login" label="Логин" value="svladislav" class="profile-main__input"}}
+		{{> Input name="first_name" label="Имя" value="Владислав" class="profile-main__input"}}
+		{{> Input name="second_name" label="Фамилия" value="Селезов" class="profile-main__input"}}
+		{{> Input name="display_name" label="Имя в чате" value="Владислав" class="profile-main__input"}}
+		{{> Input name="phone" label="Телефон" value="+7 123 456 78 90" class="profile-main__input"}}
 	</div>
 
 	<div class="profile-page__actions">
-		<span class="profile-page__action main-color">Изменить данные</span>
-		<span class="profile-page__action main-color">Изменить пароль</span>
-		<span class="profile-page__action error-color">Выйти</span>
+		{{> Button class="profile-page__action main-color" text="Изменить данные"}}
+		{{> ModalButton text="Изменить пароль" idModal="changePassword" class="profile-page__action main-color"}}
+		
+		{{> Button class="profile-page__action btn_bg_color_red" text="Выйти"}}
 	</div>
-	{{> Button class="goToChatsBtn profile-main__btn" text="Вернуться"}}
+	<div class="profile-main__go-back-btn">
+		{{> Button class="goToChatsBtn " text="Вернуться"}}
+	</div>
+
+
+	{{#> Modal id="changePassword" title="Смена пароля" class="modal-change-password" showCloseBtn="true"}}
+
+		{{#*inline "body"}}
+			{{> Input label="Старый пароль" name="oldPassword" value="test"}}
+			{{> Input label="Новый пароль" name="newPassword" value=""}}
+			{{> Input label="Подтвердите новый пароль"}}
+		{{/inline}}
+
+		{{#* inline "actions"}}
+			{{> Button text="Сохранить" class="modal__footer-btn" dataset="modalId"}}
+			{{> ModalButton text="Закрыть" idModal="changePassword" class="modal__footer-btn"}}
+		{{/inline}}
+		
+	{{/Modal}}
 </div>
