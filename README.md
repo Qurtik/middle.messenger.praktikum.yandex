@@ -7,6 +7,7 @@
 - `npm run build` - билд проекта
 
 Ссылка на netlify: https://yandex-chat-qurtik.netlify.app/
+Ссылка на репозиторий: https://github.com/Qurtik/middle.messenger.praktikum.yandex/tree/sprint_1
 
 ## Как пользоваться:
 1. Зарегистрироваться в приложении
