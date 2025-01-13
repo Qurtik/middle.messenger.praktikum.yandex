@@ -1,13 +1,13 @@
 <div class="register-page">
-	{{#> Card title="Регистрация" }}
-
+	{{#> Card title="Регистрация" class="register-page"}}
+	
 		{{#*inline "body"}}
-			{{> Input label="Почта"}}
-			{{> Input label="Логин"}}
-			{{> Input label="Имя"}}
-			{{> Input label="Фамилия"}}
-			{{> Input label="Телефон"}}
-			{{> Input label="Пароль"}}
+			{{> Input name="email" label="Почта"}}
+			{{> Input name="login" label="Логин"}}
+			{{> Input name="first_name" label="Имя"}}
+			{{> Input name="second_name" label="Фамилия"}}
+			{{> Input name="phone" label="Телефон"}}
+			{{> Input name="password" label="Пароль"}}
 			{{> Input label="Повторите пароль"}}
 		{{/inline}}
 
