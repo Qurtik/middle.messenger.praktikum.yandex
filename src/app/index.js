@@ -91,6 +91,12 @@ export default class App {
 				this.state.currentPage = "chatPage";
 				this.render();
 			});
+
+			const avatarImage = document.querySelector(".avatar-image");
+			const avatarUpload = document.querySelector(".avatar-upload");
+			avatarImage.addEventListener("click", function () {
+				avatarUpload.click()
+			});
 		}
 		if (this.state.currentPage === "authPage") {
 			const goToRegister = document.querySelector(".goToRegisterBtn");
