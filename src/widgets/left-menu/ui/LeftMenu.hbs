@@ -12,7 +12,8 @@
 
 	<div class="left-menu__footer">
 		{{> ModalButton text="Добавить пользователя" idModal="addNewsUserToChat" class="btn_bg_color_green btn_size_s"}}
-		{{> Button text="Удалить пользователя" class="btn_bg_color_red btn_size_s"}}
+		{{> ModalButton text="Удалить пользователя" idModal="deleteUserFromChat" class="btn_bg_color_red btn_size_s"}}
+		{{!-- {{> Button text="Удалить пользователя" class="btn_bg_color_red btn_size_s"}} --}}
 	</div>
 
 	{{#> Modal id="addNewsUserToChat" title="Добавить пользователя" showCloseBtn="true"}}
@@ -24,6 +25,19 @@
 		{{#* inline "actions"}}
 			{{> Button text="Добавить" class="modal__footer-btn" dataset="modalId"}}
 			{{> ModalButton text="Закрыть" idModal="addNewsUserToChat" class="modal__footer-btn"}}
+		{{/inline}}
+		
+	{{/Modal}}
+
+	{{#> Modal id="deleteUserFromChat" title="Удалить пользователя" showCloseBtn="true"}}
+
+		{{#*inline "body"}}
+			{{> Input label="Имя пользователя" value="Вася"}}
+		{{/inline}}
+
+		{{#* inline "actions"}}
+			{{> Button text="Удалить" class="modal__footer-btn" dataset="modalId"}}
+			{{> ModalButton text="Закрыть" idModal="deleteUserFromChat" class="modal__footer-btn"}}
 		{{/inline}}
 		
 	{{/Modal}}
