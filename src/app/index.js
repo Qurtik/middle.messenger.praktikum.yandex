@@ -12,6 +12,11 @@ import "../pages/auth/ui/AuthPage.pcss";
 import { RegistrationPage } from "../pages/register";
 import "../pages/register/ui/RegistrationPage.pcss";
 
+
+import { NotFoundPage, ServerErrorPage } from "../pages/System";
+import "../pages/System/404/ui/NotFoundPage.pcss";
+import "../pages/System/505/ui/ServerErrorPage.pcss";
+
 import { Input, Button, ModalButton, Card, Modal } from "../shared/ui";
 
 // import "../shared/ui/Input/Input.pcss";
@@ -41,7 +46,7 @@ Handlebars.registerHelper("eq", function (a, b) {
 export default class App {
 	constructor() {
 		this.state = {
-			currentPage: "chatPage",
+			currentPage: "authPage",
 			userData: {
 				email: "vladislav@yandex.ru",
 				login: "svladislav",
@@ -72,7 +77,13 @@ export default class App {
 		} else if (this.state.currentPage === "registrationPage") {
 			template = Handlebars.compile(RegistrationPage);
 			this.appElement.innerHTML = template();
-		}
+		} else if (this.state.currentPage === "notFoundPage") {
+			template = Handlebars.compile(NotFoundPage);
+			this.appElement.innerHTML = template();
+		} else if (this.state.currentPage === "serverErrorPage") {
+			template = Handlebars.compile(ServerErrorPage);
+			this.appElement.innerHTML = template();
+		};
 		this.attachEventListeners();
 	}
 
