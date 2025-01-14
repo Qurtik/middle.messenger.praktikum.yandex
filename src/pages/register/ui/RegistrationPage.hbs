@@ -1,0 +1,19 @@
+<div class="register-page">
+	{{#> Card title="Регистрация" class="register-page"}}
+	
+		{{#*inline "body"}}
+			{{> Input name="email" label="Почта"}}
+			{{> Input name="login" label="Логин"}}
+			{{> Input name="first_name" label="Имя"}}
+			{{> Input name="second_name" label="Фамилия"}}
+			{{> Input name="phone" label="Телефон"}}
+			{{> Input name="password" label="Пароль"}}
+			{{> Input label="Повторите пароль"}}
+		{{/inline}}
+
+		{{#*inline "actions"}}
+			{{> Button class="goToChatsBtn" text="Зарегистрироваться"}}
+		{{/inline}}
+
+	{{/Card}}
+</div>
