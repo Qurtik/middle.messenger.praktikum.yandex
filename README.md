@@ -6,18 +6,18 @@
 - `npm run dev` - запуск локального сервера для разработки
 - `npm run build` - билд проекта
 
-Ссылка на netlify: https://yandex-chat-qurtik.netlify.app/
-Ссылка на репозиторий: https://github.com/Qurtik/middle.messenger.praktikum.yandex/tree/sprint_1
-Ссылка на UI: https://www.figma.com/design/Yl9h5DIsHMqazC7frvAaCN/Chat_practicum?node-id=0-1&t=VeZFeG7mKu4lVo5a-1
+Ссылка на netlify: https://yandex-chat-qurtik.netlify.app/  
+Ссылка на репозиторий: https://github.com/Qurtik/middle.messenger.praktikum.yandex/tree/sprint_1  
+Ссылка на UI: https://www.figma.com/design/Yl9h5DIsHMqazC7frvAaCN/Chat_practicum?node-id=0-1&t=VeZFeG7mKu4lVo5a-1  
 
-## Как пользоваться:
-1. Зарегистрироваться в приложении
+<!-- ## Как пользоваться: -->
+<!-- 1. Зарегистрироваться в приложении -->
 <!-- Скрин страницы регистрации -->
-2. Пройти авторизацию
+<!-- 2. Пройти авторизацию -->
 <!-- Скрин страницы авторизации -->
-3. Добавить нового пользователя
+<!-- 3. Добавить нового пользователя -->
 <!-- Скрин модального окна добавления пользователя -->
-4. Удалить пользователя из чата
+<!-- 4. Удалить пользователя из чата -->
 <!-- Скрин модального окна удаления пользователя -->
-5. Страница профиля пользователя
+<!-- 5. Страница профиля пользователя -->
 <!-- Скрин страницы профиля пользователя -->
