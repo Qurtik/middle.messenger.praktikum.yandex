@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build",
+		"build": "npm run prebuild && vite build",
+		"prebuild": "tsc --noEmit",
 		"start": "vite build && node server.cjs",
 		"preview": "vite preview"
 	},
@@ -13,6 +14,7 @@
 		"autoprefixer": "^10.4.20",
 		"postcss": "^8.4.49",
 		"postcss-preset-env": "^10.1.3",
+		"typescript": "^5.7.3",
 		"vite": "^6.0.7",
 		"vite-plugin-handlebars": "^2.0.0"
 	},

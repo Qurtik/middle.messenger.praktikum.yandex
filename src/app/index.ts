@@ -12,7 +12,6 @@ import "../pages/auth/ui/AuthPage.pcss";
 import { RegistrationPage } from "../pages/register";
 import "../pages/register/ui/RegistrationPage.pcss";
 
-
 import { NotFoundPage, ServerErrorPage } from "../pages/System";
 import "../pages/System/404/ui/NotFoundPage.pcss";
 import "../pages/System/505/ui/ServerErrorPage.pcss";
@@ -23,7 +22,6 @@ import { Input, Button, ModalButton, Card, Modal } from "../shared/ui";
 import "../shared/ui/Button/Button.pcss";
 import "../shared/ui/Card/Card.pcss";
 import "../shared/ui/Modal/Modal.pcss";
-
 
 import "../shared/ui/Input/TextField.pcss";
 
@@ -44,6 +42,7 @@ Handlebars.registerHelper("eq", function (a, b) {
 });
 
 export default class App {
+
 	constructor() {
 		this.state = {
 			currentPage: "authPage",
@@ -83,7 +82,7 @@ export default class App {
 		} else if (this.state.currentPage === "serverErrorPage") {
 			template = Handlebars.compile(ServerErrorPage);
 			this.appElement.innerHTML = template();
-		};
+		}
 		this.attachEventListeners();
 	}
 
@@ -109,7 +108,7 @@ export default class App {
 			const avatarImage = document.querySelector(".avatar-image");
 			const avatarUpload = document.querySelector(".avatar-upload");
 			avatarImage.addEventListener("click", function () {
-				avatarUpload.click()
+				avatarUpload.click();
 			});
 		}
 		if (this.state.currentPage === "authPage") {
