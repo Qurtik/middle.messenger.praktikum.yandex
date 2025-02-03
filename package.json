@@ -3,6 +3,11 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
+	"targets":{
+		"default": {
+			"includeNodeModules": true
+		}
+	},
 	"scripts": {
 		"dev": "vite",
 		"build": "npm run prebuild && vite build",
