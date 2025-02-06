@@ -1,5 +1,6 @@
 import App, { PAGES } from "@/app";
 import Block from "@/app/core";
+import Chat from "@/widgets/chat";
 
 import LeftMenu from "@/widgets/left-menu";
 // import "../widgets/left-menu/ui/LeftMenu.pcss";
@@ -14,6 +15,7 @@ export default class ChatPage extends Block {
 			...props,
 			class: "chat-page",
 			LeftMenu: new LeftMenu({...props}),
+			Chat: new Chat({...props})
 		});
 	}
 
@@ -22,16 +24,9 @@ export default class ChatPage extends Block {
 		<div class="{{class}}">
 			{{{LeftMenu}}}
 			<div class="{{class}}__main">
-				Modal
+				{{{Chat}}}
 			</div>
 		</div>
 		`;
 	}
 }
-
-// <div class="chat-page">
-// 	{{> LeftMenu}}
-// 	<div class="chat-page__main">
-// 		{{> Modal title="MyModal" showCloseBtn="true"}}
-// 	</div>
-// </div>

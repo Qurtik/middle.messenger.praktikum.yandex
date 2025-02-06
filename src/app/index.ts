@@ -55,7 +55,7 @@ export default class App {
 
 	constructor() {
 		this.state = {
-			currentPage: PAGES.REGISTRATION,
+			currentPage: PAGES.CHAT,
 			userData: {
 				email: "vladislav@yandex.ru",
 				login: "svladislav",
@@ -121,10 +121,6 @@ export default class App {
 		}
 		
 		const value = el.value;
-		console.log("rules");
-		console.log(rules);
-		console.log("el");
-		console.log(el);
 		for (const rule of rules) {
 			const regex = new RegExp(rule);
 			const isValid = regex.test(value);
@@ -139,6 +135,7 @@ export default class App {
 
 	public submit(idForm: string, formRules?: any): void {
 		const applicantForm = document.getElementById(idForm);
+		console.log(applicantForm);
 		const formFields = applicantForm.querySelectorAll("input");
 
 		let formResult = {};

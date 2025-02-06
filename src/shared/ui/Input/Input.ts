@@ -35,7 +35,7 @@ export default class Input extends Block {
 
 	protected override render(): string {
 		return `
-			<div class="text-field {{class}}">
+			<div class="{{class}} text-field">
 				<input class="text-field__input" {{readonly}} {{required}} type="text" name="{{name}}" id="{{name}}" placeholder="{{placeholder}}" value="{{value}}"/>
 				<label class="text-field__label" for="{{name}}">{{label}}</label>
 			</div>
