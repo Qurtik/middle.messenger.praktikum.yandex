@@ -1,4 +1,4 @@
-import App from "./app/index.js";
+import App from "./app";
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = new App();
