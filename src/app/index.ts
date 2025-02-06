@@ -1,51 +1,61 @@
-import Handlebars from "handlebars";
-
-import { ChatPage } from "../pages/chat";
+import ChatPage from "../pages/chat";
 import "../pages/chat/ui/ChatPage.pcss";
 
-import { ProfilePage } from "../pages/profile";
+import ProfilePage from "../pages/profile";
 import "../pages/profile/ui/ProfilePage.pcss";
 
-import { AuthPage } from "../pages/auth";
+import AuthPage from "../pages/auth";
 import "../pages/auth/ui/AuthPage.pcss";
 
-import { RegistrationPage } from "../pages/register";
+import RegistrationPage from "../pages/register";
 import "../pages/register/ui/RegistrationPage.pcss";
 
 import { NotFoundPage, ServerErrorPage } from "../pages/System";
 import "../pages/System/404/ui/NotFoundPage.pcss";
 import "../pages/System/505/ui/ServerErrorPage.pcss";
 
-import { Input, Button, ModalButton, Card, Modal } from "../shared/ui";
+// import { http } from "../shared/api";
 
-// import "../shared/ui/Input/Input.pcss";
-import "../shared/ui/Button/Button.pcss";
-import "../shared/ui/Card/Card.pcss";
-import "../shared/ui/Modal/Modal.pcss";
+interface IState {
+	currentPage: string;
+	userData: IUserData;
+}
 
-import "../shared/ui/Input/TextField.pcss";
+interface IUserData {
+	email: string;
+	login: string;
+	name: string;
+	surname: string;
+	nickname: string;
+	phoneNumber: string;
+}
 
-// import "../style.pcss";
+export const enum PAGES {
+	AUTH = "authPage",
+	CHAT = "chatPage",
+	PROFILE = "profilePage",
+	REGISTRATION = "registrationPage",
+	NOT_FOUND = "notFoundPage",
+	SERVER_ERROR = "serverErrorPage",
+}
 
-import { LeftMenu } from "../widgets/left-menu";
-import "../widgets/left-menu/ui/LeftMenu.pcss";
-
-Handlebars.registerPartial("Input", Input);
-Handlebars.registerPartial("Button", Button);
-Handlebars.registerPartial("ModalButton", ModalButton);
-Handlebars.registerPartial("Card", Card);
-Handlebars.registerPartial("LeftMenu", LeftMenu);
-Handlebars.registerPartial("Modal", Modal);
-
-Handlebars.registerHelper("eq", function (a, b) {
-	return a === b;
-});
+export const enum INPUT_RULES {
+	EMAIL = "^[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9_\\-\\.]+\\.[a-zA-Z]+$",
+	PASSWORD = "^(?=.*[A-Z])(?=.*\\d).{8,40}$",
+	LOGIN = "^(?=.*[a-zA-Z])[a-zA-Z0-9_\\-]{3,20}$",
+	FIRST_NAME = "^[A-ZА-Я][a-zа-яё\\-]*$",
+	SECOND_NAME = "^[A-ZА-Я][a-zа-яё\\-]*$",
+	PHONE = "^\\+?\\d{10,15}$",
+	MESSAGE = "^\\s*\\S.*+$",
+}
 
 export default class App {
+	state: IState;
+	appElement: HTMLElement;
 
 	constructor() {
 		this.state = {
-			currentPage: "authPage",
+			currentPage: PAGES.REGISTRATION,
 			userData: {
 				email: "vladislav@yandex.ru",
 				login: "svladislav",
@@ -56,26 +66,38 @@ export default class App {
 			},
 		};
 
-		this.appElement = document.getElementById("app");
+		this.appElement = document.querySelector("#app");
+		console.log(`App element from constructor,`, this.appElement);
 
-		document.addEventListener("click", attachedEventListenerToggleModal);
+		// const testHttp = new http;
 	}
 
-	render() {
+	public toggleModal(IdModal: string) {
+		const modal = document.getElementById(IdModal);
+		modal.classList.toggle("modal_active");
+	}
+
+	public changePage(pageName: PAGES): void {
+		this.state.currentPage = pageName;
+		console.log(this.state);
+		this.render();
+	}
+
+	public render() {
 		let template;
 
-		if (this.state.currentPage === "chatPage") {
-			template = Handlebars.compile(ChatPage);
-			this.appElement.innerHTML = template();
-		} else if (this.state.currentPage === "profilePage") {
-			template = Handlebars.compile(ProfilePage);
-			this.appElement.innerHTML = template({ userData: this.state.userData });
-		} else if (this.state.currentPage === "authPage") {
-			template = Handlebars.compile(AuthPage);
-			this.appElement.innerHTML = template();
-		} else if (this.state.currentPage === "registrationPage") {
-			template = Handlebars.compile(RegistrationPage);
-			this.appElement.innerHTML = template();
+		if (this.state.currentPage === PAGES.CHAT) {
+			const page = new ChatPage({ AppInstance: this });
+			this.appElement.replaceChildren(page.getContent());
+		} else if (this.state.currentPage === PAGES.PROFILE) {
+			const page = new ProfilePage({ AppInstance: this });
+			this.appElement.replaceChildren(page.getContent());
+		} else if (this.state.currentPage === PAGES.AUTH) {
+			const page = new AuthPage({ AppInstance: this });
+			this.appElement.replaceChildren(page.getContent());
+		} else if (this.state.currentPage === PAGES.REGISTRATION) {
+			const page = new RegistrationPage({ AppInstance: this });
+			this.appElement.replaceChildren(page.getContent());
 		} else if (this.state.currentPage === "notFoundPage") {
 			template = Handlebars.compile(NotFoundPage);
 			this.appElement.innerHTML = template();
@@ -83,85 +105,66 @@ export default class App {
 			template = Handlebars.compile(ServerErrorPage);
 			this.appElement.innerHTML = template();
 		}
-		this.attachEventListeners();
 	}
 
-	attachEventListeners() {
-		if (this.state.currentPage === "chatPage") {
-			const goToProfile = document.querySelector(".goToProfileBtn");
-
-			goToProfile.addEventListener("click", (e) => {
-				e.preventDefault();
-				this.state.currentPage = "profilePage";
-				this.render();
-			});
-		}
-		if (this.state.currentPage === "profilePage") {
-			const goToProfile = document.querySelector(".goToChatsBtn");
-
-			goToProfile.addEventListener("click", (e) => {
-				e.preventDefault();
-				this.state.currentPage = "chatPage";
-				this.render();
-			});
-
-			const avatarImage = document.querySelector(".avatar-image");
-			const avatarUpload = document.querySelector(".avatar-upload");
-			avatarImage.addEventListener("click", function () {
-				avatarUpload.click();
-			});
-		}
-		if (this.state.currentPage === "authPage") {
-			const goToRegister = document.querySelector(".goToRegisterBtn");
-			const goToChats = document.querySelector(".goToChatsBtn");
-
-			goToRegister.addEventListener("click", (e) => {
-				e.preventDefault();
-				this.state.currentPage = "registrationPage";
-				this.render();
-			});
-
-			goToChats.addEventListener("click", (e) => {
-				e.preventDefault();
-				this.state.currentPage = "chatPage";
-				this.render();
-			});
-		}
-		if (this.state.currentPage === "registrationPage") {
-			const goToChats = document.querySelector(".goToChatsBtn");
-
-			goToChats.addEventListener("click", (e) => {
-				e.preventDefault();
-				this.state.currentPage = "chatPage";
-				this.render();
-			});
+	public setInputValidity(el: HTMLElement, isValid: boolean): void {
+		if (isValid) {
+			el.style.borderColor = "green";
+		} else {
+			el.style.borderColor = "red";
 		}
 	}
 
-	// eventListenerModal() {
-	// 	console.log("eventListenerModal");
-	// 	document.addEventListener("click", toggleModal);
+	public isValidate(el: HTMLInputElement, rules: INPUT_RULES[]): boolean {
+		if (!rules) {
+			return true;
+		}
+		
+		const value = el.value;
+		console.log("rules");
+		console.log(rules);
+		console.log("el");
+		console.log(el);
+		for (const rule of rules) {
+			const regex = new RegExp(rule);
+			const isValid = regex.test(value);
 
-	// 	function toggleModal(event) {
-	// 		console.log("event:");
-	// 		console.log(event);
-	// 		// Проверяем, был ли клик на элементе, который нам интересен
-	// 		if (event.target.classList.contains("modal_toggle")) {
-	// 			const idModal = event.target.getAttribute("data-id-modal");
-	// 			// const modalId = event.target.dataset.modal; // Если есть data атрибут
-	// 			const modal = document.getElementById(idModal);
-	// 			modal.classList.toggle("modal_active");
-	// 		}
-	// 	}
-	// }
-}
+			this.setInputValidity(el, isValid);
+			if (!isValid) {
+				return false;
+			}
+		}
+		return true;
+	}
 
-function attachedEventListenerToggleModal(event) {
-	// Проверяем, был ли клик на элементе, который нам интересен
-	if (event.target.classList.contains("modal_toggle")) {
-		const idModal = event.target.getAttribute("data-id-modal");
-		// const modalId = event.target.dataset.modal; // Если есть data атрибут
-		const modal = document.getElementById(idModal);
-		modal.classList.toggle("modal_active");
+	public submit(idForm: string, formRules?: any): void {
+		const applicantForm = document.getElementById(idForm);
+		const formFields = applicantForm.querySelectorAll("input");
+
+		let formResult = {};
+
+		let isFormValid: boolean = true;
+		formFields.forEach((element) => {
+			const inputValue = element.value;
+			const inputName = element.name;
+			formResult[inputName] = inputValue;
+
+			if (!!formRules) {
+				const rules: INPUT_RULES[] = formRules[inputName];
+				const result = this.isValidate(element, rules);
+				this.setInputValidity(element, result);
+
+				if (!result) {
+					isFormValid = false;
+				}
+			}
+		});
+
+		if (isFormValid) {
+			console.log("formResult");
+			console.log(formResult);
+			console.log("SUBMITED");
+			// applicantForm.submit();
+		}
 	}
 }

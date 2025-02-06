@@ -20,9 +20,9 @@ function queryStringify(data) {
 // 	console.log(data);
 // }
 
-// function fetchWithRetry(url, options) {
-// 	// код
-// }
+function fetchWithRetry(url, options) {
+	// код
+}
 
 export default class HTTPTransport {
 	get = (url, options = {}) => {

@@ -1,4 +1,3 @@
-import AuthPage from "./ui/AuthPage.hbs?raw";
+import { AuthPage } from "./ui/AuthPage";
 
-export { AuthPage };
-
+export default AuthPage;
