@@ -110,17 +110,49 @@ export default class HTTPTransport {
 
 		// return promise;
 	};
-	private _urlWithParams(url, data) {
-		const params = Object.entries(data).reduce((acc, [key, value], index, array) => {
-			if (typeof value === "object" && !Array.isArray(value)) {
-				return acc;
+
+	private _urlWithParams(url: string, data: Record<string, any>): string {
+		console.log("data in urlWithParams");
+		console.log(data);
+
+		const params = new URLSearchParams();
+
+		for (const key in data) {
+			if (Object.prototype.hasOwnProperty.call(data, key)) {
+				const value = data[key];
+
+				if (value !== undefined && value !== null) {
+					// Обработка undefined и null
+					if (typeof value === "object") {
+						try {
+							params.append(key, JSON.stringify(value));
+						} catch (error) {
+							console.error(`Error stringifying value for key ${key}:`, error);
+							// Handle error or skip the parameter
+						}
+					} else {
+						params.append(key, String(value)); // Явное преобразование в строку
+					}
+				}
 			}
+		}
 
-			return `${acc}${key}=${value}${index !== array.length - 1 ? "&" : ""}`;
-		}, "?");
-
-		return url + params;
+		const paramsString = params.toString();
+		return url + (paramsString ? "?" + paramsString : "");
 	}
+
+	// private _urlWithParams(url, data) {
+	// 	const params = Object.entries(data).reduce((acc, [key, value], index, array) => {
+	// 		if (typeof value === "object" && !Array.isArray(value)) {
+	// 			return acc;
+	// 		}
+
+	// 		return `${acc}${key}=${value}${index !== array.length - 1 ? "&" : ""}`;
+	// 	}, "?");
+
+	// 	return url + params;
+	// }
+
 	private async fetchWithRetry(url: string, options, timeout: number) {
 		await this.request(url, options, timeout);
 		// new Proxy(this.request,{
