@@ -2,11 +2,23 @@ import App, { PAGES } from "@/app";
 import Block from "@/app/core";
 import "./LeftMenu.pcss";
 import { Button, Input, Modal } from "@/shared/ui";
+import MessageCard from "@/entities/Chat";
+
+// import Handlebars from "handlebars";
+
+// Handlebars.registerHelper("times", function (n, block) {
+// 	let accum = "";
+// 	for (let i = 0; i < n; ++i) {
+// 		accum += block.fn(i); // Передаем индекс итерации в блок
+// 	}
+// 	return accum;
+// });
 
 interface IProps {
 	AppInstance: App;
 	class: string;
 	Chats: Block | Block[];
+	MessageCard: Block;
 	ProfileBtn: Block | Block[];
 	Actions: Block | Block[];
 	Modal?: Block | Block[];
@@ -23,6 +35,8 @@ export default class LeftMenu extends Block {
 				onClick: (e) => {
 					props.AppInstance.changePage(PAGES.PROFILE)
 				}
+			}),
+			MessageCard: new MessageCard({
 			}),
 			Actions: [
 				new Button({
@@ -107,11 +121,13 @@ export default class LeftMenu extends Block {
 				<input class="search-field left-menu__search-field" type="text" placeholder="Search" />
 			</div>
 
-			<div class="{{class}}__main">Chats</div>
+			<div class="{{class}}__main">
+				{{{MessageCard}}}
+			</div>
 
 			<div class="{{class}}__footer">
-			{{{Actions}}}
-			{{{Modal}}}
+				{{{Actions}}}
+				{{{Modal}}}
 			</div>
 		</div>
 		`;

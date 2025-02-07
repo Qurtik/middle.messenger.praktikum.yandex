@@ -1,7 +1,7 @@
 import App, { INPUT_RULES } from "@/app";
 import Block from "@/app/core";
 import "./Chat.pcss";
-import { Button, Input } from "@/shared/ui";
+import { Avatar, Button, Input } from "@/shared/ui";
 
 interface IProps {
 	AppInstance: App;
@@ -11,7 +11,11 @@ export default class Chat extends Block {
 	constructor(props: IProps) {
 		super({
 			...props,
-			messageInput: new Input({
+			// FIXME:
+			Avatar: new Avatar({
+				userName:"Владислав"
+			}),
+			MessageInput: new Input({
 				label: "Собщение",
 				name: "message",
 				class: "chat-main__message-input text-field-size-block",
@@ -21,7 +25,7 @@ export default class Chat extends Block {
 					props.AppInstance.isValidate(input, rules);
 				},
 			}),
-			sendMsgBtn: new Button({
+			SendMsgBtn: new Button({
 				text: "Отправить",
 				class: "chat-main__message-send",
 				onClick: (e) => {
@@ -37,10 +41,12 @@ export default class Chat extends Block {
 		return `
 		<form id="chat-main-form">
 			<div class="chat-main">
-				<div class="chat-main__header">Header</div>
+				<div class="chat-main__header">
+				{{{ Avatar }}}
+				Header</div>
 				<div class="chat-main__body">Message</div>
 				<div class="chat-main__footer">
-				{{{ messageInput }}} {{{sendMsgBtn}}}
+				{{{ MessageInput }}} {{{ SendMsgBtn }}}
 				</div>
 			</div>
 		</form>
