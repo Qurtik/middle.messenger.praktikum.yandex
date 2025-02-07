@@ -15,11 +15,12 @@ module.exports = {
 			},
 		},
 	],
-	plugins: ["@typescript-eslint"],
+	plugins: ["@typescript-eslint", "@stylistic/eslint-plugin-ts"],
 	extends: [
-		"airbnb-typescript",
+		// "airbnb-typescript",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
+		// "plugin:@stylistic/eslint-plugin-ts",
 	],
 	env: {
 		browser: true,
@@ -27,6 +28,7 @@ module.exports = {
 		node: true,
 	},
 	rules: {
+		"@stylistic/ts/indent": ["error", "tab"],
 		"react/jsx-filename-extension": "off",
 		"import/extensions": "off",
 		"import/no-extraneous-dependencies": "off",
