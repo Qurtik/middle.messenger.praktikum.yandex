@@ -17,7 +17,7 @@
 		"lint": "eslint . --ext .ts",
 		"lint:fix": "eslint . --ext .ts --fix",
 		"lint:style": "stylelint \"**/*.pcss\"",
-		"lint:style-fix": "stylelint \"**/*.pcss\" --fix"
+		"lint:style:fix": "stylelint \"**/*.pcss\" --fix"
 	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.20",
