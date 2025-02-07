@@ -28,7 +28,7 @@ module.exports = {
 		node: true,
 	},
 	rules: {
-		"@stylistic/ts/indent": ["error", "tab"],
+		// "@stylistic/ts/indent": ["error", "tab"],
 		"react/jsx-filename-extension": "off",
 		"import/extensions": "off",
 		"import/no-extraneous-dependencies": "off",
