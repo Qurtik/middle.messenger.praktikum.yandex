@@ -1,22 +1,22 @@
 {
 	"compilerOptions": {
 		"target": "ES2020",
-		"module": "ESNext",
-		"baseUrl": ".",
+		"module": "ESNext","baseUrl": ".",
 		"paths": {
 			"@/*": [
 				"./src/*"
 			]
 		},
 		"sourceMap": true,
-		"noImplicitAny": false,
+		"moduleResolution": "node",
+		"noImplicitAny": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"strictNullChecks": false,
-		"moduleResolution": "node",
+		"strictNullChecks": true,
+		"allowSyntheticDefaultImports": true
 	},
 	"include": [
 		"src/**/*.ts",
-		".esliintrc.cjs"
+		".eslintrc.cjs"
 	]
 }
