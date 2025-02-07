@@ -3,7 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
-	"targets":{
+	"targets": {
 		"default": {
 			"includeNodeModules": true
 		}
@@ -13,12 +13,21 @@
 		"build": "npm run prebuild && vite build",
 		"prebuild": "tsc --noEmit",
 		"start": "vite build && node server.cjs",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"lint": "eslint . --ext .ts",
+		"lint:fix": "eslint . --ext .ts --fix",
+		"lint:style": "stylelint \"**/*.pcss\"",
+		"lint:style-fix": "stylelint \"**/*.pcss\" --fix"
 	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.20",
+		"eslint": "^8.57.1",
+		"eslint-config-airbnb-typescript": "^18.0.0",
 		"postcss": "^8.4.49",
 		"postcss-preset-env": "^10.1.3",
+		"stylelint": "^16.14.1",
+		"stylelint-config-standard": "^37.0.0",
+		"stylelint-order": "^6.0.4",
 		"typescript": "^5.7.3",
 		"vite": "^6.0.7",
 		"vite-plugin-handlebars": "^2.0.0"
