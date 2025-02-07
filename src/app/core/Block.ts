@@ -86,6 +86,8 @@ export default class Block {
 
 	// Может переопределять пользователь, необязательно трогать
 	protected componentDidUpdate(oldProps, newProps) {
+		console.log(oldProps);
+		console.log(newProps);
 		return true;
 	}
 

@@ -10,7 +10,7 @@ interface IProps {
 	placeholder?: string;
 	required?: boolean;
 	readonly?: boolean;
-	onBlur?: Function;
+	onBlur?: (event: Event) => void;
 }
 
 export default class Input extends Block {
@@ -20,17 +20,13 @@ export default class Input extends Block {
 			readonly: props.readonly ? "readonly" : "",
 			required: props.required ? "required" : "",
 			events: {
-				blur: (e) => {
+				blur: (e: Event) => {
 					if (!!props.onBlur) {
 						props.onBlur(e);
 					}
 				},
-				// click: (e) => {
-				// 	console.log("clock");
-				// },
 			},
 		});
-		// const readonly = props.readonly || "readonly";
 	}
 
 	protected override render(): string {

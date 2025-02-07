@@ -1,4 +1,3 @@
-//@ts-nocheck
 const enum METHODS {
 	GET = "GET",
 	POST = "POST",
@@ -11,18 +10,18 @@ const enum METHODS {
  * На входе: объект. Пример: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
  * На выходе: строка. Пример: ?a=1&b=2&c=[object Object]&k=1,2,3
  */
-function queryStringify(data) {
-	// Можно делать трансформацию GET-параметров в отдельной функции
-}
+// function queryStringify(data) {
+// 	// Можно делать трансформацию GET-параметров в отдельной функции
+// }
 
 // function urlWithParams(url, data) {
 // 	console.log("urlWithParams");
 // 	console.log(data);
 // }
 
-function fetchWithRetry(url, options) {
-	// код
-}
+// function fetchWithRetry(url, options) {
+// 	// код
+// }
 
 export default class HTTPTransport {
 	get = (url, options = {}) => {
@@ -97,7 +96,7 @@ export default class HTTPTransport {
 			xhr.ontimeout = handleError;
 		});
 
-		let { tries = 0 } = options;
+		const { tries = 0 } = options;
 
 		return promise
 			.then((resolve) => {
@@ -112,13 +111,6 @@ export default class HTTPTransport {
 		// return promise;
 	};
 	private _urlWithParams(url, data) {
-		console.log("data in urlWithParams");
-		console.log(data);
-
-		// Object.entries(data).forEach(([key, value])=>{
-		// 	console.log(`key: ${key}, value ${value}`)
-		// })
-
 		const params = Object.entries(data).reduce((acc, [key, value], index, array) => {
 			if (typeof value === "object" && !Array.isArray(value)) {
 				return acc;
@@ -129,8 +121,8 @@ export default class HTTPTransport {
 
 		return url + params;
 	}
-	private fetchWithRetry(url, options) {
-		this.request(url, options);
+	private async fetchWithRetry(url: string, options, timeout: number) {
+		await this.request(url, options, timeout);
 		// new Proxy(this.request,{
 		// 	get(target, prop){
 		// 		console.log(target)
@@ -139,13 +131,13 @@ export default class HTTPTransport {
 	}
 }
 
-const testMethod = new HTTPTransport();
+// const testMethod = new HTTPTransport();
 
-testMethod
-	.get("123/test", { headers: { header: "Key", otherHeader: "Key2" }, tries: 5 })
-	.then((response) => {
-		// console.log(response);
-	});
+// testMethod
+// 	.get("123/test", { headers: { header: "Key", otherHeader: "Key2" }, tries: 5 })
+// 	.then((response) => {
+// 		// console.log(response);
+// 	});
 
 // testMethod
 // 	.post("/mock/userData.json", {

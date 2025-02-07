@@ -1,4 +1,4 @@
-import App, { PAGES } from "@/app";
+import App from "@/app";
 import Block from "@/app/core";
 import Chat from "@/widgets/chat";
 

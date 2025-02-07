@@ -1,15 +1,17 @@
-interface IEventBus {
-	[key: string]: Function[];
-}
+// interface IEventBus {
+// 	[key: string]: (callback: Event)[];
+// }
+export type EventCallback = (...args: any[]) => void;
 
 export default class EventBus {
-	private listeners: IEventBus;
+	// private listeners: IEventBus;
+	private listeners: Record<string, EventCallback[]>;
 
 	constructor() {
 		this.listeners = {};
 	}
 
-	on(event: string, callback: Function) {
+	on(event: string, callback: EventCallback) {
 		if (!this.listeners[event]) {
 			this.listeners[event] = [];
 		}
@@ -17,7 +19,7 @@ export default class EventBus {
 		this.listeners[event].push(callback);
 	}
 
-	off(event: string, callback: Function) {
+	off(event: string, callback: EventCallback) {
 		if (!this.listeners[event]) {
 			throw new Error(`Нет события: ${event}`);
 		}

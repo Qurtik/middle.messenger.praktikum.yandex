@@ -18,7 +18,7 @@ export default class ProfilePage extends Block {
 			Header: [
 				new Avatar({
 					userName: "Владислав С.",
-					onClick: (e) => {
+					onClick: () => {
 						this._uploadAvatar();
 					},
 				}),
@@ -69,7 +69,7 @@ export default class ProfilePage extends Block {
 				new Button({
 					text: "Изменить пароль",
 					class: "profile-page__action main-color",
-					onClick: (e) => {
+					onClick: () => {
 						props.AppInstance.toggleModal("changePassword");
 					},
 				}),
@@ -77,7 +77,7 @@ export default class ProfilePage extends Block {
 			BtnBack: new Button({
 				class: "goToChatsBtn ",
 				text: "Вернуться",
-				onClick: (e) => {
+				onClick: () => {
 					props.AppInstance.changePage(PAGES.CHAT);
 				},
 			}),
@@ -108,7 +108,7 @@ export default class ProfilePage extends Block {
 						new Button({
 							text: "Закрыть",
 							class: "modal__footer-btn",
-							onClick: (e) => {
+							onClick: () => {
 								props.AppInstance.toggleModal("changePassword");
 							},
 						}),

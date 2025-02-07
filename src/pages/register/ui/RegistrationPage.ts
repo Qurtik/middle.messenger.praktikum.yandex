@@ -1,4 +1,4 @@
-import App, { INPUT_RULES, PAGES } from "@/app";
+import App, { INPUT_RULES } from "@/app";
 import Block from "@/app/core";
 import { Card, Input, Button } from "@/shared/ui";
 
@@ -86,7 +86,7 @@ export default class RegistrationPage extends Block {
 					new Button({
 						class: "goToChatsBtn",
 						text: "Зарегистрироваться",
-						onClick: (e) => {
+						onClick: () => {
 							props.AppInstance.submit("register-page-form", fieldRules);
 							// props.AppInstance.changePage(PAGES.CHAT)
 						},

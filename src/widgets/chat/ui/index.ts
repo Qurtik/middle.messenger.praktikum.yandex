@@ -28,7 +28,7 @@ export default class Chat extends Block {
 			SendMsgBtn: new Button({
 				text: "Отправить",
 				class: "chat-main__message-send",
-				onClick: (e) => {
+				onClick: () => {
 					console.log(props.AppInstance.submit("chat-main-form", fieldRules));
 				},
 			}),

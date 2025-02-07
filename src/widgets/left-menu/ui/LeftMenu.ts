@@ -32,7 +32,7 @@ export default class LeftMenu extends Block {
 			ProfileBtn: new Button({
 				text: "Профиль",
 				class: "btn goToProfileBtn",
-				onClick: (e) => {
+				onClick: () => {
 					props.AppInstance.changePage(PAGES.PROFILE)
 				}
 			}),
@@ -42,14 +42,14 @@ export default class LeftMenu extends Block {
 				new Button({
 					text: "Добавить пользователя",
 					class: "btn_bg_color_green btn_size_s",
-					onClick: (e) => {
+					onClick: () => {
 						this.toggleModal("addNewsUserToChat");
 					},
 				}),
 				new Button({
 					text: "Удалить пользователя",
 					class: "btn_bg_color_red btn_size_s",
-					onClick: (e) => {
+					onClick: () => {
 						this.toggleModal("deleteUserFromChat");
 					},
 				}),
@@ -73,7 +73,7 @@ export default class LeftMenu extends Block {
 						new Button({
 							text: "Закрыть",
 							class: "modal__footer-btn",
-							onClick: (e) => {
+							onClick: () => {
 								this.toggleModal("addNewsUserToChat");
 							},
 						}),
@@ -96,7 +96,7 @@ export default class LeftMenu extends Block {
 						new Button({
 							text: "Закрыть",
 							class: "modal__footer-btn",
-							onClick: (e) => {
+							onClick: () => {
 								this.toggleModal("deleteUserFromChat");
 							},
 						}),

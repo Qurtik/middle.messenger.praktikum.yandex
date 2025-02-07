@@ -23,7 +23,7 @@ export class AuthPage extends Block {
 						label: "Почта",
 						name: "email",
 						value: "vladislav.selezov@yandex.ru",
-						onBlur: (e) => {
+						onBlur: () => {
 							const input = e.target;
 							const rules = fieldRules[input.name];
 							props.AppInstance.isValidate(input, rules);
@@ -33,7 +33,7 @@ export class AuthPage extends Block {
 						label: "Пароль",
 						name: "password",
 						required: true,
-						onBlur: (e) => {
+						onBlur: (e: HTMLElement) => {
 							const input = e.target;
 							const rules = fieldRules[input.name];
 
@@ -45,7 +45,7 @@ export class AuthPage extends Block {
 				],
 				Actions: [
 					new Button({
-						onClick: (e: Event) => {
+						onClick: () => {
 							props.AppInstance.submit("auth-page-form", fieldRules);
 							// props.AppInstance.changePage(PAGES.CHAT);
 							// const form = document.getElementById("auth-page-form") as HTMLFormElement;
@@ -55,8 +55,7 @@ export class AuthPage extends Block {
 						class: "goToChatsBtn",
 					}),
 					new Button({
-						onClick: (e) => {
-							console.log(e);
+						onClick: () => {
 							props.AppInstance.changePage(PAGES.REGISTRATION);
 						},
 						text: "Зарегистрироваться",

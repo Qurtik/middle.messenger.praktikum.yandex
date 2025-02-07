@@ -16,10 +16,7 @@ import "../pages/System/505/ui/ServerErrorPage.pcss";
 
 // import { http } from "../shared/api";
 
-interface IState {
-	currentPage: string;
-	userData: IUserData;
-}
+
 
 interface IUserData {
 	email: string;
@@ -44,9 +41,15 @@ export const enum INPUT_RULES {
 	PASSWORD = "^(?=.*[A-Z])(?=.*\\d).{8,40}$",
 	LOGIN = "^(?=.*[a-zA-Z])[a-zA-Z0-9_\\-]{3,20}$",
 	FIRST_NAME = "^[A-ZА-Я][a-zа-яё\\-]*$",
+	// eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
 	SECOND_NAME = "^[A-ZА-Я][a-zа-яё\\-]*$",
 	PHONE = "^\\+?\\d{10,15}$",
 	MESSAGE = "^\\s*\\S.*+$",
+}
+
+interface IState {
+	currentPage: PAGES;
+	userData: IUserData;
 }
 
 export default class App {
@@ -98,10 +101,10 @@ export default class App {
 		} else if (this.state.currentPage === PAGES.REGISTRATION) {
 			const page = new RegistrationPage({ AppInstance: this });
 			this.appElement.replaceChildren(page.getContent());
-		} else if (this.state.currentPage === "notFoundPage") {
+		} else if (this.state.currentPage === PAGES.NOT_FOUND) {
 			template = Handlebars.compile(NotFoundPage);
 			this.appElement.innerHTML = template();
-		} else if (this.state.currentPage === "serverErrorPage") {
+		} else if (this.state.currentPage === PAGES.SERVER_ERROR) {
 			template = Handlebars.compile(ServerErrorPage);
 			this.appElement.innerHTML = template();
 		}
@@ -138,7 +141,7 @@ export default class App {
 		console.log(applicantForm);
 		const formFields = applicantForm.querySelectorAll("input");
 
-		let formResult = {};
+		const formResult = {};
 
 		let isFormValid: boolean = true;
 		formFields.forEach((element) => {
