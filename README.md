@@ -5,6 +5,10 @@
 - `npm i` - установка пакетов
 - `npm run dev` - запуск локального сервера для разработки
 - `npm run build` - билд проекта
+- `npm run lint` - проверка проекта eslint'ом
+- `npm run lint:fix` - проверка проекта и автоисправление ошибок eslint'ом
+- `npm run lint:style` - проверка проекта stylelint'ом
+- `npm run lint:style:fix` - проверка проекта и автоисправление ошибок stylelint'ом
 
 Ссылка на netlify: https://yandex-chat-qurtik.netlify.app/  
 Ссылка на репозиторий: https://github.com/Qurtik/middle.messenger.praktikum.yandex/tree/sprint_1  

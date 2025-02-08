@@ -74,10 +74,9 @@ export default class App {
 		} else {
 			throw new Error("Коневой эмент не найден");
 		}
-
+		
 		console.log(`App element from constructor,`, this.appElement);
 
-		// const testHttp = new http;
 	}
 
 	public toggleModal(IdModal: string) {
