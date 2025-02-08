@@ -11,7 +11,7 @@
 - `npm run lint:style:fix` - проверка проекта и автоисправление ошибок stylelint'ом
 
 Ссылка на netlify: https://yandex-chat-qurtik.netlify.app/  
-Ссылка на репозиторий: https://github.com/Qurtik/middle.messenger.praktikum.yandex/tree/sprint_1  
+Ссылка на репозиторий: https://github.com/Qurtik/middle.messenger.praktikum.yandex/tree/main
 Ссылка на UI: https://www.figma.com/design/Yl9h5DIsHMqazC7frvAaCN/Chat_practicum?node-id=0-1&t=VeZFeG7mKu4lVo5a-1  
 
 <!-- ## Как пользоваться: -->
