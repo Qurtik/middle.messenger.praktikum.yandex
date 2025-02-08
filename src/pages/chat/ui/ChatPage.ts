@@ -14,8 +14,8 @@ export default class ChatPage extends Block {
 		super({
 			...props,
 			class: "chat-page",
-			LeftMenu: new LeftMenu({...props}),
-			Chat: new Chat({...props})
+			LeftMenu: new LeftMenu({ ...props }),
+			Chat: new Chat({ ...props }),
 		});
 	}
 

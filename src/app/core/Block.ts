@@ -16,10 +16,15 @@ export default class Block {
 	};
 
 	protected _element: HTMLElement | null = null;
+
 	protected props: IBlockProps;
+
 	protected children: Record<string, Block>;
+
 	private _id: string = crypto.randomUUID();
+
 	protected lists: Record<string, any[]>;
+
 	protected eventBus: () => EventBus;
 
 	constructor(propsAndChild: IBlockProps = {}) {
@@ -43,7 +48,9 @@ export default class Block {
 			if (this._element) {
 				if (this._element.tagName === "DIV" && eventName === "blur") {
 					const innerInput = this._element.querySelector("input");
-					innerInput.addEventListener(eventName, events[eventName]);
+					if (!!innerInput) {
+						innerInput.addEventListener(eventName, events[eventName]);
+					}
 				} else {
 					this._element.addEventListener(eventName, events[eventName]);
 				}
@@ -85,7 +92,7 @@ export default class Block {
 	}
 
 	// Может переопределять пользователь, необязательно трогать
-	protected componentDidUpdate(oldProps, newProps) {
+	protected componentDidUpdate(oldProps: IBlockProps, newProps: IBlockProps) {
 		console.log(oldProps);
 		console.log(newProps);
 		return true;
@@ -230,7 +237,7 @@ export default class Block {
 				}
 			},
 			deleteProperty(target: IBlockProps, prop: string) {
-				throw new Error(`Нет доступа для удаления параметра ${prop}`);
+				throw new Error(`Нет доступа для удаления параметра ${target[prop]}`);
 			},
 		});
 	}

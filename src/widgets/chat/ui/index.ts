@@ -8,35 +8,44 @@ interface IProps {
 }
 
 export default class Chat extends Block {
+	private _fieldRules: Record<string, INPUT_RULES[]>;
+
 	constructor(props: IProps) {
+		const fieldRules = {
+			email: [INPUT_RULES.EMAIL],
+			password: [INPUT_RULES.PASSWORD],
+		};
 		super({
 			...props,
 			// FIXME:
 			Avatar: new Avatar({
-				userName:"Владислав"
+				userName: "Владислав",
 			}),
 			MessageInput: new Input({
 				label: "Собщение",
 				name: "message",
 				class: "chat-main__message-input text-field-size-block",
 				onBlur: (e) => {
-					const input = e.target;
-					const rules = fieldRules[input.name];
-					props.AppInstance.isValidate(input, rules);
+					const input = e.target as HTMLInputElement;
+					if (input && input.name === undefined) {
+						const rules = this._fieldRules[input.name];
+						if (props) {
+							props.AppInstance.isValidate(input, rules);
+						}
+					}
 				},
 			}),
 			SendMsgBtn: new Button({
 				text: "Отправить",
 				class: "chat-main__message-send",
 				onClick: () => {
-					console.log(props.AppInstance.submit("chat-main-form", fieldRules));
+					console.log(props.AppInstance.submit("chat-main-form", this._fieldRules));
 				},
 			}),
 		});
-		const fieldRules = {
-			email: [INPUT_RULES.MESSAGE],
-		};
+		this._fieldRules = fieldRules;
 	}
+
 	protected override render(): string {
 		return `
 		<form id="chat-main-form">

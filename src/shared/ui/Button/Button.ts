@@ -2,7 +2,6 @@ import Block from "@/app/core";
 import "./Button.pcss";
 
 interface IProps {
-	
 	id?: string;
 	class?: string;
 	onClick?: any;
@@ -16,13 +15,13 @@ export default class Button extends Block {
 			// text: "No label",
 			...props,
 			events: {
-				click: (e) => {
+				click: (e: Event) => {
 					e.preventDefault();
 					e.stopPropagation();
-					
+
 					if (!!props.onClick) {
 						console.log("props.onClick");
-						console.log(props.onClick)
+						console.log(props.onClick);
 						console.log(e);
 						props.onClick(e);
 					}

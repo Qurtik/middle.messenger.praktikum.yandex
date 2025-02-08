@@ -119,7 +119,7 @@ export default class ProfilePage extends Block {
 	}
 
 	private _uploadAvatar() {
-		const avatarUpload: HTMLElement = document.querySelector(".avatar-upload");
+		const avatarUpload: HTMLElement = document.querySelector(".avatar-upload")!;
 		avatarUpload.click();
 	}
 

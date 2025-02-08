@@ -9,10 +9,18 @@ interface IProps {
 	Card?: Block | Block[];
 	Body?: Block | Block[];
 	Actions?: Block | Block[];
+	onBlur?: (event: Event) => void;
 }
 
 export class AuthPage extends Block {
+	private _fieldRules: Record<string, INPUT_RULES[]>;
+
 	constructor(props?: IProps) {
+		const fieldRules = {
+			email: [INPUT_RULES.EMAIL],
+			password: [INPUT_RULES.PASSWORD],
+		};
+
 		super({
 			...props,
 			Card: new Card({
@@ -23,30 +31,37 @@ export class AuthPage extends Block {
 						label: "Почта",
 						name: "email",
 						value: "vladislav.selezov@yandex.ru",
-						onBlur: () => {
-							const input = e.target;
-							const rules = fieldRules[input.name];
-							props.AppInstance.isValidate(input, rules);
+						onBlur: (e) => {
+							const input = e.target as HTMLInputElement;
+							if (input && input.name === undefined) {
+								const rules = this._fieldRules[input.name];
+								if (props) {
+									props.AppInstance.isValidate(input, rules);
+								}
+							}
 						},
 					}),
 					new Input({
 						label: "Пароль",
 						name: "password",
 						required: true,
-						onBlur: (e: HTMLElement) => {
-							const input = e.target;
-							const rules = fieldRules[input.name];
-
-							// const isValid = this.isValidate(input.value, rules);
-							props.AppInstance.isValidate(input, rules);
-							// this.setInputValidity(input, isValid);
+						onBlur: (e) => {
+							const input = e.target as HTMLInputElement;
+							if (input && input.name === undefined) {
+								const rules = this._fieldRules[input.name];
+								if (props) {
+									props.AppInstance.isValidate(input, rules);
+								}
+							}
 						},
 					}),
 				],
 				Actions: [
 					new Button({
 						onClick: () => {
-							props.AppInstance.submit("auth-page-form", fieldRules);
+							if (props) {
+								props.AppInstance.submit("auth-page-form", this._fieldRules);
+							}
 							// props.AppInstance.changePage(PAGES.CHAT);
 							// const form = document.getElementById("auth-page-form") as HTMLFormElement;
 							// form.submit();
@@ -56,7 +71,9 @@ export class AuthPage extends Block {
 					}),
 					new Button({
 						onClick: () => {
-							props.AppInstance.changePage(PAGES.REGISTRATION);
+							if (props) {
+								props.AppInstance.changePage(PAGES.REGISTRATION);
+							}
 						},
 						text: "Зарегистрироваться",
 						class: "goToRegisterBtn",
@@ -64,10 +81,7 @@ export class AuthPage extends Block {
 				],
 			}),
 		});
-		const fieldRules = {
-			email: [INPUT_RULES.EMAIL],
-			password: [INPUT_RULES.PASSWORD],
-		};
+		this._fieldRules = fieldRules;
 	}
 
 	// public setInputValidity(el: HTMLElement, isValid: boolean): void {

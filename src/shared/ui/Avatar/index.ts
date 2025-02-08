@@ -12,7 +12,7 @@ export default class Avatar extends Block {
 		super({
 			...props,
 			events: {
-				click: (e) => {
+				click: (e: Event) => {
 					if (!!props.onClick) {
 						props.onClick(e);
 					}
@@ -22,6 +22,7 @@ export default class Avatar extends Block {
 			},
 		});
 	}
+
 	protected override render(): string {
 		return `
 		<div class="profile-title profile-page__profile-title">

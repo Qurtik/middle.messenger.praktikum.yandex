@@ -23,17 +23,29 @@ const enum METHODS {
 // 	// код
 // }
 
+interface IRequestOptions {
+	[key: string]: unknown;
+	timeout?: number;
+	headers?: {
+		[key: string]: string;
+	};
+	method?: METHODS;
+}
+
 export default class HTTPTransport {
-	get = (url, options = {}) => {
+	get = (url: string, options: IRequestOptions = {}) => {
 		return this.fetchWithRetry(url, { ...options, method: METHODS.GET }, options.timeout);
 	};
-	post = (url, options = {}) => {
+
+	post = (url: string, options: IRequestOptions = {}) => {
 		return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
 	};
-	put = (url, options = {}) => {
+
+	put = (url: string, options: IRequestOptions = {}) => {
 		return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
 	};
-	delete = (url, options = {}) => {
+
+	delete = (url: string, options: IRequestOptions = {}) => {
 		return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
 	};
 
@@ -42,7 +54,7 @@ export default class HTTPTransport {
 	// options:
 	// headers — obj
 	// data — obj
-	request = (url, options, timeout = 5000) => {
+	request = (url: string, options: IRequestOptions, timeout = 5000) => {
 		const { method, data, headers = {} } = options;
 
 		const promise = new Promise((resolve, reject) => {
@@ -52,10 +64,10 @@ export default class HTTPTransport {
 
 			// 2. Настраиваем его: GET-запрос по URL
 			xhr.open(
-				method,
+				method as string,
 				isGet && !!data
 					? this._urlWithParams(url, data) // Добавить url с параметрами
-					: url
+					: url,
 			);
 
 			Object.keys(headers).forEach((key) => {
@@ -86,7 +98,7 @@ export default class HTTPTransport {
 				resolve(xhr);
 			};
 
-			const handleError = (err) => {
+			const handleError = (err: object) => {
 				console.log(err);
 				reject(err);
 			};
@@ -96,17 +108,17 @@ export default class HTTPTransport {
 			xhr.ontimeout = handleError;
 		});
 
-		const { tries = 0 } = options;
+		// const { tries = 0 } = options;
 
-		return promise
-			.then((resolve) => {
-				return resolve;
-			})
-			.catch((err) => {
-				if (tries !== 0) {
-					fetchWithRetry(this);
-				} else return err;
-			});
+		return promise;
+		// .then((resolve) => {
+		// 	return resolve;
+		// })
+		// .catch((err) => {
+		// 	if (tries !== 0) {
+		// 		fetchWithRetry(this);
+		// 	} else return err;
+		// });
 
 		// return promise;
 	};
@@ -153,13 +165,8 @@ export default class HTTPTransport {
 	// 	return url + params;
 	// }
 
-	private async fetchWithRetry(url: string, options, timeout: number) {
+	private async fetchWithRetry(url: string, options: IRequestOptions, timeout?: number) {
 		await this.request(url, options, timeout);
-		// new Proxy(this.request,{
-		// 	get(target, prop){
-		// 		console.log(target)
-		// 	}
-		// })
 	}
 }
 

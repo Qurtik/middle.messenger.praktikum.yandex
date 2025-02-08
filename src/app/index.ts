@@ -10,13 +10,11 @@ import "../pages/auth/ui/AuthPage.pcss";
 import RegistrationPage from "../pages/register";
 import "../pages/register/ui/RegistrationPage.pcss";
 
-import { NotFoundPage, ServerErrorPage } from "../pages/System";
+// import { NotFoundPage, ServerErrorPage } from "../pages/System";
 import "../pages/System/404/ui/NotFoundPage.pcss";
 import "../pages/System/505/ui/ServerErrorPage.pcss";
 
 // import { http } from "../shared/api";
-
-
 
 interface IUserData {
 	email: string;
@@ -36,6 +34,7 @@ export const enum PAGES {
 	SERVER_ERROR = "serverErrorPage",
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const enum INPUT_RULES {
 	EMAIL = "^[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9_\\-\\.]+\\.[a-zA-Z]+$",
 	PASSWORD = "^(?=.*[A-Z])(?=.*\\d).{8,40}$",
@@ -54,6 +53,7 @@ interface IState {
 
 export default class App {
 	state: IState;
+
 	appElement: HTMLElement;
 
 	constructor() {
@@ -69,7 +69,12 @@ export default class App {
 			},
 		};
 
-		this.appElement = document.querySelector("#app");
+		if (this.appElement !== null) {
+			this.appElement = document.querySelector("#app")!;
+		} else {
+			throw new Error("Коневой эмент не найден");
+		}
+
 		console.log(`App element from constructor,`, this.appElement);
 
 		// const testHttp = new http;
@@ -77,7 +82,9 @@ export default class App {
 
 	public toggleModal(IdModal: string) {
 		const modal = document.getElementById(IdModal);
-		modal.classList.toggle("modal_active");
+		if (!!modal) {
+			modal.classList.toggle("modal_active");
+		}
 	}
 
 	public changePage(pageName: PAGES): void {
@@ -87,8 +94,6 @@ export default class App {
 	}
 
 	public render() {
-		let template;
-
 		if (this.state.currentPage === PAGES.CHAT) {
 			const page = new ChatPage({ AppInstance: this });
 			this.appElement.replaceChildren(page.getContent());
@@ -101,13 +106,14 @@ export default class App {
 		} else if (this.state.currentPage === PAGES.REGISTRATION) {
 			const page = new RegistrationPage({ AppInstance: this });
 			this.appElement.replaceChildren(page.getContent());
-		} else if (this.state.currentPage === PAGES.NOT_FOUND) {
-			template = Handlebars.compile(NotFoundPage);
-			this.appElement.innerHTML = template();
-		} else if (this.state.currentPage === PAGES.SERVER_ERROR) {
-			template = Handlebars.compile(ServerErrorPage);
-			this.appElement.innerHTML = template();
 		}
+		// else if (this.state.currentPage === PAGES.NOT_FOUND) {
+		// 	template = Handlebars.compile(NotFoundPage);
+		// 	this.appElement.innerHTML = template();
+		// } else if (this.state.currentPage === PAGES.SERVER_ERROR) {
+		// 	template = Handlebars.compile(ServerErrorPage);
+		// 	this.appElement.innerHTML = template();
+		// }
 	}
 
 	public setInputValidity(el: HTMLElement, isValid: boolean): void {
@@ -122,7 +128,7 @@ export default class App {
 		if (!rules) {
 			return true;
 		}
-		
+
 		const value = el.value;
 		for (const rule of rules) {
 			const regex = new RegExp(rule);
@@ -139,32 +145,36 @@ export default class App {
 	public submit(idForm: string, formRules?: any): void {
 		const applicantForm = document.getElementById(idForm);
 		console.log(applicantForm);
-		const formFields = applicantForm.querySelectorAll("input");
 
-		const formResult = {};
+		if (applicantForm) {
+			const formFields = applicantForm.querySelectorAll("input");
+			const formResult: Record<string, string> = {};
 
-		let isFormValid: boolean = true;
-		formFields.forEach((element) => {
-			const inputValue = element.value;
-			const inputName = element.name;
-			formResult[inputName] = inputValue;
+			let isFormValid: boolean = true;
+			formFields.forEach((element) => {
+				const inputValue = element.value;
+				const inputName = element.name;
+				formResult[inputName] = inputValue;
 
-			if (!!formRules) {
-				const rules: INPUT_RULES[] = formRules[inputName];
-				const result = this.isValidate(element, rules);
-				this.setInputValidity(element, result);
+				if (!!formRules) {
+					const rules: INPUT_RULES[] = formRules[inputName];
+					const result = this.isValidate(element, rules);
+					this.setInputValidity(element, result);
 
-				if (!result) {
-					isFormValid = false;
+					if (!result) {
+						isFormValid = false;
+					}
 				}
-			}
-		});
+			});
 
-		if (isFormValid) {
-			console.log("formResult");
-			console.log(formResult);
-			console.log("SUBMITED");
-			// applicantForm.submit();
+			if (isFormValid) {
+				console.log("formResult");
+				console.log(formResult);
+				console.log("SUBMITED");
+				// applicantForm.submit();
+			}
+		} else {
+			throw new Error(`Form не найден по ид ${idForm}`);
 		}
 	}
 }

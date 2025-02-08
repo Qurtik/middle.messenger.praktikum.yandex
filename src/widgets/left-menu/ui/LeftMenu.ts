@@ -16,16 +16,16 @@ import MessageCard from "@/entities/Chat";
 
 interface IProps {
 	AppInstance: App;
-	class: string;
-	Chats: Block | Block[];
-	MessageCard: Block;
-	ProfileBtn: Block | Block[];
-	Actions: Block | Block[];
+	class?: string;
+	Chats?: Block | Block[];
+	MessageCard?: Block;
+	ProfileBtn?: Block | Block[];
+	Actions?: Block | Block[];
 	Modal?: Block | Block[];
 }
 
 export default class LeftMenu extends Block {
-	constructor(props?: Partial<IProps>) {
+	constructor(props: IProps) {
 		super({
 			...props,
 			class: "left-menu",
@@ -33,24 +33,23 @@ export default class LeftMenu extends Block {
 				text: "Профиль",
 				class: "btn goToProfileBtn",
 				onClick: () => {
-					props.AppInstance.changePage(PAGES.PROFILE)
-				}
+					props.AppInstance.changePage(PAGES.PROFILE);
+				},
 			}),
-			MessageCard: new MessageCard({
-			}),
+			MessageCard: new MessageCard({}),
 			Actions: [
 				new Button({
 					text: "Добавить пользователя",
 					class: "btn_bg_color_green btn_size_s",
 					onClick: () => {
-						this.toggleModal("addNewsUserToChat");
+						props.AppInstance.toggleModal("addNewsUserToChat");
 					},
 				}),
 				new Button({
 					text: "Удалить пользователя",
 					class: "btn_bg_color_red btn_size_s",
 					onClick: () => {
-						this.toggleModal("deleteUserFromChat");
+						props.AppInstance.toggleModal("deleteUserFromChat");
 					},
 				}),
 			],
@@ -74,7 +73,7 @@ export default class LeftMenu extends Block {
 							text: "Закрыть",
 							class: "modal__footer-btn",
 							onClick: () => {
-								this.toggleModal("addNewsUserToChat");
+								props.AppInstance.toggleModal("addNewsUserToChat");
 							},
 						}),
 					],
@@ -97,7 +96,7 @@ export default class LeftMenu extends Block {
 							text: "Закрыть",
 							class: "modal__footer-btn",
 							onClick: () => {
-								this.toggleModal("deleteUserFromChat");
+								props.AppInstance.toggleModal("deleteUserFromChat");
 							},
 						}),
 					],
@@ -105,10 +104,11 @@ export default class LeftMenu extends Block {
 			],
 		});
 	}
-	toggleModal(IdModal) {
-		const modal = document.getElementById(IdModal);
-		modal.classList.toggle("modal_active");
-	}
+
+	// toggleModal(IdModal:string) {
+	// 	const modal = document.getElementById(IdModal);
+	// 	modal.classList.toggle("modal_active");
+	// }
 
 	protected override render(): string {
 		return `

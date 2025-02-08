@@ -14,9 +14,9 @@ interface IProps {
 
 export default class Modal extends Block {
 	constructor(props: IProps) {
-		showCloseBtn: false;
+		// showCloseBtn: false;
 		super({
-			...props
+			...props,
 		});
 		console.log("Modal rendered");
 	}

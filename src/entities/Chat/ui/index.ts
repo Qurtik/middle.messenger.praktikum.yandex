@@ -1,12 +1,13 @@
 import Block from "@/app/core";
-import "./MessageCard.pcss"
+import "./MessageCard.pcss";
 
-export default class MessageCard extends Block{
-	constructor(props){
+interface IProps {}
+
+export default class MessageCard extends Block {
+	constructor(props: IProps) {
 		super({
 			...props,
-
-		})
+		});
 	}
 
 	protected override render(): string {

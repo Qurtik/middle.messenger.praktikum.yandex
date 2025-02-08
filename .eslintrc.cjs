@@ -17,7 +17,7 @@ module.exports = {
 	],
 	plugins: ["@typescript-eslint", "@stylistic/eslint-plugin-ts"],
 	extends: [
-		// "airbnb-typescript",
+		"airbnb-typescript",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
 		// "plugin:@stylistic/eslint-plugin-ts",
@@ -29,6 +29,8 @@ module.exports = {
 	},
 	rules: {
 		// "@stylistic/ts/indent": ["error", "tab"],
+		"@typescript-eslint/quotes":"off",
+		"@typescript-eslint/indent":"off",
 		"react/jsx-filename-extension": "off",
 		"import/extensions": "off",
 		"import/no-extraneous-dependencies": "off",
