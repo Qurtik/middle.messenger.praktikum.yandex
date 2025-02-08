@@ -1,7 +1,11 @@
 import App, { INPUT_RULES } from "@/app";
 import Block from "@/app/core";
 import "./Chat.pcss";
-import { Avatar, Button, Input } from "@/shared/ui";
+import {
+	// Avatar,
+	Button,
+	Input,
+} from "@/shared/ui";
 
 interface IProps {
 	AppInstance: App;
@@ -18,9 +22,9 @@ export default class Chat extends Block {
 		super({
 			...props,
 			// FIXME:
-			Avatar: new Avatar({
-				userName: "Владислав",
-			}),
+			// Avatar: new Avatar({
+			// 	userName: "Владислав",
+			// }),
 			MessageInput: new Input({
 				label: "Собщение",
 				name: "message",
