@@ -1,13 +1,11 @@
 import Handlebars from "handlebars";
-import EventBus from "./event-bus";
-
-type EventCallback = (...args: any[]) => void;
+import EventBus, { type EventCallback } from "./event-bus";
 
 interface IBlockProps {
 	[key: string]: any;
 }
 
-export default class Block {
+export default abstract class Block {
 	static EVENTS = {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
@@ -40,6 +38,15 @@ export default class Block {
 		this._registerEvents(eventBus);
 
 		eventBus.emit(Block.EVENTS.INIT);
+	}
+
+	private _removeEvents(): void {
+		const { events = {} } = this.props;
+		Object.keys(events).forEach((eventName) => {
+			if (events[eventName]) {
+				this._element?.removeEventListener(eventName, events[eventName]);
+			}
+		});
 	}
 
 	private _addEvents(): void {
@@ -193,6 +200,9 @@ export default class Block {
 		if (this._element && newElement) {
 			this._element.replaceWith(newElement);
 		}
+		this._removeEvents();
+		// console.log("this._element");
+		// console.log(this._element);
 		this._element = newElement;
 		this._addEvents();
 		this.addAttributes();
