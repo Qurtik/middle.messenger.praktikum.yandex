@@ -31,7 +31,7 @@ export default class Chat extends Block {
 				class: "chat-main__message-input text-field-size-block",
 				onBlur: (e) => {
 					const input = e.target as HTMLInputElement;
-					if (input && input.name === undefined) {
+					if (input && input.name !== undefined) {
 						const rules = this._fieldRules[input.name];
 						if (props) {
 							props.AppInstance.isValidate(input, rules);

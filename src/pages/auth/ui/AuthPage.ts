@@ -31,9 +31,10 @@ export class AuthPage extends Block {
 						label: "Почта",
 						name: "email",
 						value: "vladislav.selezov@yandex.ru",
+						errorText: "Введите корретный email",
 						onBlur: (e) => {
 							const input = e.target as HTMLInputElement;
-							if (input && input.name === undefined) {
+							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
 								if (props) {
 									props.AppInstance.isValidate(input, rules);
@@ -44,10 +45,12 @@ export class AuthPage extends Block {
 					new Input({
 						label: "Пароль",
 						name: "password",
+						errorText:
+							"Пароль состоит из 3-8 симоволов, минимум 1 цифра, минимум 1 заглавная буква",
 						required: true,
 						onBlur: (e) => {
 							const input = e.target as HTMLInputElement;
-							if (input && input.name === undefined) {
+							if (!!input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
 								if (props) {
 									props.AppInstance.isValidate(input, rules);

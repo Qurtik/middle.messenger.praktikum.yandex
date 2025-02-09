@@ -58,7 +58,7 @@ export default class App {
 
 	constructor() {
 		this.state = {
-			currentPage: PAGES.CHAT,
+			currentPage: PAGES.AUTH,
 			userData: {
 				email: "vladislav@yandex.ru",
 				login: "svladislav",
@@ -74,9 +74,8 @@ export default class App {
 		} else {
 			throw new Error("Коневой эмент не найден");
 		}
-		
-		console.log(`App element from constructor,`, this.appElement);
 
+		console.log(`App element from constructor,`, this.appElement);
 	}
 
 	public toggleModal(IdModal: string) {
@@ -116,10 +115,15 @@ export default class App {
 	}
 
 	public setInputValidity(el: HTMLElement, isValid: boolean): void {
+		const parent: HTMLElement = el.parentElement!;
+		const errorDescription = parent.querySelector(".input-error-description");
+
 		if (isValid) {
 			el.style.borderColor = "green";
+			errorDescription?.classList.remove("input-error-description-active");
 		} else {
 			el.style.borderColor = "red";
+			errorDescription?.classList.add("input-error-description-active");
 		}
 	}
 

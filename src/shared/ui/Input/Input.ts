@@ -8,11 +8,13 @@ interface IProps {
 	value?: string;
 	class?: string;
 	placeholder?: string;
+	errorText?: string;
 	required?: boolean;
 	readonly?: boolean;
 	onBlur?: (event: Event) => void;
 }
 
+// FIXME: Исправить отображение span, убрать выход за пределы div'a
 export default class Input extends Block {
 	constructor(props: IProps) {
 		super({
@@ -34,6 +36,7 @@ export default class Input extends Block {
 			<div class="{{class}} text-field">
 				<input class="text-field__input" {{readonly}} {{required}} type="text" name="{{name}}" id="{{name}}" placeholder="{{placeholder}}" value="{{value}}"/>
 				<label class="text-field__label" for="{{name}}">{{label}}</label>
+				<span class="input-error-description text-field__input-error-description">{{errorText}}</span>
 			</div>
 		`;
 	}
