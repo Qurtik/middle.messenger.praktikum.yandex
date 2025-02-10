@@ -1,10 +1,8 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
-// import handlebars from "vite-plugin-handlebars";
 import { fileURLToPath } from "url";
 
 export default defineConfig({
-	//   root: resolve(__dirname, "src"),
 	build: {
 		rollupOptions: {
 			input: {
@@ -20,6 +18,6 @@ export default defineConfig({
 		alias: {
 			"@": fileURLToPath(new URL("./src", import.meta.url)),
 		},
-		extensions: [".js"],
+		extensions: [".js", ".ts", "*.hbs?raw"],
 	},
 });

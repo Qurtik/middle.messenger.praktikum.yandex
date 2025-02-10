@@ -1,17 +1,16 @@
 :root {
-  --primary-color: #8a2be2;
-  --secondary-color: #2c3e50;
-  --background-color: #8856bb1d;
-
-  --text-color: #666666;
-  --background-btn-color: #f0f8ff;
-
-  --error-color: #e74c3c;
-  --success-color: #81c784;
-  /* --info-color: #81c784; */
-  --warning-color: #FFD150;
-  --border-color: #eaeaea;
-  --light-red-color: #ffab91;
+	--primary-color: #8a2be2;
+	--secondary-color: #2c3e50;
+	--background-color: #8856bb1d;
+	--text-color: #666;
+	--background-btn-color: #f0f8ff;
+	--error-color: #e74c3c;
+	--success-color: #81c784;
+	
+	/* --info-color: #81c784; */
+	--warning-color: #ffd150;
+	--border-color: #eaeaea;
+	--light-red-color: #ffab91;
 }
 
 html,
@@ -28,79 +27,83 @@ body {
 
 #app {
 	height: 100vh;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 }
 
 .profile__link {
-	outline: none;
-	border-radius: 50px;
-	font-size: 14px;
-	color: var(--primary-color);
 	background-color: var(--background-color);
+	border-radius: 50px;
+	color: var(--primary-color);
+	font-size: 14px;
+	outline: none;
 }
+
 .profile__link:hover {
-	transition: all 0.2s;
 	box-shadow: 0 7px 14px rgb(65 132 144 / 50%), 0 3px 6px rgb(0 0 0 / 58%);
+	transition: all 0.2s;
 }
+
 .profile__link:active {
 	background-color: #adadde;
 }
 
 .avatar-image {
 	background-color: gray;
-	width: 50px;
-	height: 50px;
 	border-radius: 50%;
+	height: 50px;
 	object-fit: cover;
+	width: 50px;
 }
 
 .search-field {
-	position: relative;
-	outline: none;
-	border-style: hidden;
-	text-align: center;
-	display: block;
-	width: 90%;
-	margin-top: 15px;
-	margin-left: 12px;
-	height: calc(2rem + 2px);
-	padding: 0.375rem 0.75rem;
-	font-family: inherit;
-	font-size: 1rem;
-	font-weight: 400;
-	line-height: 1.5;
 	background-clip: padding-box;
 	border: 1px solid var(--primary-color);
 	border-radius: 0.25rem;
+	border-style: hidden;
+	display: block;
+	font-family: inherit;
+	font-size: 1rem;
+	font-weight: 400;
+	height: calc(2rem + 2px);
+	line-height: 1.5;
+	margin-left: 12px;
+	margin-top: 15px;
+	outline: none;
+	padding: 0.375rem 0.75rem;
+	position: relative;
+	text-align: center;
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	width: 90%;
 }
 
 .main-color {
 	color: var(--primary-color);
 }
-.error-color {
-	color: var(--error-color)
-}
 
+.error-color {
+	color: var(--error-color);
+}
 
 .search-field:hover {
 	border-color: var(--primary-color);
 }
+
 .search-field:focus {
-	transition: border 0.2s ease-in-out;
 	border: 2px solid var(--primary-color);
+	transition: border 0.2s ease-in-out;
 }
 
 /* установим отступ 1rem от нижнего края элемента */
 .left-menu__search-field {
-	padding: 12px;
 	margin-bottom: 1rem;
+	padding: 12px;
 }
 
-.bg_color_green{
+.bg_color_green {
 	background-color: var(--success-color);
 }
-.bg_color_red{
+
+.bg_color_red {
 	background-color: var(--error-color);
 }
