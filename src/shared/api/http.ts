@@ -32,32 +32,29 @@ interface IRequestOptions {
 	method?: METHODS;
 }
 
+type HTTPMethod = (url: string, options?: IRequestOptions) => Promise<XMLHttpRequest>;
+
 export default class HTTPTransport {
-	get = (url: string, options: IRequestOptions = {}) => {
-		return this.fetchWithRetry(url, { ...options, method: METHODS.GET }, options.timeout);
+	get: HTTPMethod = (url, options = {}) => {
+		return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
 	};
 
-	post = (url: string, options: IRequestOptions = {}) => {
+	post: HTTPMethod = (url, options = {}) => {
 		return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
 	};
 
-	put = (url: string, options: IRequestOptions = {}) => {
+	put: HTTPMethod = (url, options = {}) => {
 		return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
 	};
 
-	delete = (url: string, options: IRequestOptions = {}) => {
+	delete: HTTPMethod = (url, options = {}) => {
 		return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
 	};
 
-	// PUT, POST, DELETE
-
-	// options:
-	// headers — obj
-	// data — obj
-	request = (url: string, options: IRequestOptions, timeout = 5000) => {
+	request = (url: string, options: IRequestOptions, timeout = 5000): Promise<XMLHttpRequest> => {
 		const { method, data, headers = {} } = options;
 
-		const promise = new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			// 1. Создаём новый XMLHttpRequest-объект
 			const xhr = new XMLHttpRequest();
 			const isGet = method === METHODS.GET;
@@ -109,8 +106,6 @@ export default class HTTPTransport {
 		});
 
 		// const { tries = 0 } = options;
-
-		return promise;
 		// .then((resolve) => {
 		// 	return resolve;
 		// })
@@ -165,9 +160,9 @@ export default class HTTPTransport {
 	// 	return url + params;
 	// }
 
-	private async fetchWithRetry(url: string, options: IRequestOptions, timeout?: number) {
-		await this.request(url, options, timeout);
-	}
+	// private async fetchWithRetry(url: string, options: IRequestOptions, timeout?: number) {
+	// 	await this.request(url, options, timeout);
+	// }
 }
 
 // const testMethod = new HTTPTransport();
