@@ -1,13 +1,15 @@
 import Block from "@/app/core";
+import { IEvents } from "@/shared/types";
 
 interface IProps {
 	id?: string;
 	class?: string;
 	onClick?: any;
 	userName?: string;
+	events?: IEvents
 }
 
-export default class Avatar extends Block {
+export default class Avatar extends Block<IProps> {
 	constructor(props: IProps) {
 		super({
 			...props,

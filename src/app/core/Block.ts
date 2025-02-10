@@ -5,7 +5,7 @@ interface IBlockProps {
 	[key: string]: any;
 }
 
-export default abstract class Block {
+export default abstract class Block<Props extends Record<string, any> = Record<string, any>> {
 	static EVENTS = {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
@@ -15,7 +15,7 @@ export default abstract class Block {
 
 	protected _element: HTMLElement | null = null;
 
-	protected props: IBlockProps;
+	protected props: Props;
 
 	protected children: Record<string, Block>;
 
@@ -25,12 +25,12 @@ export default abstract class Block {
 
 	protected eventBus: () => EventBus;
 
-	constructor(propsAndChild: IBlockProps = {}) {
+	constructor(propsAndChild: Props = {} as Props) {
 		const eventBus = new EventBus();
 
 		const { props, children, lists } = this._getPropsAndChildren(propsAndChild);
 
-		this.props = this._makePropsProxy({ ...props });
+		this.props = this._makePropsProxy({ ...props }) as Props;
 		this.children = children;
 		this.lists = this._makePropsProxy({ ...lists });
 
@@ -138,7 +138,7 @@ export default abstract class Block {
 		});
 	}
 
-	public setProps = (nextProps: Record<string, unknown>): void => {
+	public setProps = (nextProps: Partial<Props>): void => {
 		if (!nextProps) {
 			return;
 		}
@@ -159,7 +159,7 @@ export default abstract class Block {
 	}
 
 	_render() {
-		const propsAndStubs = { ...this.props };
+		const propsAndStubs: Record<string, any> = { ...(this.props as Record<string, any>) };
 		const tmpId = crypto.randomUUID();
 
 		Object.entries(this.children).forEach(([key, child]) => {

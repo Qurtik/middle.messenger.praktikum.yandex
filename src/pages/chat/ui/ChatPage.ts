@@ -7,9 +7,12 @@ import LeftMenu from "@/widgets/left-menu";
 
 interface IProps {
 	AppInstance: App;
+	class?: string;
+	LeftMenu?: Block;
+	Chat?: Block;
 }
 
-export default class ChatPage extends Block {
+export default class ChatPage extends Block<IProps> {
 	constructor(props: IProps) {
 		super({
 			...props,

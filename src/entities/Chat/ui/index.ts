@@ -3,7 +3,7 @@ import "./MessageCard.pcss";
 
 interface IProps {}
 
-export default class MessageCard extends Block {
+export default class MessageCard extends Block<IProps> {
 	constructor(props: IProps) {
 		super({
 			...props,

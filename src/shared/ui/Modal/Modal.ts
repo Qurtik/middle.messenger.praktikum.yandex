@@ -12,7 +12,7 @@ interface IProps {
 	// showCloseBtn: boolean;
 }
 
-export default class Modal extends Block {
+export default class Modal extends Block<IProps> {
 	constructor(props: IProps) {
 		// showCloseBtn: false;
 		super({

@@ -5,14 +5,14 @@ import Block from "@/app/core/Block";
 import { Card, Input, Button } from "@/shared/ui";
 
 interface IProps {
-	AppInstance: App;
+	AppInstance?: App;
 	Card?: Block | Block[];
 	Body?: Block | Block[];
 	Actions?: Block | Block[];
 	onBlur?: (event: Event) => void;
 }
 
-export class AuthPage extends Block {
+export class AuthPage extends Block<IProps> {
 	private _fieldRules: Record<string, INPUT_RULES[]>;
 
 	constructor(props?: IProps) {
@@ -36,7 +36,7 @@ export class AuthPage extends Block {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
+								if (props && props.AppInstance) {
 									props.AppInstance.isValidate(input, rules);
 								}
 							}
@@ -52,7 +52,7 @@ export class AuthPage extends Block {
 							const input = e.target as HTMLInputElement;
 							if (!!input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
+								if (props && props.AppInstance) {
 									props.AppInstance.isValidate(input, rules);
 								}
 							}
@@ -62,7 +62,7 @@ export class AuthPage extends Block {
 				Actions: [
 					new Button({
 						onClick: () => {
-							if (props) {
+							if (props && props.AppInstance) {
 								props.AppInstance.submit("auth-page-form", this._fieldRules);
 							}
 							// props.AppInstance.changePage(PAGES.CHAT);
@@ -74,7 +74,7 @@ export class AuthPage extends Block {
 					}),
 					new Button({
 						onClick: () => {
-							if (props) {
+							if (props && props.AppInstance) {
 								props.AppInstance.changePage(PAGES.REGISTRATION);
 							}
 						},

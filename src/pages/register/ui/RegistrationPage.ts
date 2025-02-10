@@ -8,7 +8,7 @@ interface IProps {
 	Card?: Block;
 }
 
-export default class RegistrationPage extends Block {
+export default class RegistrationPage extends Block<IProps> {
 	private _fieldRules: Record<string, INPUT_RULES[]>;
 
 	constructor(props: IProps) {

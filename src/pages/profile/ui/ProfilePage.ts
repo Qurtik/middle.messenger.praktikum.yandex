@@ -4,13 +4,16 @@ import { Avatar, Button, Input, Modal } from "@/shared/ui";
 
 interface IProps {
 	AppInstance: App;
+	class?: string;
+	Header?: Block | Block[];
 	Body?: Block | Block[];
 	Actions?: Block | Block[];
+	Modal?: Block | Block[];
 	Avatar?: Block;
 	BtnBack?: Block;
 }
 
-export default class ProfilePage extends Block {
+export default class ProfilePage extends Block<IProps> {
 	constructor(props: IProps) {
 		super({
 			...props,

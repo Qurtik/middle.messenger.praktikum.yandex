@@ -1,14 +1,16 @@
 import Block from "@/app/core";
 import "./Button.pcss";
+import { IEvents } from "@/shared/types";
 
 interface IProps {
 	id?: string;
 	class?: string;
 	onClick?: any;
 	text?: string;
+	events?: IEvents
 }
 
-export default class Button extends Block {
+export default class Button extends Block<IProps> {
 	constructor(props: IProps) {
 		super({
 			// Defaul values

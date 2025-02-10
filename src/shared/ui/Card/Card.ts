@@ -2,14 +2,14 @@ import Block from "@/app/core";
 import "./Card.pcss";
 
 interface IProps {
-	title: string;
-	class: string;
-	Body: Block[];
-	Actions: Block[];
+	title?: string;
+	class?: string;
+	Body?: Block[];
+	Actions?: Block[];
 }
 
-export default class Card extends Block {
-	constructor(props: Partial<IProps>) {
+export default class Card extends Block<IProps> {
+	constructor(props: IProps) {
 		super({
 			...props,
 		});
