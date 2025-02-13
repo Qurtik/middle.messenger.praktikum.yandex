@@ -25,7 +25,7 @@ export default class Avatar extends Block<IProps> {
 		});
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<div class="profile-title profile-page__profile-title">
 			<img src="/img/avatar_default.jpg" alt="Avatar" class="avatar-image avatar-image_icon_big">

@@ -1,6 +1,9 @@
-import App, { INPUT_RULES } from "@/app";
+import App from "@/app";
 import Block from "@/app/core";
+import { INPUT_RULES, isValidate, submit } from "@/shared/lib/validate";
 import { Card, Input, Button } from "@/shared/ui";
+
+import "./RegistrationPage.pcss";
 
 interface IProps {
 	AppInstance: App;
@@ -34,9 +37,9 @@ export default class RegistrationPage extends Block<IProps> {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+									isValidate(input, rules);
+								// }
 							}
 						},
 					}),
@@ -48,9 +51,9 @@ export default class RegistrationPage extends Block<IProps> {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+									isValidate(input, rules);
+								// }
 							}
 						},
 					}),
@@ -63,9 +66,9 @@ export default class RegistrationPage extends Block<IProps> {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+									isValidate(input, rules);
+								// }
 							}
 						},
 					}),
@@ -78,9 +81,9 @@ export default class RegistrationPage extends Block<IProps> {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+									isValidate(input, rules);
+								// }
 							}
 						},
 					}),
@@ -92,9 +95,9 @@ export default class RegistrationPage extends Block<IProps> {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+									isValidate(input, rules);
+								// }
 							}
 						},
 					}),
@@ -106,9 +109,9 @@ export default class RegistrationPage extends Block<IProps> {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+									isValidate(input, rules);
+								// }
 							}
 						},
 					}),
@@ -122,7 +125,7 @@ export default class RegistrationPage extends Block<IProps> {
 						class: "goToChatsBtn",
 						text: "Зарегистрироваться",
 						onClick: () => {
-							props.AppInstance.submit("register-page-form", fieldRules);
+							submit("register-page-form", fieldRules);
 							// props.AppInstance.changePage(PAGES.CHAT)
 						},
 					}),
@@ -132,7 +135,7 @@ export default class RegistrationPage extends Block<IProps> {
 		this._fieldRules = fieldRules;
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<form id="register-page-form">
 			<div class="{{class}}">

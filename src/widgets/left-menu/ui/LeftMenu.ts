@@ -33,7 +33,7 @@ export default class LeftMenu extends Block {
 				text: "Профиль",
 				class: "btn goToProfileBtn",
 				onClick: () => {
-					props.AppInstance.changePage(PAGES.PROFILE);
+					// props.AppInstance.changePage(PAGES.PROFILE);
 				},
 			}),
 			MessageCard: new MessageCard({}),
@@ -110,7 +110,7 @@ export default class LeftMenu extends Block {
 	// 	modal.classList.toggle("modal_active");
 	// }
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<div class="{{class}}">
 			<div class="{{class}}__header">

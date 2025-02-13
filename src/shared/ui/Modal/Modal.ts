@@ -35,7 +35,7 @@ export default class Modal extends Block<IProps> {
 	// 				{{> ModalButton idModal=id type="img" src="close" class="modal__title-close-btn"}}
 	// 			{{/if}}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 			<div id="{{id}}" class="modal {{class}}">
 				<div class="modal__shadow"></div>

@@ -1,4 +1,4 @@
-import App, { INPUT_RULES } from "@/app";
+import App from "@/app";
 import Block from "@/app/core";
 import "./Chat.pcss";
 import {
@@ -6,6 +6,7 @@ import {
 	Button,
 	Input,
 } from "@/shared/ui";
+import { INPUT_RULES, isValidate, submit } from "@/shared/lib/validate";
 
 interface IProps {
 	AppInstance: App;
@@ -34,7 +35,7 @@ export default class Chat extends Block {
 					if (input && input.name !== undefined) {
 						const rules = this._fieldRules[input.name];
 						if (props) {
-							props.AppInstance.isValidate(input, rules);
+							isValidate(input, rules);
 						}
 					}
 				},
@@ -43,14 +44,14 @@ export default class Chat extends Block {
 				text: "Отправить",
 				class: "chat-main__message-send",
 				onClick: () => {
-					console.log(props.AppInstance.submit("chat-main-form", this._fieldRules));
+					console.log(submit("chat-main-form", this._fieldRules));
 				},
 			}),
 		});
 		this._fieldRules = fieldRules;
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<form id="chat-main-form">
 			<div class="chat-main">

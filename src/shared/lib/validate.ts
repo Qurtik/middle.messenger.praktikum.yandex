@@ -1,0 +1,77 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const enum INPUT_RULES {
+	EMAIL = "^[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9_\\-\\.]+\\.[a-zA-Z]+$",
+	PASSWORD = "^(?=.*[A-Z])(?=.*\\d).{8,40}$",
+	LOGIN = "^(?=.*[a-zA-Z])[a-zA-Z0-9_\\-]{3,20}$",
+	FIRST_NAME = "^[A-ZА-Я][a-zа-яё\\-]*$",
+	// eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+	SECOND_NAME = "^[A-ZА-Я][a-zа-яё\\-]*$",
+	PHONE = "^\\+?\\d{10,15}$",
+	MESSAGE = "^\\s*\\S.*+$",
+}
+
+export function setInputValidity(el: HTMLElement, isValid: boolean): void {
+		const parent: HTMLElement = el.parentElement!;
+		const errorDescription = parent.querySelector(".input-error-description");
+
+		if (isValid) {
+			el.style.borderColor = "green";
+			errorDescription?.classList.remove("input-error-description-active");
+		} else {
+			el.style.borderColor = "red";
+			errorDescription?.classList.add("input-error-description-active");
+		}
+	}
+
+	export function isValidate(el: HTMLInputElement, rules: INPUT_RULES[]): boolean {
+		if (!rules) {
+			return true;
+		}
+
+		const value = el.value;
+		for (const rule of rules) {
+			const regex = new RegExp(rule);
+			const isValid = regex.test(value);
+
+			setInputValidity(el, isValid);
+			if (!isValid) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	export function submit(idForm: string, formRules?: any): void {
+		const applicantForm = document.getElementById(idForm);
+		console.log(applicantForm);
+
+		if (applicantForm) {
+			const formFields = applicantForm.querySelectorAll("input");
+			const formResult: Record<string, string> = {};
+
+			let isFormValid: boolean = true;
+			formFields.forEach((element) => {
+				const inputValue = element.value;
+				const inputName = element.name;
+				formResult[inputName] = inputValue;
+
+				if (!!formRules) {
+					const rules: INPUT_RULES[] = formRules[inputName];
+					const result = isValidate(element, rules);
+					setInputValidity(element, result);
+
+					if (!result) {
+						isFormValid = false;
+					}
+				}
+			});
+
+			if (isFormValid) {
+				console.log("formResult");
+				console.log(formResult);
+				console.log("SUBMITED");
+			}
+		} else {
+			throw new Error(`Form не найден по ид ${idForm}`);
+		}
+	}

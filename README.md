@@ -14,6 +14,8 @@
 Ссылка на репозиторий: https://github.com/Qurtik/middle.messenger.praktikum.yandex/tree/main
 Ссылка на UI: https://www.figma.com/design/Yl9h5DIsHMqazC7frvAaCN/Chat_practicum?node-id=0-1&t=VeZFeG7mKu4lVo5a-1  
 
+
+<!-- Конфигурация линтеров https://habr.com/ru/companies/ruvds/articles/428173/ -->
 <!-- ## Как пользоваться: -->
 <!-- 1. Зарегистрироваться в приложении -->
 <!-- Скрин страницы регистрации -->

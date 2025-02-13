@@ -209,7 +209,7 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 	}
 
 	// Может переопределять пользователь, необязательно трогать
-	protected render(): string {
+	public render(): string {
 		return "";
 	}
 
@@ -257,18 +257,25 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 		return document.createElement(tagName) as HTMLTemplateElement;
 	}
 
-	public show(): void {
+	public show(query: string): void {
+		console.log("Show from Block");
+		console.log("query");
+		console.log(query);
 		const content = this.getContent();
 		if (content) {
-			content.style.display = "block";
+			document.querySelector(query)?.replaceChildren(content);
+			// content.style.display = "block";
+		} else {
+			throw new Error("No content to render");
 		}
 	}
 
 	hide() {
+		console.log("Hide from Block");
 		// this._element.style.display = "none";
-		const content = this.getContent();
-		if (content) {
-			content.style.display = "none";
-		}
+		// const content = this.getContent();
+		// if (content) {
+		// content.style.display = "none";
+		// }
 	}
 }

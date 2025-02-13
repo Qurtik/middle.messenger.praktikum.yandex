@@ -15,7 +15,7 @@ export default class Card extends Block<IProps> {
 		});
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<div class="{{class}}">
 			<div class="card card__{{class}}">

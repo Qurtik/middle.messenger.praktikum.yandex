@@ -1,6 +1,8 @@
-import App, { PAGES } from "@/app";
+import App from "@/app";
 import Block from "@/app/core";
 import { Avatar, Button, Input, Modal } from "@/shared/ui";
+
+import "./ProfilePage.pcss";
 
 interface IProps {
 	AppInstance: App;
@@ -81,7 +83,7 @@ export default class ProfilePage extends Block<IProps> {
 				class: "goToChatsBtn ",
 				text: "Вернуться",
 				onClick: () => {
-					props.AppInstance.changePage(PAGES.CHAT);
+					// props.AppInstance.changePage(PAGES.CHAT);
 				},
 			}),
 			Modal: [
@@ -126,7 +128,7 @@ export default class ProfilePage extends Block<IProps> {
 		avatarUpload.click();
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<div class="{{class}}">
 			{{{Header}}}

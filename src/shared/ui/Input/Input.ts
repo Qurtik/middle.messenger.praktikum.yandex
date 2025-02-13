@@ -31,7 +31,7 @@ export default class Input extends Block<IProps> {
 		});
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 			<div class="{{class}} text-field">
 				<input class="text-field__input" {{#if readonly}}readonly{{/if}} {{#if required}}required{{/if}} type="text" name="{{name}}" id="{{name}}" placeholder="{{placeholder}}" value="{{value}}"/>

@@ -5,6 +5,8 @@ import Chat from "@/widgets/chat";
 import LeftMenu from "@/widgets/left-menu";
 // import "../widgets/left-menu/ui/LeftMenu.pcss";
 
+import "./ChatPage.pcss";
+
 interface IProps {
 	AppInstance: App;
 	class?: string;
@@ -22,7 +24,7 @@ export default class ChatPage extends Block<IProps> {
 		});
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<div class="{{class}}">
 			{{{LeftMenu}}}

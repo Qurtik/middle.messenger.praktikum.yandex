@@ -32,7 +32,7 @@ export default class Button extends Block<IProps> {
 		});
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 			<button id="{{id}}" class="btn {{class}}">{{text}}</button>
 		`;
