@@ -5,6 +5,30 @@ const enum METHODS {
 	DELETE = "DELETE",
 }
 
+export class BaseApi {
+	// private _baseUrl: string;
+
+	// constructor(baseUrl: string) {
+	// 	this._baseUrl = baseUrl;
+	// }
+
+	create(): Promise<any> {
+		throw new Error("Not implemented");
+	}
+
+	request() {
+		throw new Error("Not implemented");
+	}
+
+	update() {
+		throw new Error("Not implemented");
+	}
+
+	delete() {
+		throw new Error("Not implemented");
+	}
+}
+
 /**
  * Функцию реализовывать здесь необязательно, но может помочь не плодить логику у GET-метода
  * На входе: объект. Пример: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
@@ -32,26 +56,45 @@ interface IRequestOptions {
 	method?: METHODS;
 }
 
-type HTTPMethod = (url: string, options?: IRequestOptions) => Promise<XMLHttpRequest>;
+// type HTTPMethod = (url: string, options?: IRequestOptions) => Promise<XMLHttpRequest>;
+type HTTPMethod<T> = (url: string, options?: IRequestOptions) => Promise<T>;
 
-export default class HTTPTransport {
-	get: HTTPMethod = (url, options = {}) => {
-		return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+export default class HTTPTransport<T> {
+	constructor(private _baseUrl: string) {}
+
+	get: HTTPMethod<T> = (url, options = {}) => {
+		return this.request(
+			`${this._baseUrl}${url}`,
+			{ ...options, method: METHODS.GET },
+			options.timeout,
+		);
 	};
 
-	post: HTTPMethod = (url, options = {}) => {
-		return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+	post: HTTPMethod<T> = (url, options = {}) => {
+		return this.request(
+			`${this._baseUrl}${url}`,
+			{ ...options, method: METHODS.POST },
+			options.timeout,
+		);
 	};
 
-	put: HTTPMethod = (url, options = {}) => {
-		return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+	put: HTTPMethod<T> = (url, options = {}) => {
+		return this.request(
+			`${this._baseUrl}${url}`,
+			{ ...options, method: METHODS.PUT },
+			options.timeout,
+		);
 	};
 
-	delete: HTTPMethod = (url, options = {}) => {
-		return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+	delete: HTTPMethod<T> = (url, options = {}) => {
+		return this.request(
+			`${this._baseUrl}${url}`,
+			{ ...options, method: METHODS.DELETE },
+			options.timeout,
+		);
 	};
 
-	request = (url: string, options: IRequestOptions, timeout = 5000): Promise<XMLHttpRequest> => {
+	request = (url: string, options: IRequestOptions, timeout = 5000): Promise<T> => {
 		const { method, data, headers = {} } = options;
 
 		return new Promise((resolve, reject) => {
@@ -67,16 +110,21 @@ export default class HTTPTransport {
 					: url,
 			);
 
+			xhr.withCredentials = true;
+			xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+
 			Object.keys(headers).forEach((key) => {
 				xhr.setRequestHeader(key, headers[key]);
 			});
 
 			// 3. Отсылаем запрос
 			if (!isGet && data) {
-				const form = new FormData();
+				// const form = new FormData();
 				const formData = JSON.stringify(data);
-				form.append("data", formData);
-				xhr.send(form);
+				// form.append("data", formData);
+
+				// form.append("data", formData);
+				xhr.send(formData);
 			} else {
 				xhr.send();
 			}
@@ -92,7 +140,14 @@ export default class HTTPTransport {
 					// если всё прошло гладко, выводим результат
 					console.log(`Ответ успешно получен`);
 				}
-				resolve(xhr);
+
+				const response = xhr.response;
+
+				try {
+					resolve(JSON.parse(response));
+				} catch (err) {
+					resolve(response);
+				}
 			};
 
 			const handleError = (err: object) => {
