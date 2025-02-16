@@ -10,7 +10,7 @@ export default class MessageCard extends Block<IProps> {
 		});
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<div class="message-card">
 			<div class="message-card__avatar">

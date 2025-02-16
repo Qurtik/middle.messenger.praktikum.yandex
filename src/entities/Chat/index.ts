@@ -1,3 +1,5 @@
+import * as chatApi from "./api";
+import useChat from "./model";
 import MessageCard from "./ui";
 
-export default MessageCard;
+export { MessageCard, useChat, chatApi };
