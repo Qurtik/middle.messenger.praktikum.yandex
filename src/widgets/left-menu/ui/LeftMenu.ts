@@ -1,8 +1,8 @@
-import App, { PAGES } from "@/app";
+import App from "@/app";
 import Block from "@/app/core";
 import "./LeftMenu.pcss";
 import { Button, Input, Modal } from "@/shared/ui";
-import MessageCard from "@/entities/Chat";
+import { MessageCard } from "@/entities/Chat";
 
 // import Handlebars from "handlebars";
 
