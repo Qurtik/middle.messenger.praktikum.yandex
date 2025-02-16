@@ -99,9 +99,10 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 	}
 
 	// Может переопределять пользователь, необязательно трогать
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	protected componentDidUpdate(oldProps: IBlockProps, newProps: IBlockProps) {
-		console.log(oldProps);
-		console.log(newProps);
+		// console.log(oldProps);
+		// console.log(newProps);
 		return true;
 	}
 
@@ -259,8 +260,8 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 
 	public show(query: string): void {
 		console.log("Show from Block");
-		console.log("query");
-		console.log(query);
+		// console.log("query");
+		// console.log(query);
 		const content = this.getContent();
 		if (content) {
 			document.querySelector(query)?.replaceChildren(content);
