@@ -11,67 +11,73 @@ export const enum INPUT_RULES {
 }
 
 export function setInputValidity(el: HTMLElement, isValid: boolean): void {
-		const parent: HTMLElement = el.parentElement!;
-		const errorDescription = parent.querySelector(".input-error-description");
+	const parent: HTMLElement = el.parentElement!;
+	const errorDescription = parent.querySelector(".input-error-description");
 
-		if (isValid) {
-			el.style.borderColor = "green";
-			errorDescription?.classList.remove("input-error-description-active");
-		} else {
-			el.style.borderColor = "red";
-			errorDescription?.classList.add("input-error-description-active");
-		}
+	if (isValid) {
+		el.style.borderColor = "green";
+		errorDescription?.classList.remove("input-error-description-active");
+	} else {
+		el.style.borderColor = "red";
+		errorDescription?.classList.add("input-error-description-active");
 	}
+}
 
-	export function isValidate(el: HTMLInputElement, rules: INPUT_RULES[]): boolean {
-		if (!rules) {
-			return true;
-		}
-
-		const value = el.value;
-		for (const rule of rules) {
-			const regex = new RegExp(rule);
-			const isValid = regex.test(value);
-
-			setInputValidity(el, isValid);
-			if (!isValid) {
-				return false;
-			}
-		}
+export function isValidate(el: HTMLInputElement, rules: INPUT_RULES[]): boolean {
+	if (!rules) {
 		return true;
 	}
 
-	export function submit(idForm: string, formRules?: any): void {
-		const applicantForm = document.getElementById(idForm);
-		console.log(applicantForm);
+	const value = el.value;
+	for (const rule of rules) {
+		const regex = new RegExp(rule);
+		const isValid = regex.test(value);
 
-		if (applicantForm) {
-			const formFields = applicantForm.querySelectorAll("input");
-			const formResult: Record<string, string> = {};
-
-			let isFormValid: boolean = true;
-			formFields.forEach((element) => {
-				const inputValue = element.value;
-				const inputName = element.name;
-				formResult[inputName] = inputValue;
-
-				if (!!formRules) {
-					const rules: INPUT_RULES[] = formRules[inputName];
-					const result = isValidate(element, rules);
-					setInputValidity(element, result);
-
-					if (!result) {
-						isFormValid = false;
-					}
-				}
-			});
-
-			if (isFormValid) {
-				console.log("formResult");
-				console.log(formResult);
-				console.log("SUBMITED");
-			}
-		} else {
-			throw new Error(`Form не найден по ид ${idForm}`);
+		setInputValidity(el, isValid);
+		if (!isValid) {
+			return false;
 		}
 	}
+	return true;
+}
+
+export function submit<T>(
+	idForm: string,
+	formRules?: any,
+	// callback?: (formResult: Record<string, string>, formRules: INPUT_RULES) => void,
+): T | boolean {
+	const applicantForm = document.getElementById(idForm);
+	console.log(applicantForm);
+
+	if (applicantForm) {
+		const formFields = applicantForm.querySelectorAll("input");
+		const formResult: Record<string, string> = {};
+
+		let isFormValid: boolean = true;
+		formFields.forEach((element) => {
+			const inputValue = element.value;
+			const inputName = element.name;
+			formResult[inputName] = inputValue;
+
+			if (!!formRules) {
+				const rules: INPUT_RULES[] = formRules[inputName];
+				const result = isValidate(element, rules);
+				setInputValidity(element, result);
+
+				if (!result) {
+					isFormValid = false;
+				}
+			}
+		});
+
+		if (isFormValid) {
+			console.log("formResult");
+			console.log(formResult);
+			console.log("SUBMITED");
+			return formResult as T;
+		}
+		return false;
+	} else {
+		throw new Error(`Form не найден по ид ${idForm}`);
+	}
+}
