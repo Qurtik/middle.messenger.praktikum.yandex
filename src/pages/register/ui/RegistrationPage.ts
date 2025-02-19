@@ -1,9 +1,16 @@
-import App from "@/app";
+import App, { PAGES } from "@/app";
 import Block from "@/app/core";
+import { Router } from "@/app/router";
 import { INPUT_RULES, isValidate, submit } from "@/shared/lib/validate";
 import { Card, Input, Button } from "@/shared/ui";
 
+import { useUser, type TRegisterUser } from "@/entities/User";
+
+const router = new Router();
+const user = new useUser();
+
 import "./RegistrationPage.pcss";
+import { connect } from "@/app/core/hoc";
 
 interface IProps {
 	AppInstance: App;
@@ -11,7 +18,9 @@ interface IProps {
 	Card?: Block;
 }
 
-export default class RegistrationPage extends Block<IProps> {
+const RegistrationPageState = connect(() => ({}));
+
+class RegistrationPageBase extends Block<IProps> {
 	private _fieldRules: Record<string, INPUT_RULES[]>;
 
 	constructor(props: IProps) {
@@ -38,7 +47,7 @@ export default class RegistrationPage extends Block<IProps> {
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
 								// if (props) {
-									isValidate(input, rules);
+								isValidate(input, rules);
 								// }
 							}
 						},
@@ -52,7 +61,7 @@ export default class RegistrationPage extends Block<IProps> {
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
 								// if (props) {
-									isValidate(input, rules);
+								isValidate(input, rules);
 								// }
 							}
 						},
@@ -67,7 +76,7 @@ export default class RegistrationPage extends Block<IProps> {
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
 								// if (props) {
-									isValidate(input, rules);
+								isValidate(input, rules);
 								// }
 							}
 						},
@@ -82,7 +91,7 @@ export default class RegistrationPage extends Block<IProps> {
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
 								// if (props) {
-									isValidate(input, rules);
+								isValidate(input, rules);
 								// }
 							}
 						},
@@ -96,7 +105,7 @@ export default class RegistrationPage extends Block<IProps> {
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
 								// if (props) {
-									isValidate(input, rules);
+								isValidate(input, rules);
 								// }
 							}
 						},
@@ -110,7 +119,7 @@ export default class RegistrationPage extends Block<IProps> {
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
 								// if (props) {
-									isValidate(input, rules);
+								isValidate(input, rules);
 								// }
 							}
 						},
@@ -124,9 +133,15 @@ export default class RegistrationPage extends Block<IProps> {
 					new Button({
 						class: "goToChatsBtn",
 						text: "Зарегистрироваться",
-						onClick: () => {
-							submit("register-page-form", fieldRules);
-							// props.AppInstance.changePage(PAGES.CHAT)
+						onClick: async () => {
+							const result = submit("register-page-form", this._fieldRules) as TRegisterUser;
+							if (result) {
+								const isRegister = await user.register(result);
+
+								if (isRegister) {
+									router.go(PAGES.CHAT);
+								}
+							}
 						},
 					}),
 				],
@@ -145,3 +160,5 @@ export default class RegistrationPage extends Block<IProps> {
 		`;
 	}
 }
+
+export default RegistrationPageState(RegistrationPageBase);
