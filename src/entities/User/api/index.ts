@@ -1,4 +1,5 @@
 import { BaseApi, http } from "@/shared/api";
+import { IUserProfile, TRegisterUser } from "../types";
 const userApiInstance = new http<any>("https://ya-praktikum.tech/api/v2");
 
 type TUser = {
@@ -11,11 +12,6 @@ type TUser = {
 	avatar: string;
 	email: string;
 };
-
-// interface IChatApi {
-// 	signIn: (data: { login: string; password: string }) => Promise<string | { reason: string }>;
-// 	getUserInfo: () => Promise<TUser>;
-// }
 
 export default class UserAPI extends BaseApi {
 	// Set user cookie
@@ -30,11 +26,62 @@ export default class UserAPI extends BaseApi {
 		}
 
 		return response;
-		// RouteManagement.go("/chats");
 	}
 
 	protected async getUserInfo(): Promise<TUser> {
 		const response = await userApiInstance.get("/auth/user");
+		
+		if ("reason" in response) {
+			throw new Error(response.reason);
+		}
+
+		return response;
+	}
+
+	protected async signUp(data: TRegisterUser): Promise<{ login: string; password: string }> {
+		const response = await userApiInstance.post("/auth/signup", { data });
+
+		if ("id" in response) {
+			return {
+				login: data.login,
+				password: data.password,
+			};
+		} else {
+			throw new Error(response.reason);
+		}
+	}
+
+	protected async logout(): Promise<boolean> {
+		// Используются куки
+		const response = await userApiInstance.post("/auth/logout");
+
+		if (response) {
+			return true;
+		}
+		return false;
+	}
+
+	protected async changePassword(data: {
+		oldPassword: string;
+		newPassword: string;
+	}): Promise<"OK" | { reason: string }> {
+		// try {
+		const response = await userApiInstance.put("/user/password", { data });
+
+		if ("reason" in response) {
+			throw new Error(response.reason);
+		}
+
+		return response;
+	}
+
+	protected async changeProfile(data: IUserProfile): Promise<"OK" | { reason: string }> {
+		const response = await userApiInstance.put("/user/profile", { data });
+
+		if ("reason" in response) {
+			throw new Error(response.reason);
+		}
+
 		return response;
 	}
 }

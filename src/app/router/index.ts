@@ -58,18 +58,13 @@ class Route implements IRoute {
 		return isEqual(pathname, this._pathname);
 	}
 
+	// Нормально ли каждый раз вызывать рендер блока?
 	public render(): void {
 		if (!this._block) {
-			console.log("Block Class: ", this._blockClass);
-
 			this._block = new this._blockClass();
 
-			console.log("this._block");
-			console.log(this._block);
 			// render(this._props.rootQuery, this._block);
-			console.log("render from route");
 			this._block?.render();
-			// return;
 		}
 
 		this._block.show(this._props.rootQuery);
@@ -114,6 +109,7 @@ export class Router<T extends { rootQuery?: string }> implements IRouter<T> {
 
 	public start(): void {
 		window.onpopstate = (event: Event) => {
+			console.log("onpopstate - Event:");
 			console.log(event);
 			this._onRoute(window.location.pathname);
 		};
@@ -128,15 +124,16 @@ export class Router<T extends { rootQuery?: string }> implements IRouter<T> {
 			return;
 		}
 
-		console.log("CurrentRoute");
-		console.log(route);
-
 		if (this._currentRoute) {
 			this._currentRoute.leave();
 		}
 
 		this._currentRoute = route;
 		route.render();
+	}
+
+	public beforeEach() {
+		
 	}
 
 	public go(pathname: string): void {

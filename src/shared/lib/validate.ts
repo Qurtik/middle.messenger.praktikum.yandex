@@ -41,22 +41,30 @@ export function isValidate(el: HTMLInputElement, rules: INPUT_RULES[]): boolean 
 	return true;
 }
 
-export function submit<T>(
+type FieldRules = Record<string, INPUT_RULES[]>;
+
+export function submit<T extends FieldRules>(
 	idForm: string,
-	formRules?: any,
+	formRules?: T,
 	// callback?: (formResult: Record<string, string>, formRules: INPUT_RULES) => void,
-): T | boolean {
+): { [K in keyof T]: string } | boolean {
 	const applicantForm = document.getElementById(idForm);
 	console.log(applicantForm);
 
 	if (applicantForm) {
 		const formFields = applicantForm.querySelectorAll("input");
 		const formResult: Record<string, string> = {};
+		console.log(formFields);
 
 		let isFormValid: boolean = true;
 		formFields.forEach((element) => {
 			const inputValue = element.value;
 			const inputName = element.name;
+
+			if (!inputName) {
+				return;
+			}
+
 			formResult[inputName] = inputValue;
 
 			if (!!formRules) {
@@ -74,7 +82,7 @@ export function submit<T>(
 			console.log("formResult");
 			console.log(formResult);
 			console.log("SUBMITED");
-			return formResult as T;
+			return formResult as { [K in keyof T]: string };
 		}
 		return false;
 	} else {

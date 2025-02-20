@@ -1,18 +1,14 @@
-import App from "@/app";
+import App, { PAGES } from "@/app";
+import { Router } from "@/app/router";
+
 import Block from "@/app/core";
 import "./LeftMenu.pcss";
 import { Button, Input, Modal } from "@/shared/ui";
 import { MessageCard } from "@/entities/Chat";
 
-// import Handlebars from "handlebars";
+const router = new Router();
 
-// Handlebars.registerHelper("times", function (n, block) {
-// 	let accum = "";
-// 	for (let i = 0; i < n; ++i) {
-// 		accum += block.fn(i); // Передаем индекс итерации в блок
-// 	}
-// 	return accum;
-// });
+// import Handlebars from "handlebars";
 
 interface IProps {
 	AppInstance: App;
@@ -34,6 +30,7 @@ export default class LeftMenu extends Block {
 				class: "btn goToProfileBtn",
 				onClick: () => {
 					// props.AppInstance.changePage(PAGES.PROFILE);
+					router.go(PAGES.PROFILE);
 				},
 			}),
 			MessageCard: new MessageCard({}),

@@ -1,41 +1,44 @@
-// import { Router } from "@/app/router";
-// const router = new Router();
-
 import store from "@/app/stores";
-
 import UserAPI from "../api";
+import { IUserProfile, TRegisterUser } from "../types";
 
 export default class User extends UserAPI {
+	state: { id: string; name: string };
+
 	public async isUserAuthorized(): Promise<boolean> {
 		// Проверка авторизован ли пользователь - локально
 		const { user } = store.getState();
-		if (user) {
+		if (user && "id" in user) {
 			console.log("Пользователь авторизован - локально");
 			return true;
 		} else {
-			// Если локальная проверка непрошла, отправляем запрос на сервер
-			const response = await this.getUserInfo();
-
-			if ("id" in response) {
-				console.log("Пользователь авторизован - запрос на сервер");
+			try {
+				await this.getUser();
 				return true;
+			} catch (error) {
+				return false;
 			}
-			return false;
+			// Если локальная проверка непрошла, отправляем запрос на сервер
+			// const response = await this.getUserInfo();
 		}
 	}
 
-	// async loginAsync(data: any): Promise<void> {
-	// 	try {
-	// 		const isSignedIn = await this.signIn(data);
-	// 		if (!!isSignedIn) {
-	// 			const userData = await this.getUserInfo();
-	// 			console.log(userData);
-	// 			store.set("user", userData);
-	// 		}
-	// 	} catch (err) {
-	// 		console.error("Ошибка при выполнеии запроса loginAsync", err);
-	// 	}
+	// public async getUser(): Promise<boolean> {
+	// 	const response = await
+	// 	return true;
 	// }
+
+	public async getUser(): Promise<boolean> {
+		try {
+			const userData = await this.getUserInfo();
+			store.set("user", userData);
+			console.log("Пользователь авторизован - запрос на сервер");
+
+			return true;
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
 
 	public async login(data: { login: string; password: string }): Promise<boolean> {
 		try {
@@ -45,45 +48,66 @@ export default class User extends UserAPI {
 				throw new Error("Authorization error: Invalid credentials");
 			}
 
-			const userData = await this.getUserInfo();
-			store.set("user", userData);
+			await this.getUser();
 
 			return true;
 		} catch (error) {
-			console.error("Login failed", error);
+			// console.error("Login failed", error);
 			throw new Error(error instanceof Error ? error.message : "Unknown authorization error");
 		}
 	}
 
-	// return new Promise((resolve, reject) => {
-	// 	this.signIn(data)
-	// 		.then((isSignedIn) => {
-	// 			console.log("isSignedIn");
-	// 			console.log(isSignedIn);
-	// 			if (isSignedIn === "OK") {
-	// 				// Данные передаются через cookies
-	// 				this.getUserInfo()
-	// 					.then((userData) => {
-	// 						console.log("GetUserInfo");
-	// 						console.log(userData);
-	// 						store.set("user", userData);
-	// 						setTimeout(() => {
-	// 							resolve(true);
-	// 						}, 2500);
-	// 					})
-	// 					.catch(() => {
-	// 						console.log("error");
-	// 						throw new Error("Ошибка авторизации");
-	// 					});
-	// 			} else {
-	// 				throw new Error("Ошибка авторизации");
-	// 			}
-	// 			// TODO: в чем разница если в промисе вернуть throw new Error или reject
-	// 		})
-	// 		.catch((err) => {
-	// 			console.error(err);
-	// 			reject(err);
-	// 		});
-	// });
-	// }
+	public async register(data: TRegisterUser): Promise<boolean> {
+		try {
+			// if (isUserAuthorized) {
+			await this.userLogout();
+			// }
+
+			const response = await this.signUp(data);
+			console.log("signUp response");
+			console.log(response);
+
+			if (response) {
+				await this.login(response);
+				return true;
+			}
+			return false;
+		} catch (error) {
+			alert(error);
+			throw new Error(error instanceof Error ? error.message : error);
+		}
+	}
+
+	public async userLogout() {
+		try {
+			if (await this.isUserAuthorized()) {
+				await this.logout();
+			}
+		} catch (error) {
+			throw new Error("Ошибка при выходе из системы");
+		}
+	}
+
+	public async userChangePassword(oldPassword: string, newPassword: string): Promise<boolean> {
+		try {
+			const data = { oldPassword, newPassword };
+			// return await this.changePassword(data);
+			await this.changePassword(data);
+			return true;
+		} catch (error) {
+			alert(error);
+			return false;
+		}
+	}
+
+	public async userChangeProfile(data: IUserProfile): Promise<boolean> {
+		try {
+			await this.changeProfile(data);
+			alert("Сохранено");
+			return true;
+		} catch (error) {
+			alert(error);
+			return false;
+		}
+	}
 }

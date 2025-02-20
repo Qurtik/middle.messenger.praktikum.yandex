@@ -22,9 +22,9 @@ export default class Button extends Block<IProps> {
 					e.stopPropagation();
 
 					if (!!props.onClick) {
-						console.log("props.onClick");
-						console.log(props.onClick);
-						console.log(e);
+						// console.log("props.onClick");
+						// console.log(props.onClick);
+						// console.log(e);
 						props.onClick(e);
 					}
 				},
@@ -34,7 +34,7 @@ export default class Button extends Block<IProps> {
 
 	override render(): string {
 		return `
-			<button id="{{id}}" class="btn {{class}}">{{text}}</button>
+			<button {{#if id}}id="{{id}}"{{/if}} class="btn {{class}}">{{text}}</button>
 		`;
 	}
 }

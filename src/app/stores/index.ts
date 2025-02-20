@@ -10,6 +10,7 @@ class Store extends EventBus {
 	private state: Record<string, any> = {};
 
 	public getState() {
+		console.log("State from main store:", this.state);
 		return this.state;
 	}
 

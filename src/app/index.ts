@@ -11,6 +11,11 @@ import RegistrationPage from "../pages/register";
 import "../pages/System/404/ui/NotFoundPage.pcss";
 import "../pages/System/505/ui/ServerErrorPage.pcss";
 
+import { useUser } from "@/entities/User";
+const user = new useUser();
+
+const router = new Router("#app");
+
 export enum PAGES {
 	DEFAULT = "/",
 	AUTH = "/auth",
@@ -21,14 +26,8 @@ export enum PAGES {
 	SERVER_ERROR = "serverErrorPage",
 }
 
-const router = new Router("#app");
-
-import { useUser } from "@/entities/User";
-const user = new useUser();
-
 export default class App {
 	// state: IState;
-
 	router: any;
 
 	public toggleModal(IdModal: string) {
@@ -38,13 +37,24 @@ export default class App {
 		}
 	}
 
-	private async init() {
+	public init() {
 		this.render();
 
-		const isUserAuthorized = await user.isUserAuthorized();
-		if (!isUserAuthorized) {
-			router.go(PAGES.AUTH);
-		}
+		// const isUserAuthorized = await user.isUserAuthorized();
+		// if (!isUserAuthorized) {
+		// 	router.go(PAGES.AUTH);
+		// }
+
+		user
+			.isUserAuthorized()
+			.then((isUserAuthorized) => {
+				if (!isUserAuthorized) {
+					router.go(PAGES.AUTH);
+				}
+			})
+			.catch(() => {
+				console.log("Пользователь не авторизован");
+			});
 	}
 
 	public render() {
