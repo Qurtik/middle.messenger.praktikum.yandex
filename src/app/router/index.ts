@@ -18,6 +18,7 @@ interface IRouter<T extends { rootQuery?: string }> {
 	back: () => void;
 	forward: () => void;
 	getRoute: (pathname: string) => Route | undefined;
+	getUrlParams: () => Record<string, string | number> 
 	// getRoute: (pathname: string) => Route<T> | undefined;
 }
 
@@ -132,9 +133,7 @@ export class Router<T extends { rootQuery?: string }> implements IRouter<T> {
 		route.render();
 	}
 
-	public beforeEach() {
-		
-	}
+	public beforeEach() {}
 
 	public go(pathname: string): void {
 		this.history.pushState({}, `Title ${pathname}`, pathname);
@@ -153,4 +152,19 @@ export class Router<T extends { rootQuery?: string }> implements IRouter<T> {
 	public getRoute(pathname: string): Route | undefined {
 		return this.routes.find((route) => route.match(pathname));
 	}
+
+	// public getUrlParams(): Record<string, string | number> {
+	// 	const result: Record<string, string | number> = {};
+	// 	const urlParts = window.location.pathname.split('/').filter(Boolean);
+
+	// 	for (let i = 0; i < urlParts.length; i += 2) {
+	// 		const key = urlParts[i];
+	// 		const value = urlParts[i + 1];
+	// 		if (key && value) {
+	// 				result[key] = isNaN(Number(value)) ? value : Number(value);
+	// 		}
+	// 	}
+
+	// 	return result;
+	// }
 }

@@ -30,10 +30,14 @@ export default class UserAPI extends BaseApi {
 
 	protected async getUserInfo(): Promise<TUser> {
 		const response = await userApiInstance.get("/auth/user");
-		
+
+		// console.log("GetUserInfo:", response);
+
 		if ("reason" in response) {
 			throw new Error(response.reason);
 		}
+
+		// console.log("No Error - getUserInfo");
 
 		return response;
 	}
@@ -77,6 +81,16 @@ export default class UserAPI extends BaseApi {
 
 	protected async changeProfile(data: IUserProfile): Promise<"OK" | { reason: string }> {
 		const response = await userApiInstance.put("/user/profile", { data });
+
+		if ("reason" in response) {
+			throw new Error(response.reason);
+		}
+
+		return response;
+	}
+
+	protected async changeAvatar(data): Promise<"OK" | { reason: string }> {
+		const response = await userApiInstance.put("/user/profile/avatar", { data });
 
 		if ("reason" in response) {
 			throw new Error(response.reason);

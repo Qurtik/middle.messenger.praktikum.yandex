@@ -1,4 +1,5 @@
 import Block from "@/app/core";
+import { connect } from "@/app/core/hoc";
 import { IEvents } from "@/shared/types";
 
 interface IProps {
@@ -6,10 +7,16 @@ interface IProps {
 	class?: string;
 	onClick?: any;
 	userName?: string;
-	events?: IEvents
+	events?: IEvents;
+	user: any;
+	avatarSrc: any;
 }
 
-export default class Avatar extends Block<IProps> {
+const mapStateToProps = (state) => ({
+	user: state.user,
+});
+
+class AvatarBase extends Block<IProps> {
 	constructor(props: IProps) {
 		super({
 			...props,
@@ -23,15 +30,28 @@ export default class Avatar extends Block<IProps> {
 				},
 			},
 		});
+		this._getAvatar();
+	}
+
+	private _getAvatar() {
+		console.log(this.props.user.avatar);
+
+		this.setProps({
+			// avatarSrc: this.props.user.avatar,
+			avatarSrc: "/img/avatar_default.jpg",
+		});
 	}
 
 	override render(): string {
 		return `
 		<div class="profile-title profile-page__profile-title">
-			<img src="/img/avatar_default.jpg" alt="Avatar" class="avatar-image avatar-image_icon_big">
+			<img src="{{avatarSrc}}" alt="Avatar" class="avatar-image avatar-image_icon_big">
 			<input type="file" class="avatar-upload" name="avatar" accept="image/*" style="display: none;">
 			<span class="avatar__label">{{userName}}</span>
 		</div>
 		`;
 	}
 }
+
+const AvatarState = connect(mapStateToProps)(AvatarBase);
+export default AvatarState;

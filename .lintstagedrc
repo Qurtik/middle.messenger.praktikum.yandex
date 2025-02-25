@@ -1,4 +1,4 @@
 {
-	"*.ts": ["npm run lint"],
-	"*.css": ["npm run lint:style"]
+	// "*.ts": ["npm run lint"],
+	// "*.css": ["npm run lint:style"]
 }

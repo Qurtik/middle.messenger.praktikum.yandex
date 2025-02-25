@@ -1,21 +1,27 @@
-import store from "@/app/stores";
+import store from "@/app/store";
 import UserAPI from "../api";
 import { IUserProfile, TRegisterUser } from "../types";
 
 export default class User extends UserAPI {
-	state: { id: string; name: string };
+	state = store.getState();
 
 	public async isUserAuthorized(): Promise<boolean> {
 		// Проверка авторизован ли пользователь - локально
 		const { user } = store.getState();
+		// console.log("user:", user);
+
 		if (user && "id" in user) {
-			console.log("Пользователь авторизован - локально");
+			// console.log("Пользователь авторизован - локально");
 			return true;
 		} else {
 			try {
+				// const response = 
 				await this.getUser();
+				// console.log("getUser-response=", response);
 				return true;
 			} catch (error) {
+				alert(error);
+				console.error(error);
 				return false;
 			}
 			// Если локальная проверка непрошла, отправляем запрос на сервер
@@ -59,13 +65,9 @@ export default class User extends UserAPI {
 
 	public async register(data: TRegisterUser): Promise<boolean> {
 		try {
-			// if (isUserAuthorized) {
 			await this.userLogout();
-			// }
 
 			const response = await this.signUp(data);
-			console.log("signUp response");
-			console.log(response);
 
 			if (response) {
 				await this.login(response);

@@ -1,4 +1,6 @@
 import Block from "@/app/core";
+import { connect } from "@/app/core/hoc";
+
 import "./TextField.pcss";
 import { IEvents } from "@/shared/types";
 
@@ -16,8 +18,12 @@ interface IProps {
 	onBlur?: (event: Event) => void;
 }
 
+const mapStateToProps = (state: any) => ({
+	user: state.user,
+});
+
 // FIXME: Исправить отображение span, убрать выход за пределы div'a
-export default class Input extends Block<IProps> {
+class InputBase extends Block<IProps> {
 	constructor(props: IProps) {
 		super({
 			...props,
@@ -29,7 +35,14 @@ export default class Input extends Block<IProps> {
 				},
 			},
 		});
+		// this.setNewValue();
 	}
+
+	// setNewValue() {
+	// 	this.setProps({
+	// 		value: "123",
+	// 	});
+	// }
 
 	override render(): string {
 		return `
@@ -41,3 +54,6 @@ export default class Input extends Block<IProps> {
 		`;
 	}
 }
+
+const InputState = connect(mapStateToProps)(InputBase);
+export default InputState;

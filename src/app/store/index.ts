@@ -1,4 +1,5 @@
 // import Block from "../core";
+import set from "@/shared/lib/set";
 import EventBus from "../core/event-bus";
 
 export enum StoreEvents {
@@ -10,8 +11,14 @@ class Store extends EventBus {
 	private state: Record<string, any> = {};
 
 	public getState() {
-		console.log("State from main store:", this.state);
+		// console.log("State from main store:", this.state);
 		return this.state;
+	}
+
+	public setMessages(path: string, value: any) {
+		set(this.state, path, value);
+
+		this.emit(StoreEvents.Updated);
 	}
 
 	public set(path: string, value: unknown) {

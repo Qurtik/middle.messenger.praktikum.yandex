@@ -140,6 +140,7 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 	}
 
 	public setProps = (nextProps: Partial<Props>): void => {
+		// console.log("SetProps:", nextProps);
 		if (!nextProps) {
 			return;
 		}
@@ -259,7 +260,7 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 	}
 
 	public show(query: string): void {
-		console.log("Show from Block");
+		// console.log("Show from Block");
 		// console.log("query");
 		// console.log(query);
 		const content = this.getContent();
@@ -272,7 +273,7 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 	}
 
 	hide() {
-		console.log("Hide from Block");
+		// console.log("Hide from Block");
 		// this._element.style.display = "none";
 		// const content = this.getContent();
 		// if (content) {

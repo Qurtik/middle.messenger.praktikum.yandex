@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+import store from "./store";
 import { Router } from "./router";
 
 import ChatPage from "../pages/chat";
@@ -30,38 +31,47 @@ export default class App {
 	// state: IState;
 	router: any;
 
-	public toggleModal(IdModal: string) {
-		const modal = document.getElementById(IdModal);
-		if (!!modal) {
-			modal.classList.toggle("modal_active");
+	// public toggleModal(IdModal: string) {
+	// 	const modal = document.getElementById(IdModal);
+	// 	if (!!modal) {
+	// 		modal.classList.toggle("modal_active");
+	// 	}
+	// }
+
+	public async init() {
+		// Создаем событие "updated" в шине
+		store.on("updated", () => {
+			console.log("STORE UPDATED");
+		});
+		// this.render();
+
+		const isUserAuthorized = await user.isUserAuthorized();
+		
+		if (!isUserAuthorized) {
+			router.use(PAGES.AUTH, AuthPage).start();
+			router.go(PAGES.AUTH);
 		}
-	}
 
-	public init() {
 		this.render();
-
-		// const isUserAuthorized = await user.isUserAuthorized();
-		// if (!isUserAuthorized) {
-		// 	router.go(PAGES.AUTH);
-		// }
-
-		user
-			.isUserAuthorized()
-			.then((isUserAuthorized) => {
-				if (!isUserAuthorized) {
-					router.go(PAGES.AUTH);
-				}
-			})
-			.catch(() => {
-				console.log("Пользователь не авторизован");
-			});
+ 
+		// user
+		// 	.isUserAuthorized()
+		// 	.then((isUserAuthorized) => {
+		// 		console.log("isUserAuthorized:", isUserAuthorized);
+		// 		if (!isUserAuthorized) {
+		// 			router.go(PAGES.AUTH);
+		// 		}
+		// 	})
+		// 	.catch(() => {
+		// 		console.log("Пользователь не авторизован");
+		// 	});
 	}
 
 	public render() {
 		// public init() {
 		router
 			.use(PAGES.DEFAULT, AuthPage)
-			.use(PAGES.AUTH, AuthPage)
+			// .use(PAGES.AUTH, AuthPage)
 			.use(PAGES.CHAT, ChatPage)
 			.use(PAGES.PROFILE, ProfilePage)
 			.use(PAGES.REGISTRATION, RegistrationPage)

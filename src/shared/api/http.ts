@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const enum METHODS {
 	GET = "GET",
 	POST = "POST",
@@ -12,19 +13,19 @@ export class BaseApi {
 	// 	this._baseUrl = baseUrl;
 	// }
 
-	create(): Promise<any> {
+	protected create(): Promise<any> {
 		throw new Error("Not implemented");
 	}
 
-	request() {
+	protected request() {
 		throw new Error("Not implemented");
 	}
 
-	update() {
+	protected update() {
 		throw new Error("Not implemented");
 	}
 
-	delete() {
+	protected delete() {
 		throw new Error("Not implemented");
 	}
 }
@@ -111,23 +112,34 @@ export default class HTTPTransport<T> {
 			);
 
 			xhr.withCredentials = true;
-			xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+			// xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
 
 			Object.keys(headers).forEach((key) => {
 				xhr.setRequestHeader(key, headers[key]);
 			});
 
-			// 3. Отсылаем запрос
-			if (!isGet && data) {
-				// const form = new FormData();
-				const formData = JSON.stringify(data);
-				// form.append("data", formData);
-
-				// form.append("data", formData);
-				xhr.send(formData);
-			} else {
+			if (isGet || !data) {
 				xhr.send();
+			} else if (data instanceof FormData) {
+				xhr.send(data);
+			} else {
+				xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+				xhr.send(JSON.stringify(data));
 			}
+
+			// 3. Отсылаем запрос
+			// if (!isGet && data) {
+			// 	// const form = new FormData();
+			// 	const formData = JSON.stringify(data);
+			// 	// form.append("data", formData);
+
+			// 	// form.append("data", formData);
+			// 	xhr.send(formData);
+			// } else {
+			// 	xhr.send();
+			// }
+
+			// if(data instanceof FormData){}
 
 			xhr.timeout = timeout;
 
@@ -138,7 +150,7 @@ export default class HTTPTransport<T> {
 					console.error(`Ошибка при получении ответа, ${xhr.status}: ${xhr.statusText}`);
 				} else {
 					// если всё прошло гладко, выводим результат
-					console.log(`Ответ успешно получен`);
+					// console.log(`Ответ успешно получен`);
 				}
 
 				const response = xhr.response;

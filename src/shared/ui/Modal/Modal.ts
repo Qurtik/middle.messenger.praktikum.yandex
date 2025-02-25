@@ -22,7 +22,7 @@ export default class Modal extends Block<IProps> {
 			...props,
 			idForm: `${props.id}-form`,
 		});
-		console.log("Modal rendered");
+		// console.log("Modal rendered");
 	}
 
 	// attachedEventListenerToggleModal(event) {

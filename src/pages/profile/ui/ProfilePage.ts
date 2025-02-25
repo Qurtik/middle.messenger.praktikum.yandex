@@ -15,6 +15,7 @@ import { INPUT_RULES, submit } from "@/shared/lib/validate";
 import { connect } from "@/app/core/hoc";
 const user = new useUser();
 
+
 // import store from "@/app/stores";
 
 // const u = new userStore();
@@ -38,33 +39,8 @@ const mapStateToProps = (state) => ({
 	user: state.user,
 });
 
-// const ProfilePageState = connect((state) => ({
-// 	user: state.user,
-// 	profileUserId: state.user,
-// 	// test: "testData",
-// 	userName: { name: "testUserName" },
-// }));
-
-// const userStore = store.getState();
-// console.log("userStore:", userStore);
-
-// const test = store.getState().user;
-
-// user
-// 	.getUser()
-// 	.then(() => {
-// 		console.log(user);
-// 	})
-// 	.catch(() => {});
-
-// console.log("ProfilePageState");
-// console.log(ProfilePageState);
-// console.log(ProfilePageState.user);
-
-// console.log("user", user);
-
 class ProfilePageBase extends Block<IProps> {
-	constructor(props: IProps, store: any) {
+	constructor(props: IProps) {
 		const fieldRulesChangePassword = {
 			oldPassword: [],
 			newPassword: [INPUT_RULES.PASSWORD],
@@ -79,15 +55,9 @@ class ProfilePageBase extends Block<IProps> {
 			phone: [INPUT_RULES.PHONE],
 		};
 
-		console.log("props:", { ...props });
-
 		super({
 			...props,
-			// ...store,
-			// currentStore: store,
 			class: "profile-page",
-			// testUser: "{{store}}",
-			title: props,
 			Header: [
 				new Avatar({
 					userName: "Владислав С.",
@@ -95,43 +65,54 @@ class ProfilePageBase extends Block<IProps> {
 						this._uploadAvatar();
 					},
 				}),
+				new Button({
+					text: "Сохранить",
+					onClick: () => {
+						const avatar: HTMLElement = document.querySelector(".avatar-upload").files[0];
+						console.log(avatar);
+						const formData = new FormData();
+						formData.append("avatar", avatar);
+						void user.changeAvatar(formData);
+					},
+				}),
 			],
 			Body: [
 				new Input({
+					...props,
 					name: "email",
 					label: "Почта",
-					value: "",
+					value: props.user.email,
 					// value: "vladislav@yandex.ru",
 					class: "profile-main__input",
 				}),
 				new Input({
 					name: "login",
 					label: "Логин",
-					value: props,
+					value: props.user.login,
 					class: "profile-main__input",
 				}),
 				new Input({
 					name: "first_name",
 					label: "Имя",
-					value: props.class,
+					value: props.user.first_name,
 					class: "profile-main__input",
 				}),
 				new Input({
 					name: "second_name",
 					label: "Фамилия",
-					value: "Селезов",
+					value: props.user.second_name,
 					class: "profile-main__input",
 				}),
 				new Input({
 					name: "display_name",
 					label: "Имя в чате",
-					value: "Владислав",
+					value: props.user.display_name,
 					class: "profile-main__input",
 				}),
 				new Input({
 					name: "phone",
 					label: "Телефон",
-					value: "+7 123 456 78 90",
+					value: props.user.phone,
 					class: "profile-main__input",
 				}),
 			],
@@ -151,7 +132,6 @@ class ProfilePageBase extends Block<IProps> {
 					text: "Изменить пароль",
 					class: "profile-page__action main-color",
 					onClick: () => {
-						// props.AppInstance.toggleModal("changePassword");
 						toggleModal("changePassword");
 					},
 				}),
@@ -174,7 +154,6 @@ class ProfilePageBase extends Block<IProps> {
 				class: "goToChatsBtn ",
 				text: "Вернуться",
 				onClick: () => {
-					// props.AppInstance.changePage(PAGES.CHAT);
 					router.go(PAGES.CHAT);
 				},
 			}),
@@ -187,7 +166,7 @@ class ProfilePageBase extends Block<IProps> {
 						new Input({
 							label: "Старый пароль",
 							name: "oldPassword",
-							value: "test",
+							value: "",
 						}),
 						new Input({
 							label: "Новый пароль",
@@ -224,7 +203,6 @@ class ProfilePageBase extends Block<IProps> {
 							text: "Закрыть",
 							class: "modal__footer-btn",
 							onClick: () => {
-								// props.AppInstance.toggleModal("changePassword");
 								toggleModal("changePassword");
 							},
 						}),
@@ -232,13 +210,20 @@ class ProfilePageBase extends Block<IProps> {
 				}),
 			],
 		});
-
-		this.CurrentStore = store;
-
-		console.log("this.currentStore", this.currentStore);
-		console.log("props2:", this.props);
-		// console.log("store.getState().profileUser", store.getState().profileUser);
+		// this.getUserData();
 	}
+
+	// private getUserData() {
+	// 	void user.getUser().then(() => {
+	// 		console.log("user.state", user.state.user.email);
+	// 		this.setProps({
+	// 			title: user.state, // chat.state.chats[0].id, //chats[0].id,
+	// 			email: "Email", //user.state.user.email,
+	// 		});
+	// 	});
+	// 	// console.log("getUserData this.props", this.props);
+	// 	// console.log(this.props);
+	// }
 
 	private _uploadAvatar() {
 		const avatarUpload: HTMLElement = document.querySelector(".avatar-upload")!;
@@ -246,12 +231,10 @@ class ProfilePageBase extends Block<IProps> {
 	}
 
 	override render(): string {
+		console.log("Render Props from ProfilePage", this.props.user);
 		return `
 		<form id="profile-page-form">
 			<div class="{{class}}">
-			<h1>title: {{title}}</h1>
-			user.state: {{user}} -- {{user.id}} -- test: {{test}}
-			</br> testUser -- {{{testUser}}}
 				{{{Header}}}
 				{{{Body}}}
 
