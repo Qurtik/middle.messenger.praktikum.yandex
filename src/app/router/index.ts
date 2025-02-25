@@ -18,11 +18,9 @@ interface IRouter<T extends { rootQuery?: string }> {
 	back: () => void;
 	forward: () => void;
 	getRoute: (pathname: string) => Route | undefined;
-	getUrlParams: () => Record<string, string | number> 
-	// getRoute: (pathname: string) => Route<T> | undefined;
 }
 
-type TBlockClass<T extends Record<string, any> = any> = new (props?: T) => Block<T>;
+type TBlockClass<T extends Record<string, any> = any> = new (props?: T) => Block;
 
 // class Route<T extends { rootQuery: string }> implements IRoute {
 class Route implements IRoute {

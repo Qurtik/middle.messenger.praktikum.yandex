@@ -20,7 +20,7 @@ interface IProps {
 
 const RegistrationPageState = connect(() => ({}));
 
-class RegistrationPageBase extends Block<IProps> {
+class RegistrationPageBase extends Block {
 	private _fieldRules: Record<string, INPUT_RULES[]>;
 
 	constructor(props: IProps) {
@@ -42,7 +42,7 @@ class RegistrationPageBase extends Block<IProps> {
 						label: "Почта",
 						name: "email",
 						errorText: "Введите корректный email",
-						onBlur: (e) => {
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
@@ -56,7 +56,7 @@ class RegistrationPageBase extends Block<IProps> {
 						label: "Логин",
 						name: "login",
 						errorText: "от 3 до 20 символов, без спецсимволов",
-						onBlur: (e) => {
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
@@ -71,7 +71,7 @@ class RegistrationPageBase extends Block<IProps> {
 						name: "first_name",
 						errorText:
 							"Латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов",
-						onBlur: (e) => {
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
@@ -86,7 +86,7 @@ class RegistrationPageBase extends Block<IProps> {
 						name: "second_name",
 						errorText:
 							"Латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов",
-						onBlur: (e) => {
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
@@ -100,7 +100,7 @@ class RegistrationPageBase extends Block<IProps> {
 						label: "Телефон",
 						name: "phone",
 						errorText: "от 10 до 15 символов, состоит из цифр, может начинается с плюса.",
-						onBlur: (e) => {
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
@@ -114,7 +114,7 @@ class RegistrationPageBase extends Block<IProps> {
 						label: "Пароль",
 						name: "password",
 						errorText: "от 8 до 40 символов, обязательно заглавная буква и цифра.",
-						onBlur: (e) => {
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];

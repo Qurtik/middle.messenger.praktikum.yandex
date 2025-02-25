@@ -10,7 +10,7 @@ interface IProps {
 	events?: IEvents
 }
 
-export default class Button extends Block<IProps> {
+export default class Button extends Block {
 	constructor(props: IProps) {
 		super({
 			// Defaul values

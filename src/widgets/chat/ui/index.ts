@@ -28,7 +28,7 @@ import store from "@/app/store";
 // console.log("user.state.user", user.state);
 // chat.connectToChat();
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
 	user: state.user,
 	chat: state.chats,
 	currentChat: state.currentChat,
@@ -54,7 +54,7 @@ class ChatBase extends Block {
 				label: "Собщение",
 				name: "message",
 				class: "chat-main__message-input text-field-size-block",
-				onBlur: (e) => {
+				onBlur: (e: Event) => {
 					const input = e.target as HTMLInputElement;
 					if (input && input.name !== undefined) {
 						const rules = this._fieldRules[input.name];
@@ -70,7 +70,8 @@ class ChatBase extends Block {
 				class: "chat-main__message-send",
 				onClick: () => {
 					// this.getMessages();
-					const { message } = submit("chat-main-form", this._fieldRules);
+					const result = submit("chat-main-form", this._fieldRules);
+					const message = result.message;
 
 					this.ws.addMessage(message);
 					// store.setMessages("currentChat.messages", message);
@@ -113,7 +114,7 @@ class ChatBase extends Block {
 		console.log("chat props", props);
 		console.log("store", store.getState());
 
-		const messagesList = messages.map((chatProps) => {
+		const messagesList = messages.map((chatProps: any) => {
 			return new MessageCard(chatProps);
 		});
 

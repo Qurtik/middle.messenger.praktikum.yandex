@@ -89,7 +89,7 @@ export default class UserAPI extends BaseApi {
 		return response;
 	}
 
-	protected async changeAvatar(data): Promise<"OK" | { reason: string }> {
+	public async changeAvatar(data: any): Promise<"OK" | { reason: string }> {
 		const response = await userApiInstance.put("/user/profile/avatar", { data });
 
 		if ("reason" in response) {

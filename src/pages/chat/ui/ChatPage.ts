@@ -18,12 +18,12 @@ interface IProps {
 	Chat?: Block;
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
 	chat: state.chat,
 	user: state.user,
 });
 
-class ChatPageBase extends Block<IProps> {
+class ChatPageBase extends Block {
 	constructor(props: IProps) {
 		super({
 			...props,

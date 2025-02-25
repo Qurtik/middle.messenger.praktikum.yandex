@@ -13,7 +13,7 @@ export default class NotFoundPage extends Block {
 		});
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		
 		`;

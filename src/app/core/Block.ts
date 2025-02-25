@@ -5,7 +5,7 @@ interface IBlockProps {
 	[key: string]: any;
 }
 
-export default abstract class Block<Props extends Record<string, any> = Record<string, any>> {
+export default class Block {
 	static EVENTS = {
 		INIT: "init",
 		FLOW_CDM: "flow:component-did-mount",
@@ -15,7 +15,7 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 
 	protected _element: HTMLElement | null = null;
 
-	protected props: Props;
+	protected props: IBlockProps; //Props;
 
 	protected children: Record<string, Block>;
 
@@ -25,12 +25,12 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 
 	protected eventBus: () => EventBus;
 
-	constructor(propsAndChild: Props = {} as Props) {
+	constructor(propsAndChild: IBlockProps = {} as IBlockProps) {
 		const eventBus = new EventBus();
 
 		const { props, children, lists } = this._getPropsAndChildren(propsAndChild);
 
-		this.props = this._makePropsProxy({ ...props }) as Props;
+		this.props = this._makePropsProxy({ ...props });
 		this.children = children;
 		this.lists = this._makePropsProxy({ ...lists });
 
@@ -90,8 +90,8 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
 
-	_componentDidUpdate(oldProps: IBlockProps, newProps: IBlockProps) {
-		const response = this.componentDidUpdate(oldProps, newProps);
+	_componentDidUpdate(/*oldProps: IBlockProps, newProps: IBlockProps*/) {
+		const response = this.componentDidUpdate(/*oldProps, newProps*/);
 		if (!response) {
 			return;
 		}
@@ -100,7 +100,7 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 
 	// Может переопределять пользователь, необязательно трогать
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	protected componentDidUpdate(oldProps: IBlockProps, newProps: IBlockProps) {
+	protected componentDidUpdate(/*oldProps: IBlockProps, newProps: IBlockProps*/) {
 		// console.log(oldProps);
 		// console.log(newProps);
 		return true;
@@ -139,7 +139,7 @@ export default abstract class Block<Props extends Record<string, any> = Record<s
 		});
 	}
 
-	public setProps = (nextProps: Partial<Props>): void => {
+	public setProps = (nextProps: Partial<IBlockProps>): void => {
 		// console.log("SetProps:", nextProps);
 		if (!nextProps) {
 			return;

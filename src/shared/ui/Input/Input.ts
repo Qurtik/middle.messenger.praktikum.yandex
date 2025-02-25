@@ -23,7 +23,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 // FIXME: Исправить отображение span, убрать выход за пределы div'a
-class InputBase extends Block<IProps> {
+class InputBase extends Block {
 	constructor(props: IProps) {
 		super({
 			...props,

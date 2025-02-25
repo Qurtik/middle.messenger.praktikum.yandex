@@ -28,7 +28,7 @@ const AuthPageState = connect((state) => ({
 	titleTest: state.titleTest,
 }));
 
-class AuthPageBase extends Block<IProps> {
+class AuthPageBase extends Block {
 	private _fieldRules: Record<string, INPUT_RULES[]>;
 
 	constructor(props?: IProps) {
@@ -49,7 +49,7 @@ class AuthPageBase extends Block<IProps> {
 						// value: "vladislav.selezov@yandex.ru",
 						value: "testya12345",
 						errorText: "Введите корретный email",
-						onBlur: (e) => {
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
 							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
@@ -66,7 +66,7 @@ class AuthPageBase extends Block<IProps> {
 						errorText:
 							"Пароль состоит из 3-8 симоволов, минимум 1 цифра, минимум 1 заглавная буква",
 						required: true,
-						onBlur: (e) => {
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
 							if (!!input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];

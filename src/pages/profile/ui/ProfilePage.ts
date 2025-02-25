@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 import App, { PAGES } from "@/app";
 import Block from "@/app/core";
 import { Router } from "@/app/router";
@@ -14,7 +11,6 @@ import { IUserProfile, useUser } from "@/entities/User";
 import { INPUT_RULES, submit } from "@/shared/lib/validate";
 import { connect } from "@/app/core/hoc";
 const user = new useUser();
-
 
 // import store from "@/app/stores";
 
@@ -33,13 +29,14 @@ interface IProps {
 	Modal?: Block | Block[];
 	Avatar?: Block;
 	BtnBack?: Block;
+	user: any;
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
 	user: state.user,
 });
 
-class ProfilePageBase extends Block<IProps> {
+class ProfilePageBase extends Block {
 	constructor(props: IProps) {
 		const fieldRulesChangePassword = {
 			oldPassword: [],
@@ -68,7 +65,11 @@ class ProfilePageBase extends Block<IProps> {
 				new Button({
 					text: "Сохранить",
 					onClick: () => {
-						const avatar: HTMLElement = document.querySelector(".avatar-upload").files[0];
+						const avatarUploader: HTMLInputElement =
+							document.querySelector(".avatar-upload")!;
+
+						const avatar: File = avatarUploader.files![0];
+
 						console.log(avatar);
 						const formData = new FormData();
 						formData.append("avatar", avatar);

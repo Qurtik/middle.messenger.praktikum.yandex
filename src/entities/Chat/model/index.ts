@@ -9,7 +9,6 @@ export default class Chat extends ChatAPI {
 	public ws: any;
 
 	public async createChat(title: string): Promise<boolean> {
-		// console.log("title", title);
 		try {
 			await this.create(title);
 			alert("Сохранено");
@@ -33,19 +32,10 @@ export default class Chat extends ChatAPI {
 	}
 
 	public getMessages() {
-		console.log("SendMessage");
-		// console.log(this.ws);
 		this.ws.getMessages();
 	}
 
 	public sendMessages(message: string) {
 		this.ws.addMessage(message);
-	}
-
-	public test(userId, chatId) {
-		console.log("test");
-		// console.log(this.ws);
-		console.log(userId, chatId);
-		this.ws.sendAndGetMessages();
 	}
 }

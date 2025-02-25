@@ -1,11 +1,12 @@
 import store, { StoreEvents } from "@/app/store";
+import Block from "./Block";
 
 // function isEqual() {
 // 	return true;
 // }
 
 export function connect(mapStateToProps: (state: any) => any) {
-	return function (Component: any) {
+	return function (Component: typeof Block) {
 		return class extends Component {
 			// constructor(...args: any[]) {
 			constructor(props: any) {

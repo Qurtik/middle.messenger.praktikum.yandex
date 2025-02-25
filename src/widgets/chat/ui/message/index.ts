@@ -9,7 +9,7 @@ interface IProps {
 	[key: string]: any;
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
 	user: state.user,
 });
 

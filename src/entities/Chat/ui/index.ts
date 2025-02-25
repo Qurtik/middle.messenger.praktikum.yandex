@@ -36,7 +36,7 @@ const mapStateToProps = (state: any) => ({
 	user: state.user,
 });
 
-class MessageCard extends Block<IProps> {
+class MessageCard extends Block {
 	private ws: MessagesAPI;
 
 	constructor(props: IProps) {

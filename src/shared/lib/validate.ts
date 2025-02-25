@@ -47,7 +47,7 @@ export function submit<T extends FieldRules>(
 	idForm: string,
 	formRules?: T,
 	// callback?: (formResult: Record<string, string>, formRules: INPUT_RULES) => void,
-): { [K in keyof T]: string } | boolean {
+): any {
 	const applicantForm = document.getElementById(idForm);
 	console.log(applicantForm);
 

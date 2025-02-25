@@ -12,11 +12,11 @@ interface IProps {
 	avatarSrc: any;
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
 	user: state.user,
 });
 
-class AvatarBase extends Block<IProps> {
+class AvatarBase extends Block {
 	constructor(props: IProps) {
 		super({
 			...props,
