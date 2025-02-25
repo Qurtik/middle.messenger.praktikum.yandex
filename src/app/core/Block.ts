@@ -1,7 +1,5 @@
 import Handlebars from "handlebars";
-import EventBus from "./event-bus";
-
-type EventCallback = (...args: any[]) => void;
+import EventBus, { type EventCallback } from "./event-bus";
 
 interface IBlockProps {
 	[key: string]: any;
@@ -17,7 +15,7 @@ export default class Block {
 
 	protected _element: HTMLElement | null = null;
 
-	protected props: IBlockProps;
+	protected props: IBlockProps; //Props;
 
 	protected children: Record<string, Block>;
 
@@ -27,7 +25,7 @@ export default class Block {
 
 	protected eventBus: () => EventBus;
 
-	constructor(propsAndChild: IBlockProps = {}) {
+	constructor(propsAndChild: IBlockProps = {} as IBlockProps) {
 		const eventBus = new EventBus();
 
 		const { props, children, lists } = this._getPropsAndChildren(propsAndChild);
@@ -40,6 +38,15 @@ export default class Block {
 		this._registerEvents(eventBus);
 
 		eventBus.emit(Block.EVENTS.INIT);
+	}
+
+	private _removeEvents(): void {
+		const { events = {} } = this.props;
+		Object.keys(events).forEach((eventName) => {
+			if (events[eventName]) {
+				this._element?.removeEventListener(eventName, events[eventName]);
+			}
+		});
 	}
 
 	private _addEvents(): void {
@@ -83,8 +90,8 @@ export default class Block {
 		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
 
-	_componentDidUpdate(oldProps: IBlockProps, newProps: IBlockProps) {
-		const response = this.componentDidUpdate(oldProps, newProps);
+	_componentDidUpdate(/*oldProps: IBlockProps, newProps: IBlockProps*/) {
+		const response = this.componentDidUpdate(/*oldProps, newProps*/);
 		if (!response) {
 			return;
 		}
@@ -92,9 +99,10 @@ export default class Block {
 	}
 
 	// Может переопределять пользователь, необязательно трогать
-	protected componentDidUpdate(oldProps: IBlockProps, newProps: IBlockProps) {
-		console.log(oldProps);
-		console.log(newProps);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	protected componentDidUpdate(/*oldProps: IBlockProps, newProps: IBlockProps*/) {
+		// console.log(oldProps);
+		// console.log(newProps);
 		return true;
 	}
 
@@ -131,7 +139,8 @@ export default class Block {
 		});
 	}
 
-	public setProps = (nextProps: Record<string, unknown>): void => {
+	public setProps = (nextProps: Partial<IBlockProps>): void => {
+		// console.log("SetProps:", nextProps);
 		if (!nextProps) {
 			return;
 		}
@@ -152,7 +161,7 @@ export default class Block {
 	}
 
 	_render() {
-		const propsAndStubs = { ...this.props };
+		const propsAndStubs: Record<string, any> = { ...(this.props as Record<string, any>) };
 		const tmpId = crypto.randomUUID();
 
 		Object.entries(this.children).forEach(([key, child]) => {
@@ -193,13 +202,16 @@ export default class Block {
 		if (this._element && newElement) {
 			this._element.replaceWith(newElement);
 		}
+		this._removeEvents();
+		// console.log("this._element");
+		// console.log(this._element);
 		this._element = newElement;
 		this._addEvents();
 		this.addAttributes();
 	}
 
 	// Может переопределять пользователь, необязательно трогать
-	protected render(): string {
+	public render(): string {
 		return "";
 	}
 
@@ -247,18 +259,25 @@ export default class Block {
 		return document.createElement(tagName) as HTMLTemplateElement;
 	}
 
-	public show(): void {
+	public show(query: string): void {
+		// console.log("Show from Block");
+		// console.log("query");
+		// console.log(query);
 		const content = this.getContent();
 		if (content) {
-			content.style.display = "block";
+			document.querySelector(query)?.replaceChildren(content);
+			// content.style.display = "block";
+		} else {
+			throw new Error("No content to render");
 		}
 	}
 
 	hide() {
+		// console.log("Hide from Block");
 		// this._element.style.display = "none";
-		const content = this.getContent();
-		if (content) {
-			content.style.display = "none";
-		}
+		// const content = this.getContent();
+		// if (content) {
+		// content.style.display = "none";
+		// }
 	}
 }

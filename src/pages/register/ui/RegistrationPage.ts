@@ -1,6 +1,16 @@
-import App, { INPUT_RULES } from "@/app";
+import App, { PAGES } from "@/app";
 import Block from "@/app/core";
+import { Router } from "@/app/router";
+import { INPUT_RULES, isValidate, submit } from "@/shared/lib/validate";
 import { Card, Input, Button } from "@/shared/ui";
+
+import { useUser, type TRegisterUser } from "@/entities/User";
+
+const router = new Router();
+const user = new useUser();
+
+import "./RegistrationPage.pcss";
+import { connect } from "@/app/core/hoc";
 
 interface IProps {
 	AppInstance: App;
@@ -8,7 +18,9 @@ interface IProps {
 	Card?: Block;
 }
 
-export default class RegistrationPage extends Block {
+const RegistrationPageState = connect(() => ({}));
+
+class RegistrationPageBase extends Block {
 	private _fieldRules: Record<string, INPUT_RULES[]>;
 
 	constructor(props: IProps) {
@@ -29,78 +41,86 @@ export default class RegistrationPage extends Block {
 					new Input({
 						label: "Почта",
 						name: "email",
-						onBlur: (e) => {
+						errorText: "Введите корректный email",
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
-							if (input && input.name === undefined) {
+							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+								isValidate(input, rules);
+								// }
 							}
 						},
 					}),
 					new Input({
 						label: "Логин",
 						name: "login",
-						onBlur: (e) => {
+						errorText: "от 3 до 20 символов, без спецсимволов",
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
-							if (input && input.name === undefined) {
+							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+								isValidate(input, rules);
+								// }
 							}
 						},
 					}),
 					new Input({
 						label: "Имя",
 						name: "first_name",
-						onBlur: (e) => {
+						errorText:
+							"Латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов",
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
-							if (input && input.name === undefined) {
+							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+								isValidate(input, rules);
+								// }
 							}
 						},
 					}),
 					new Input({
 						label: "Фамилия",
 						name: "second_name",
-						onBlur: (e) => {
+						errorText:
+							"Латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов",
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
-							if (input && input.name === undefined) {
+							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+								isValidate(input, rules);
+								// }
 							}
 						},
 					}),
 					new Input({
 						label: "Телефон",
 						name: "phone",
-						onBlur: (e) => {
+						errorText: "от 10 до 15 символов, состоит из цифр, может начинается с плюса.",
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
-							if (input && input.name === undefined) {
+							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+								isValidate(input, rules);
+								// }
 							}
 						},
 					}),
 					new Input({
 						label: "Пароль",
 						name: "password",
-						onBlur: (e) => {
+						errorText: "от 8 до 40 символов, обязательно заглавная буква и цифра.",
+						onBlur: (e: Event) => {
 							const input = e.target as HTMLInputElement;
-							if (input && input.name === undefined) {
+							if (input && input.name !== undefined) {
 								const rules = this._fieldRules[input.name];
-								if (props) {
-									props.AppInstance.isValidate(input, rules);
-								}
+								// if (props) {
+								isValidate(input, rules);
+								// }
 							}
 						},
 					}),
@@ -113,9 +133,15 @@ export default class RegistrationPage extends Block {
 					new Button({
 						class: "goToChatsBtn",
 						text: "Зарегистрироваться",
-						onClick: () => {
-							props.AppInstance.submit("register-page-form", fieldRules);
-							// props.AppInstance.changePage(PAGES.CHAT)
+						onClick: async () => {
+							const result = submit("register-page-form", this._fieldRules) as TRegisterUser;
+							if (result) {
+								const isRegister = await user.register(result);
+
+								if (isRegister) {
+									router.go(PAGES.CHAT);
+								}
+							}
 						},
 					}),
 				],
@@ -124,7 +150,7 @@ export default class RegistrationPage extends Block {
 		this._fieldRules = fieldRules;
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<form id="register-page-form">
 			<div class="{{class}}">
@@ -134,3 +160,5 @@ export default class RegistrationPage extends Block {
 		`;
 	}
 }
+
+export default RegistrationPageState(RegistrationPageBase);

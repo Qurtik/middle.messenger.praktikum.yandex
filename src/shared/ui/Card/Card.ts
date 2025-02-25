@@ -2,20 +2,20 @@ import Block from "@/app/core";
 import "./Card.pcss";
 
 interface IProps {
-	title: string;
-	class: string;
-	Body: Block[];
-	Actions: Block[];
+	title?: string;
+	class?: string;
+	Body?: Block[];
+	Actions?: Block[];
 }
 
 export default class Card extends Block {
-	constructor(props: Partial<IProps>) {
+	constructor(props: IProps) {
 		super({
 			...props,
 		});
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<div class="{{class}}">
 			<div class="card card__{{class}}">

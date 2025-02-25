@@ -7,7 +7,12 @@
 		"dev": "vite",
 		"build": "vite build",
 		"start": "vite build && node server.cjs",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"lint": "eslint . --ext .ts",
+		"lint:fix": "eslint . --ext .ts --fix",
+		"lint:style": "stylelint \"**/*.pcss\"",
+		"lint:style:fix": "stylelint \"**/*.pcss\" --fix",
+		"prepare": "husky"
 	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.20",
@@ -18,7 +23,9 @@
 	},
 	"dependencies": {
 		"express": "^4.21.2",
-		"handlebars": "^4.7.8"
+		"handlebars": "^4.7.8",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.4.3"
 	},
 	"engines": {
 		"node": "20.11.0",
