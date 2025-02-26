@@ -15,7 +15,7 @@ export default class User extends UserAPI {
 			return true;
 		} else {
 			try {
-				// const response = 
+				// const response =
 				await this.getUser();
 				// console.log("getUser-response=", response);
 				return true;
@@ -110,6 +110,23 @@ export default class User extends UserAPI {
 		} catch (error) {
 			alert(error);
 			return false;
+		}
+	}
+
+	public async findUser(login: string): Promise<{
+		id: number;
+		first_name: string;
+		second_name: string;
+		display_name: string;
+		login: string;
+		avatar: string;
+	}> {
+		try {
+			const response = await this.getUserByLogin(login);
+			return response[0];
+		} catch (error) {
+			throw new Error(error);
+			
 		}
 	}
 }

@@ -1,5 +1,5 @@
 import { http } from "@/shared/api";
-const userApiInstance = new http<any>("https://ya-praktikum.tech/api/v2");
+const userApiInstance = new http<any>();
 
 export default class ChatAPI {
 	protected async create(data: string): Promise<{ id: string }> {
@@ -30,8 +30,28 @@ export default class ChatAPI {
 	}
 
 	// protected
-	public async getToken(chatId: number | string): Promise<string> {
+	public async getToken(chatId: number): Promise<string> {
 		const { token } = await userApiInstance.post(`/chats/token/${chatId}`);
 		return token;
+	}
+
+	protected async addUserToChat(chatId: number, users: number[]): Promise<boolean> {
+		const response = await userApiInstance.put(`/chats/users`, { data: { chatId, users } });
+
+		if ("reason" in response) {
+			throw new Error(response.reason);
+		}
+
+		return response;
+	}
+
+	protected async deleteUserFromChat(chatId: number, users: number[]): Promise<boolean> {
+		const response = await userApiInstance.delete(`/chats/users`, { data: { chatId, users } });
+
+		if ("reason" in response) {
+			throw new Error(response.reason);
+		}
+
+		return response;
 	}
 }

@@ -57,11 +57,14 @@ interface IRequestOptions {
 	method?: METHODS;
 }
 
+const BASE_URL = "https://ya-praktikum.tech/api/v2";
 // type HTTPMethod = (url: string, options?: IRequestOptions) => Promise<XMLHttpRequest>;
 type HTTPMethod<T> = (url: string, options?: IRequestOptions) => Promise<T>;
 
 export default class HTTPTransport<T> {
-	constructor(private _baseUrl: string) {}
+	constructor(private _baseUrl?: string) {
+		this._baseUrl = BASE_URL;
+	}
 
 	get: HTTPMethod<T> = (url, options = {}) => {
 		return this.request(

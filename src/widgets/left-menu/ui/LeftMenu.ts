@@ -9,7 +9,7 @@ import Block from "@/app/core";
 import { connect } from "@/app/core/hoc";
 
 import "./LeftMenu.pcss";
-import { Button, Input, Modal } from "@/shared/ui";
+import { Avatar, Button, Input, Modal } from "@/shared/ui";
 import { MessageCard } from "@/entities/Chat";
 import { toggleModal } from "@/shared/lib/toggleModal";
 import { submit } from "@/shared/lib/validate";
@@ -36,6 +36,7 @@ interface IProps {
 const mapStateToProps = (state: any) => ({
 	chats: state.chat,
 	user: state.user,
+	currentChat: state.currentChat,
 });
 
 class LeftMenuBase extends Block {
@@ -46,6 +47,9 @@ class LeftMenuBase extends Block {
 			// Test: props.test,
 			// Chats: props.chats,
 			class: "left-menu",
+			Avatar: new Avatar({
+				class: "left-menu__avatar",
+			}),
 			ProfileBtn: new Button({
 				text: "Профиль",
 				class: "btn goToProfileBtn",
@@ -63,8 +67,8 @@ class LeftMenuBase extends Block {
 					text: "Добавить пользователя",
 					class: "btn_bg_color_green btn_size_s",
 					onClick: () => {
-						this.getUser();
-						// toggleModal("addNewsUserToChat");
+						// this.getUser();
+						toggleModal("addNewsUserToChat");
 					},
 				}),
 				new Button({
@@ -90,13 +94,31 @@ class LeftMenuBase extends Block {
 					title: "Добавить пользователя",
 					Body: new Input({
 						label: "Имя пользователя",
-						value: "test",
-						name: "user_name",
+						value: "test_testov",
+						name: "login",
 					}),
 					Actions: [
 						new Button({
+							text: "Найти",
+							class: "modal__footer-btn",
+							onClick: async () => {
+								const { login } = submit("addNewsUserToChat-form");
+								const foundedUser = await user.findUser(login);
+
+								alert(`Пользователь найден: \nUserName: ${foundedUser.login}`);
+								this.setProps({
+									foundedUser,
+								});
+							},
+						}),
+						new Button({
 							text: "Добавить",
 							class: "modal__footer-btn",
+							onClick: () => {
+								console.log(this.props);
+								void chat.addUser(this.props.currentChat.chatId, this.props.foundedUser.id);
+								// toggleModal("addNewsUserToChat");
+							},
 						}),
 						new Button({
 							text: "Закрыть",
@@ -113,13 +135,32 @@ class LeftMenuBase extends Block {
 					id: "deleteUserFromChat",
 					title: "Удалить пользователя",
 					Body: new Input({
+						name: "login",
 						label: "Имя пользователя",
 						value: "Вася",
 					}),
 					Actions: [
 						new Button({
+							text: "Найти",
+							class: "modal__footer-btn",
+							onClick: async () => {
+								const { login } = submit("deleteUserFromChat-form");
+								const foundedUser = await user.findUser(login);
+
+								alert(`Пользователь найден: \nUserName: ${foundedUser.login}`);
+								this.setProps({
+									foundedUser,
+								});
+							},
+						}),
+						new Button({
 							text: "Удалить",
 							class: "modal__footer-btn",
+							onClick: () => {
+								console.log(this.props);
+								void chat.deleteUser(this.props.currentChat.chatId, this.props.foundedUser.id);
+								// toggleModal("addNewsUserToChat");
+							},
 						}),
 						new Button({
 							text: "Закрыть",
@@ -217,10 +258,11 @@ class LeftMenuBase extends Block {
 	// }
 
 	override render(): string {
+		// <div class="avatar-image left-menu__avatar"></div>;
 		return `
 		<div class="{{class}}">
 			<div class="{{class}}__header">
-				<div class="avatar-image left-menu__avatar"></div>
+				{{{Avatar}}}
 				<div class="profile left-menu__profile">
 					{{{ProfileBtn}}}
 				</div>

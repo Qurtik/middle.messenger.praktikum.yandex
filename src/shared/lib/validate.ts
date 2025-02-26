@@ -7,7 +7,7 @@ export const enum INPUT_RULES {
 	// eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
 	SECOND_NAME = "^[A-ZА-Я][a-zа-яё\\-]*$",
 	PHONE = "^\\+?\\d{10,15}$",
-	MESSAGE = "^\\s*\\S.*+$",
+	MESSAGE = "(.|\\s)*\\S(.|\\s)*",
 }
 
 export function setInputValidity(el: HTMLElement, isValid: boolean): void {

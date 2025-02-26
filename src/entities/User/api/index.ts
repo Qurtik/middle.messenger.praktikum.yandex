@@ -1,6 +1,6 @@
 import { BaseApi, http } from "@/shared/api";
 import { IUserProfile, TRegisterUser } from "../types";
-const userApiInstance = new http<any>("https://ya-praktikum.tech/api/v2");
+const userApiInstance = new http<any>();
 
 type TUser = {
 	id: string;
@@ -89,9 +89,34 @@ export default class UserAPI extends BaseApi {
 		return response;
 	}
 
+	protected async getResourse(path: string): Promise<File> {
+		const response = await userApiInstance.get(`/resources/${path}`);
+		return response;
+	}
+
 	public async changeAvatar(data: any): Promise<"OK" | { reason: string }> {
 		const response = await userApiInstance.put("/user/profile/avatar", { data });
 
+		if ("reason" in response) {
+			throw new Error(response.reason);
+		}
+
+		return response;
+	}
+
+	protected async getUserByLogin(login: string): Promise<
+		{
+			id: number;
+			first_name: string;
+			second_name: string;
+			display_name: string;
+			login: string;
+			avatar: string;
+		}[]
+	> {
+		const data = { login: login };
+		console.log("data", data);
+		const response = await userApiInstance.post(`/user/search`, { data });
 		if ("reason" in response) {
 			throw new Error(response.reason);
 		}
