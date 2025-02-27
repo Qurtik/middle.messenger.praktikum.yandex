@@ -43,6 +43,7 @@ class ChatBase extends Block {
 		const fieldRules = {
 			email: [INPUT_RULES.EMAIL],
 			password: [INPUT_RULES.PASSWORD],
+			message: [INPUT_RULES.MESSAGE],
 		};
 		super({
 			...props,
@@ -71,18 +72,17 @@ class ChatBase extends Block {
 				onClick: () => {
 					// this.getMessages();
 					const result = submit("chat-main-form", this._fieldRules);
-					const message = result.message;
 
-					this.ws.addMessage(message);
-					// store.setMessages("currentChat.messages", message);
-					// store.
-					console.log(message);
+					if (result) {
+						const message = result.message;
 
-					this.ws.getMessages();
+						this.ws.addMessage(message);
+						this.ws.getMessages();
 
-					setTimeout(() => {
-						this.getMessages();
-					}, 300);
+						setTimeout(() => {
+							this.getMessages();
+						}, 300);
+					}
 					// this.getMessages();
 				},
 			}),

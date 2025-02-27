@@ -86,6 +86,7 @@ class MessageCard extends Block {
 		const messages = store.getState().messages[this.props.id];
 		store.setMessages("currentChat.messages", messages);
 		store.setMessages("currentChat.websocket", this.ws);
+		store.setMessages("currentChat.chatId", this.props.id);
 
 		store.emit("updateMessages");
 

@@ -57,7 +57,9 @@ class ProfilePageBase extends Block {
 			class: "profile-page",
 			Header: [
 				new Avatar({
-					userName: "Владислав С.",
+					userName: props.user.first_name,
+					class: "profile-title profile-page__profile-title",
+					classAvatar: "avatar-image_icon_big",
 					onClick: () => {
 						this._uploadAvatar();
 					},

@@ -38,4 +38,23 @@ export default class Chat extends ChatAPI {
 	public sendMessages(message: string) {
 		this.ws.addMessage(message);
 	}
+
+	public async addUser(chatId: number, userId: number) {
+		console.log("chatId:", chatId);
+		const users: number[] = [];
+		users[0] = userId;
+
+		try {
+			await this.addUserToChat(chatId, users);
+		} catch (error) {}
+	}
+
+	public async deleteUser(chatId: number, userId: number) {
+		const users: number[] = [];
+		users[0] = userId;
+
+		try {
+			await this.deleteUserFromChat(chatId, users);
+		} catch (error) {}
+	}
 }

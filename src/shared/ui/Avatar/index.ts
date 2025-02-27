@@ -1,10 +1,15 @@
 import Block from "@/app/core";
 import { connect } from "@/app/core/hoc";
 import { IEvents } from "@/shared/types";
+// import { useUser } from "@/entities/User";
+// const user = new useUser();
+
+import "./Avatar.pcss";
 
 interface IProps {
 	id?: string;
 	class?: string;
+	classAvata?: string,
 	onClick?: any;
 	userName?: string;
 	events?: IEvents;
@@ -37,19 +42,37 @@ class AvatarBase extends Block {
 		console.log(this.props.user.avatar);
 
 		this.setProps({
-			// avatarSrc: this.props.user.avatar,
-			avatarSrc: "/img/avatar_default.jpg",
+			avatarSrc: this.props.user.avatar,
 		});
+
+		// void user
+		// 	.getAvatar(this.props.user.avatar)
+		// 	.then((src) => {
+		// 		console.log("AvatarSrc:", src);
+		// 		this.setProps({
+		// 			// avatarSrc: this.props.user.avatar,
+		// 			avatarSrc: src,
+		// 			// avatarSrc: "/img/avatar_default.jpg",
+		// 		});
+		// 	});
 	}
 
 	override render(): string {
 		return `
-		<div class="profile-title profile-page__profile-title">
-			<img src="{{avatarSrc}}" alt="Avatar" class="avatar-image avatar-image_icon_big">
+		<div class="{{class}}">
+			<img src="https://ya-praktikum.tech/api/v2/resources/{{avatarSrc}}" alt="Avatar" class="avatar-image {{classAvatar}}">
 			<input type="file" class="avatar-upload" name="avatar" accept="image/*" style="display: none;">
 			<span class="avatar__label">{{userName}}</span>
 		</div>
 		`;
+
+		// return `
+		// <div class="profile-title profile-page__profile-title">
+		// 	<img src="https://ya-praktikum.tech/api/v2/resources/{{avatarSrc}}" alt="Avatar" class="avatar-image avatar-image_icon_big">
+		// 	<input type="file" class="avatar-upload" name="avatar" accept="image/*" style="display: none;">
+		// 	<span class="avatar__label">{{userName}}</span>
+		// </div>
+		// `;
 	}
 }
 
