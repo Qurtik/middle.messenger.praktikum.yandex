@@ -3,8 +3,8 @@ import { connect } from "@/app/core/hoc";
 import { IEvents } from "@/shared/types";
 import store from "@/app/store";
 
-import { useUser } from "@/entities/User";
-const user = new useUser();
+// import { useUser } from "@/entities/User";
+// const user = new useUser();
 
 import "./Avatar.pcss";
 
@@ -46,15 +46,21 @@ class AvatarBase extends Block {
 		// console.log("state", store.getState());
 		// console.log(this.props.user.avatar);
 
-		void user.getAvatar(this.props.user.avatar).then((response) => {
-			this.setProps({
-				avatarSrc: response,
-			});
-		});
-
-		// this.setProps({
-		// 	avatarSrc: this.props.user.avatar,
+		// void user.getAvatar(this.props.user.avatar).then((response) => {
+		// 	this.setProps({
+		// 		avatarSrc: response,
+		// 	});
 		// });
+
+		// void user.getAvatar(this.props.user.avatar).then((response) => {
+		// 	this.setProps({
+		// 		avatarSrc: response,
+		// 	});
+		// });
+
+		this.setProps({
+			avatarSrc: this.props.user.avatar,
+		});
 
 		// void user
 		// 	.getAvatar(this.props.user.avatar)
