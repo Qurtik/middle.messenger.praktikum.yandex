@@ -1,6 +1,6 @@
-import { BaseApi, http } from "@/shared/api";
+import { BaseApi, Http } from "@/shared/api";
 import { IUserProfile, TRegisterUser } from "../types";
-const userApiInstance = new http<any>();
+const userApiInstance = new Http<any>();
 
 type TUser = {
 	id: string;
@@ -94,7 +94,9 @@ export default class UserAPI extends BaseApi {
 		return response;
 	}
 
-	public async changeAvatar(data: any): Promise<"OK" | { reason: string }> {
+	public async changeAvatar(
+		data: any,
+	): Promise<{ avatar: string; [key: string]: any } | { reason: string }> {
 		const response = await userApiInstance.put("/user/profile/avatar", { data });
 
 		if ("reason" in response) {

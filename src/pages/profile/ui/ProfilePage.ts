@@ -12,7 +12,7 @@ import { INPUT_RULES, submit } from "@/shared/lib/validate";
 import { connect } from "@/app/core/hoc";
 const user = new useUser();
 
-// import store from "@/app/stores";
+import store from "@/app/store";
 
 // const u = new userStore();
 // console.log(u);
@@ -58,6 +58,7 @@ class ProfilePageBase extends Block {
 			Header: [
 				new Avatar({
 					userName: props.user.first_name,
+					src: props.user.avatar,
 					class: "profile-title profile-page__profile-title",
 					classAvatar: "avatar-image_icon_big",
 					onClick: () => {
@@ -75,7 +76,10 @@ class ProfilePageBase extends Block {
 						console.log(avatar);
 						const formData = new FormData();
 						formData.append("avatar", avatar);
-						void user.changeAvatar(formData);
+						void user.changeAvatar(formData).then((response) => {
+							store.set("user", response);
+							store.emit("avatarChange");
+						});
 					},
 				}),
 			],
