@@ -2,7 +2,6 @@
 // import { http } from "@/shared/api";
 import store from "@/app/store";
 import { WSTransport } from "@/shared/api/ws";
-// const userApiInstance = new http<any>("https://ya-praktikum.tech/api/v2");
 
 const wsUrl = "wss://ya-praktikum.tech/ws/chats";
 

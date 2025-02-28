@@ -5,7 +5,7 @@ import { IEvents } from "@/shared/types";
 interface IProps {
 	id?: string;
 	class?: string;
-	onClick?: any;
+	onClick?: (e: Event) => void | Promise<void>;
 	text?: string;
 	events?: IEvents
 }
@@ -25,7 +25,7 @@ export default class Button extends Block {
 						// console.log("props.onClick");
 						// console.log(props.onClick);
 						// console.log(e);
-						props.onClick(e);
+						void props.onClick(e);
 					}
 				},
 			},

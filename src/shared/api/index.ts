@@ -1,3 +1,3 @@
-import http, { BaseApi } from "./http";
+import Http, { BaseApi } from "./http";
 
-export { http, BaseApi };
+export { Http, BaseApi };
