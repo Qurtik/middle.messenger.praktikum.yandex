@@ -129,4 +129,15 @@ export default class User extends UserAPI {
 			
 		}
 	}
+
+	public async getAvatar(path: string) {
+		try {
+			const response = await this.getResourse(path);
+			console.log("Path", path);
+			console.log("response", response);
+			return response;
+		} catch (error) {
+			alert(error);
+		}
+	}
 }

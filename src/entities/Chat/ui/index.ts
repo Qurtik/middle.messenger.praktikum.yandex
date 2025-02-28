@@ -18,8 +18,8 @@ import { IEvents } from "@/shared/types";
 // import { useChat } from "@/entities/Chat";
 // const chat = new useChat();
 
-import { http } from "@/shared/api";
-const userApiInstance = new http<any>("https://ya-praktikum.tech/api/v2");
+import { Http } from "@/shared/api";
+const userApiInstance = new Http<any>();
 
 import { MessagesAPI } from "./../api/MessagesAPI";
 import store from "@/app/store";
@@ -27,7 +27,7 @@ import store from "@/app/store";
 
 interface IProps {
 	events?: IEvents;
-	onClick?: any;
+	onClick?: (e: Event) => void;
 	id: number;
 	[prop: string]: any;
 }

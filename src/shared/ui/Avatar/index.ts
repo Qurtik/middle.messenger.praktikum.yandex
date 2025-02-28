@@ -1,16 +1,18 @@
 import Block from "@/app/core";
 import { connect } from "@/app/core/hoc";
 import { IEvents } from "@/shared/types";
-// import { useUser } from "@/entities/User";
-// const user = new useUser();
+import store from "@/app/store";
+
+import { useUser } from "@/entities/User";
+const user = new useUser();
 
 import "./Avatar.pcss";
 
 interface IProps {
 	id?: string;
 	class?: string;
-	classAvata?: string,
-	onClick?: any;
+	classAvata?: string;
+	onClick?: (e: Event) => void;
 	userName?: string;
 	events?: IEvents;
 	user: any;
@@ -36,14 +38,23 @@ class AvatarBase extends Block {
 			},
 		});
 		this._getAvatar();
+		store.on("avatarChange", () => this._getAvatar());
 	}
 
 	private _getAvatar() {
-		console.log(this.props.user.avatar);
+		// alert("Avatar changed");
+		// console.log("state", store.getState());
+		// console.log(this.props.user.avatar);
 
-		this.setProps({
-			avatarSrc: this.props.user.avatar,
+		void user.getAvatar(this.props.user.avatar).then((response) => {
+			this.setProps({
+				avatarSrc: response,
+			});
 		});
+
+		// this.setProps({
+		// 	avatarSrc: this.props.user.avatar,
+		// });
 
 		// void user
 		// 	.getAvatar(this.props.user.avatar)

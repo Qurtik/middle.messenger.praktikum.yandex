@@ -1,5 +1,5 @@
-import { http } from "@/shared/api";
-const userApiInstance = new http<any>();
+import { Http } from "@/shared/api";
+const userApiInstance = new Http<any>();
 
 export default class ChatAPI {
 	protected async create(data: string): Promise<{ id: string }> {

@@ -46,7 +46,9 @@ export default class Chat extends ChatAPI {
 
 		try {
 			await this.addUserToChat(chatId, users);
-		} catch (error) {}
+		} catch (error) {
+			alert(error);
+		}
 	}
 
 	public async deleteUser(chatId: number, userId: number) {
@@ -55,6 +57,8 @@ export default class Chat extends ChatAPI {
 
 		try {
 			await this.deleteUserFromChat(chatId, users);
-		} catch (error) {}
+		} catch (error) {
+			alert(error);
+		}
 	}
 }
