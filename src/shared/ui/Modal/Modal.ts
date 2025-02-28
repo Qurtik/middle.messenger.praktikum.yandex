@@ -5,6 +5,7 @@ import "./Modal.pcss";
 interface IProps {
 	AppInstance?: App;
 	id: string;
+	idForm?: string;
 	class?: string;
 	title?: string;
 	Body?: Block | Block[];
@@ -12,13 +13,16 @@ interface IProps {
 	// showCloseBtn: boolean;
 }
 
-export default class Modal extends Block<IProps> {
+export default class Modal extends Block {
+	// private _idForm: string;
+
 	constructor(props: IProps) {
 		// showCloseBtn: false;
 		super({
 			...props,
+			idForm: `${props.id}-form`,
 		});
-		console.log("Modal rendered");
+		// console.log("Modal rendered");
 	}
 
 	// attachedEventListenerToggleModal(event) {
@@ -35,8 +39,9 @@ export default class Modal extends Block<IProps> {
 	// 				{{> ModalButton idModal=id type="img" src="close" class="modal__title-close-btn"}}
 	// 			{{/if}}
 
-	protected override render(): string {
+	override render(): string {
 		return `
+		<form id="{{idForm}}">
 			<div id="{{id}}" class="modal {{class}}">
 				<div class="modal__shadow"></div>
 				<div class="modal__wrap">
@@ -56,6 +61,7 @@ export default class Modal extends Block<IProps> {
 					</div>
 				</div>
 			</div>
+		</form>
 		`;
 	}
 }

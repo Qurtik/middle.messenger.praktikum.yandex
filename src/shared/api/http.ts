@@ -1,8 +1,33 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const enum METHODS {
 	GET = "GET",
 	POST = "POST",
 	PUT = "PUT",
 	DELETE = "DELETE",
+}
+
+export class BaseApi {
+	// private _baseUrl: string;
+
+	// constructor(baseUrl: string) {
+	// 	this._baseUrl = baseUrl;
+	// }
+
+	protected create(): Promise<any> {
+		throw new Error("Not implemented");
+	}
+
+	protected request() {
+		throw new Error("Not implemented");
+	}
+
+	protected update() {
+		throw new Error("Not implemented");
+	}
+
+	protected delete() {
+		throw new Error("Not implemented");
+	}
 }
 
 /**
@@ -32,26 +57,48 @@ interface IRequestOptions {
 	method?: METHODS;
 }
 
-type HTTPMethod = (url: string, options?: IRequestOptions) => Promise<XMLHttpRequest>;
+const BASE_URL = "https://ya-praktikum.tech/api/v2";
+// type HTTPMethod = (url: string, options?: IRequestOptions) => Promise<XMLHttpRequest>;
+type HTTPMethod<T> = (url: string, options?: IRequestOptions) => Promise<T>;
 
-export default class HTTPTransport {
-	get: HTTPMethod = (url, options = {}) => {
-		return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+export default class HTTPTransport<T> {
+	constructor(private _baseUrl?: string) {
+		this._baseUrl = BASE_URL;
+	}
+
+	get: HTTPMethod<T> = (url, options = {}) => {
+		return this.request(
+			`${this._baseUrl}${url}`,
+			{ ...options, method: METHODS.GET },
+			options.timeout,
+		);
 	};
 
-	post: HTTPMethod = (url, options = {}) => {
-		return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+	post: HTTPMethod<T> = (url, options = {}) => {
+		return this.request(
+			`${this._baseUrl}${url}`,
+			{ ...options, method: METHODS.POST },
+			options.timeout,
+		);
 	};
 
-	put: HTTPMethod = (url, options = {}) => {
-		return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+	put: HTTPMethod<T> = (url, options = {}) => {
+		return this.request(
+			`${this._baseUrl}${url}`,
+			{ ...options, method: METHODS.PUT },
+			options.timeout,
+		);
 	};
 
-	delete: HTTPMethod = (url, options = {}) => {
-		return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+	delete: HTTPMethod<T> = (url, options = {}) => {
+		return this.request(
+			`${this._baseUrl}${url}`,
+			{ ...options, method: METHODS.DELETE },
+			options.timeout,
+		);
 	};
 
-	request = (url: string, options: IRequestOptions, timeout = 5000): Promise<XMLHttpRequest> => {
+	request = (url: string, options: IRequestOptions, timeout = 5000): Promise<T> => {
 		const { method, data, headers = {} } = options;
 
 		return new Promise((resolve, reject) => {
@@ -67,19 +114,35 @@ export default class HTTPTransport {
 					: url,
 			);
 
+			xhr.withCredentials = true;
+			// xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+
 			Object.keys(headers).forEach((key) => {
 				xhr.setRequestHeader(key, headers[key]);
 			});
 
-			// 3. Отсылаем запрос
-			if (!isGet && data) {
-				const form = new FormData();
-				const formData = JSON.stringify(data);
-				form.append("data", formData);
-				xhr.send(form);
-			} else {
+			if (isGet || !data) {
 				xhr.send();
+			} else if (data instanceof FormData) {
+				xhr.send(data);
+			} else {
+				xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+				xhr.send(JSON.stringify(data));
 			}
+
+			// 3. Отсылаем запрос
+			// if (!isGet && data) {
+			// 	// const form = new FormData();
+			// 	const formData = JSON.stringify(data);
+			// 	// form.append("data", formData);
+
+			// 	// form.append("data", formData);
+			// 	xhr.send(formData);
+			// } else {
+			// 	xhr.send();
+			// }
+
+			// if(data instanceof FormData){}
 
 			xhr.timeout = timeout;
 
@@ -90,9 +153,16 @@ export default class HTTPTransport {
 					console.error(`Ошибка при получении ответа, ${xhr.status}: ${xhr.statusText}`);
 				} else {
 					// если всё прошло гладко, выводим результат
-					console.log(`Ответ успешно получен`);
+					// console.log(`Ответ успешно получен`);
 				}
-				resolve(xhr);
+
+				const response = xhr.response;
+
+				try {
+					resolve(JSON.parse(response));
+				} catch (err) {
+					resolve(response);
+				}
 			};
 
 			const handleError = (err: object) => {
