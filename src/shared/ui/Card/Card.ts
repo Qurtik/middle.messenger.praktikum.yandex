@@ -8,14 +8,14 @@ interface IProps {
 	Actions?: Block[];
 }
 
-export default class Card extends Block<IProps> {
+export default class Card extends Block {
 	constructor(props: IProps) {
 		super({
 			...props,
 		});
 	}
 
-	protected override render(): string {
+	override render(): string {
 		return `
 		<div class="{{class}}">
 			<div class="card card__{{class}}">
