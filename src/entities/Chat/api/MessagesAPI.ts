@@ -23,11 +23,11 @@ export class MessagesAPI {
 	// }
 
 	public connect() {
-		console.log("WS API: Begin ws conection");
+		// console.log("WS API: Begin ws conection");
 		// this.ws.on("message", callback)
 
 		const messagesHandler = this._receiveMessages.bind(this);
-		console.log("messagesHandler:", messagesHandler);
+		// console.log("messagesHandler:", messagesHandler);
 		this.wsTransport.on(WSTransport.EVENTS.MESSAGE, messagesHandler);
 
 		this.wsTransport
@@ -69,7 +69,7 @@ export class MessagesAPI {
 			? data.map((message) => convert(message))
 			: [convert(data)];
 
-		console.log("received messages", messages);
+		// console.log("received messages", messages);
 		store.setMessages("currentChat.messages", messages);
 		this.callback(messages);
 		// console.log("this.callback", this.callback);

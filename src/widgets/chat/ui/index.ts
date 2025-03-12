@@ -103,16 +103,11 @@ class ChatBase extends Block {
 	}
 
 	private getMessages() {
-		console.log("GetMessages");
-		const props = this.props.chat;
+		// const props = this.props.chat;
 
 		// this.ws.getMessages();
 
 		const messages = this.props.currentChat.messages;
-
-		console.log("MESSAGES:", messages);
-		console.log("chat props", props);
-		console.log("store", store.getState());
 
 		const messagesList = messages.map((chatProps: any) => {
 			return new MessageCard(chatProps);

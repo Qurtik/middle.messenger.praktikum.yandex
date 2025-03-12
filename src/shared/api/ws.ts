@@ -25,13 +25,10 @@ export class WSTransport extends EventBus {
 		if (!this.socket) {
 			throw new Error("Socket is not connected");
 		}
-
-		console.log("WSTransport: send");
 		this.socket.send(JSON.stringify(data));
 	}
 
 	public getChatMessages() {
-		console.log("WSTransport: getMessages");
 		if (!this.socket) {
 			throw new Error("Socket is not connected");
 		}

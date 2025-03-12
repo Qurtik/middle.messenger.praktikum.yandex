@@ -115,7 +115,6 @@ class LeftMenuBase extends Block {
 							text: "Добавить",
 							class: "modal__footer-btn",
 							onClick: () => {
-								console.log(this.props);
 								void chat.addUser(this.props.currentChat.chatId, this.props.foundedUser.id);
 								// toggleModal("addNewsUserToChat");
 							},
@@ -157,7 +156,6 @@ class LeftMenuBase extends Block {
 							text: "Удалить",
 							class: "modal__footer-btn",
 							onClick: () => {
-								console.log(this.props);
 								void chat.deleteUser(this.props.currentChat.chatId, this.props.foundedUser.id);
 								// toggleModal("addNewsUserToChat");
 							},

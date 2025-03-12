@@ -67,9 +67,9 @@ class MessageCard extends Block {
 
 	private connect(userId: number, chatId: number) {
 		const callback = (messages: any) => {
-			console.log(`Set value `, messages, `On path ${this.props.id}`);
+			// console.log(`Set value `, messages, `On path ${this.props.id}`);
 			store.setMessages(`messages.${this.props.id}`, messages);
-			console.log(store.getState());
+			// console.log(store.getState());
 		};
 
 		userApiInstance
@@ -91,7 +91,7 @@ class MessageCard extends Block {
 		store.emit("updateMessages");
 
 		// this.ws.addMessage(time.toString());
-		console.log(store.getState());
+		// console.log(store.getState());
 	}
 
 	override render(): string {
