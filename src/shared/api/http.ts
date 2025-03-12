@@ -63,10 +63,10 @@ type HTTPMethod<T> = (url: string, options?: IRequestOptions) => Promise<T>;
 
 export default class HTTPTransport<T> {
 	constructor(private _baseUrl?: string) {
-		this._baseUrl = BASE_URL;
+		this._baseUrl = !_baseUrl ? BASE_URL : _baseUrl;
 	}
 
-	get: HTTPMethod<T> = (url, options = {}) => {
+	public get: HTTPMethod<T> = (url, options = {}) => {
 		return this.request(
 			`${this._baseUrl}${url}`,
 			{ ...options, method: METHODS.GET },
@@ -74,7 +74,7 @@ export default class HTTPTransport<T> {
 		);
 	};
 
-	post: HTTPMethod<T> = (url, options = {}) => {
+	public post: HTTPMethod<T> = (url, options = {}) => {
 		return this.request(
 			`${this._baseUrl}${url}`,
 			{ ...options, method: METHODS.POST },
@@ -82,7 +82,7 @@ export default class HTTPTransport<T> {
 		);
 	};
 
-	put: HTTPMethod<T> = (url, options = {}) => {
+	public put: HTTPMethod<T> = (url, options = {}) => {
 		return this.request(
 			`${this._baseUrl}${url}`,
 			{ ...options, method: METHODS.PUT },
@@ -90,7 +90,7 @@ export default class HTTPTransport<T> {
 		);
 	};
 
-	delete: HTTPMethod<T> = (url, options = {}) => {
+	public delete: HTTPMethod<T> = (url, options = {}) => {
 		return this.request(
 			`${this._baseUrl}${url}`,
 			{ ...options, method: METHODS.DELETE },
@@ -98,7 +98,7 @@ export default class HTTPTransport<T> {
 		);
 	};
 
-	request = (url: string, options: IRequestOptions, timeout = 5000): Promise<T> => {
+	private request = (url: string, options: IRequestOptions, timeout = 5000): Promise<T> => {
 		const { method, data, headers = {} } = options;
 
 		return new Promise((resolve, reject) => {
@@ -151,6 +151,7 @@ export default class HTTPTransport<T> {
 					// анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
 					// alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
 					console.error(`Ошибка при получении ответа, ${xhr.status}: ${xhr.statusText}`);
+					reject("Code is not 200");
 				} else {
 					// если всё прошло гладко, выводим результат
 					// console.log(`Ответ успешно получен`);
@@ -166,7 +167,7 @@ export default class HTTPTransport<T> {
 			};
 
 			const handleError = (err: object) => {
-				console.log(err);
+				// console.log(err);
 				reject(err);
 			};
 
@@ -174,24 +175,9 @@ export default class HTTPTransport<T> {
 			xhr.onerror = handleError;
 			xhr.ontimeout = handleError;
 		});
-
-		// const { tries = 0 } = options;
-		// .then((resolve) => {
-		// 	return resolve;
-		// })
-		// .catch((err) => {
-		// 	if (tries !== 0) {
-		// 		fetchWithRetry(this);
-		// 	} else return err;
-		// });
-
-		// return promise;
 	};
 
 	private _urlWithParams(url: string, data: Record<string, any>): string {
-		console.log("data in urlWithParams");
-		console.log(data);
-
 		const params = new URLSearchParams();
 
 		for (const key in data) {
@@ -217,22 +203,6 @@ export default class HTTPTransport<T> {
 		const paramsString = params.toString();
 		return url + (paramsString ? "?" + paramsString : "");
 	}
-
-	// private _urlWithParams(url, data) {
-	// 	const params = Object.entries(data).reduce((acc, [key, value], index, array) => {
-	// 		if (typeof value === "object" && !Array.isArray(value)) {
-	// 			return acc;
-	// 		}
-
-	// 		return `${acc}${key}=${value}${index !== array.length - 1 ? "&" : ""}`;
-	// 	}, "?");
-
-	// 	return url + params;
-	// }
-
-	// private async fetchWithRetry(url: string, options: IRequestOptions, timeout?: number) {
-	// 	await this.request(url, options, timeout);
-	// }
 }
 
 // const testMethod = new HTTPTransport();
