@@ -1,6 +1,8 @@
 import Handlebars from "handlebars";
 import EventBus, { type EventCallback } from "./event-bus";
 
+import { v4 as uuidv4 } from "uuid";
+
 interface IBlockProps {
 	[key: string]: any;
 }
@@ -19,7 +21,7 @@ export default class Block {
 
 	protected children: Record<string, Block>;
 
-	private _id: string = crypto.randomUUID();
+	private _id: string = uuidv4();
 
 	protected lists: Record<string, any[]>;
 
@@ -162,7 +164,7 @@ export default class Block {
 
 	_render() {
 		const propsAndStubs: Record<string, any> = { ...(this.props as Record<string, any>) };
-		const tmpId = crypto.randomUUID();
+		const tmpId = uuidv4();
 
 		Object.entries(this.children).forEach(([key, child]) => {
 			propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
