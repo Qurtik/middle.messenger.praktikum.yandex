@@ -150,7 +150,7 @@ export default class HTTPTransport<T> {
 				if (xhr.status != 200) {
 					// анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
 					// alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
-					console.error(`Ошибка при получении ответа, ${xhr.status}: ${xhr.statusText}`);
+					// console.error(`Ошибка при получении ответа, ${xhr.status}: ${xhr.statusText}`);
 					reject("Code is not 200");
 				} else {
 					// если всё прошло гладко, выводим результат
