@@ -31,7 +31,7 @@ describe("Router", () => {
 		// document.body.removeChild(root);
 	});
 
-	it("Должен создавать только один экземпляр (singleton)", () => {
+	it("Создает только один экземпляр роутера (singleton)", () => {
 		const router1 = new Router();
 		const router2 = new Router();
 
