@@ -9,6 +9,7 @@
 - `npm run lint:fix` - проверка проекта и автоисправление ошибок eslint'ом
 - `npm run lint:style` - проверка проекта stylelint'ом
 - `npm run lint:style:fix` - проверка проекта и автоисправление ошибок stylelint'ом
+- `npm run test` - тестирвоание проекта
 
 Ссылка на netlify: https://yandex-chat-qurtik.netlify.app/  
 Ссылка на репозиторий: https://github.com/Qurtik/middle.messenger.praktikum.yandex/tree/main
