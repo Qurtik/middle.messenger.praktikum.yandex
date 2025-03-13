@@ -14,6 +14,15 @@ module.exports = {
 				project: "./tsconfig.node.json",
 			},
 		},
+		// {
+		// 	files: ["test/**/*"], // Применяется только к файлам в папке test
+		// 	parserOptions: {
+		// 		project: "./tsconfig.test.json", // tsconfig для тестов
+		// 	},
+		// 	rules: {
+		// 		// Специфические правила для тестов (если нужно)
+		// 	},
+		// },
 	],
 	plugins: ["@typescript-eslint", "@stylistic/eslint-plugin-ts"],
 	extends: [
@@ -29,8 +38,8 @@ module.exports = {
 	},
 	rules: {
 		// "@stylistic/ts/indent": ["error", "tab"],
-		"@typescript-eslint/quotes":"off",
-		"@typescript-eslint/indent":"off",
+		"@typescript-eslint/quotes": "off",
+		"@typescript-eslint/indent": "off",
 		"react/jsx-filename-extension": "off",
 		"import/extensions": "off",
 		"import/no-extraneous-dependencies": "off",

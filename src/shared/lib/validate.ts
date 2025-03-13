@@ -7,7 +7,7 @@ export const enum INPUT_RULES {
 	// eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
 	SECOND_NAME = "^[A-ZА-Я][a-zа-яё\\-]*$",
 	PHONE = "^\\+?\\d{10,15}$",
-	MESSAGE = "(.|\\s)*\\S(.|\\s)*",
+	MESSAGE = "(.|\s)*\\S(.|\\s)*",
 }
 
 export function setInputValidity(el: HTMLElement, isValid: boolean): void {
@@ -49,12 +49,10 @@ export function submit<T extends FieldRules>(
 	// callback?: (formResult: Record<string, string>, formRules: INPUT_RULES) => void,
 ): any {
 	const applicantForm = document.getElementById(idForm);
-	console.log(applicantForm);
 
 	if (applicantForm) {
 		const formFields = applicantForm.querySelectorAll("input");
 		const formResult: Record<string, string> = {};
-		console.log(formFields);
 
 		let isFormValid: boolean = true;
 		formFields.forEach((element) => {
@@ -79,9 +77,6 @@ export function submit<T extends FieldRules>(
 		});
 
 		if (isFormValid) {
-			console.log("formResult");
-			console.log(formResult);
-			console.log("SUBMITED");
 			return formResult as { [K in keyof T]: string };
 		}
 		return false;

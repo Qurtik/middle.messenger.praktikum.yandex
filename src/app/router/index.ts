@@ -82,16 +82,16 @@ export class Router<T extends { rootQuery?: string }> implements IRouter<T> {
 	// private _currentRoute: Route<T> | null = null;
 	private _currentRoute: Route | null = null;
 
-	private _rootQuery: string = "#app";
+	private _rootQuery: string;
 
-	constructor(rootQuery?: string) {
+	constructor(rootQuery: string = "#app") {
 		if (Router.__instance) {
 			return Router.__instance as Router<T>;
 		}
 
-		if (rootQuery) {
+		// if (rootQuery) {
 			this._rootQuery = rootQuery;
-		}
+		// }
 
 		if (!document.querySelector(this._rootQuery)) {
 			throw new Error(`Root element with selector "${this._rootQuery}" not found`);
