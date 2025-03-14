@@ -22,7 +22,6 @@ export class MessageCardBase extends Block {
 	}
 
 	private isUserMessageAuthor() {
-		console.log(this.props.user.id, this.props.userId);
 		return this.props.user.id === this.props.userId;
 	}
 

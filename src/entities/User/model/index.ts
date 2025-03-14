@@ -38,7 +38,7 @@ export default class User extends UserAPI {
 		try {
 			const userData = await this.getUserInfo();
 			store.set("user", userData);
-			console.log("Пользователь авторизован - запрос на сервер");
+			// console.log("Пользователь авторизован - запрос на сервер");
 
 			return true;
 		} catch (error) {
@@ -133,8 +133,8 @@ export default class User extends UserAPI {
 	public async getAvatar(path: string) {
 		try {
 			const response = await this.getResourse(path);
-			console.log("Path", path);
-			console.log("response", response);
+			// console.log("Path", path);
+			// console.log("response", response);
 			return response;
 		} catch (error) {
 			alert(error);
